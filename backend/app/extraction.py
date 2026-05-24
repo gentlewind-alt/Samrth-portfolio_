@@ -29,14 +29,30 @@ except ImportError:  # pragma: no cover
 
 
 def _extract_raw_text(pdf_path: str) -> str:
-    """Extract plain text from a PDF file using PyMuPDF."""
+    """Extract plain text and embedded hyperlinks from a PDF file using PyMuPDF."""
     if not fitz:
         raise RuntimeError("PyMuPDF (fitz) is required for PDF extraction")
     doc = fitz.open(pdf_path)
     text = []
+    hyperlinks = []
     for page in doc:
         text.append(page.get_text())
-    return "\n".join(text)
+        links = page.get_links()
+        for link in links:
+            if link.get("kind") == fitz.LINK_URI:
+                uri = link.get("uri")
+                rect = fitz.Rect(link.get("from"))
+                txt = page.get_text("text", clip=rect).strip().replace("\n", " ")
+                if uri:
+                    if txt:
+                        hyperlinks.append(f'- Link Text "{txt}" points to URL "{uri}"')
+                    else:
+                        hyperlinks.append(f'- URL "{uri}"')
+                        
+    full_text = "\n".join(text)
+    if hyperlinks:
+        full_text += "\n\n[Hyperlinks embedded in PDF document]:\n" + "\n".join(hyperlinks)
+    return full_text
 
 
 def _split_sections_fallback(raw_text: str) -> Dict[str, str]:
