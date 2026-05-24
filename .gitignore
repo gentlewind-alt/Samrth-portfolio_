@@ -1,0 +1,33 @@
+# Node
+node_modules/
+.next/
+out/
+build/
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Databases & local configs
+*.db
+.env
+.env.*
+!.env.example
+
+# Large binary files & installers
+*.exe
+postgresql-18.4-1-windows-x64.exe
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temp/Editor files
+.vscode/
+.idea/
+.claude/
+.antigravitycli/

@@ -1,0 +1,609 @@
+<!DOCTYPE html><html class="light" lang="en" style="scroll-behavior: smooth;"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>S. RAWAT</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;500;700&amp;family=Cormorant+Garamond:wght@400;500;700&amp;family=Ibm+Plex+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {background: "#fafaf5", tertiary: "#000000", "primary-fixed-dim": "#c8c6c5", "error-container": "#ffdad6", "primary-fixed": "#e5e2e1", error: "#ba1a1a", primary: "#000000", "outline-variant": "#c4c7c7", "surface-dim": "#dadad5", "on-surface": "#1a1c19", "tertiary-container": "#1a1c1c", "surface-container-lowest": "#ffffff", "tertiary-fixed-dim": "#c6c6c6", "inverse-primary": "#c8c6c5", "surface-container-highest": "#e3e3de", "on-primary-fixed": "#1c1b1b", "on-tertiary-fixed": "#1a1c1c", "surface-tint": "#5f5e5e", "surface-bright": "#fafaf5", "secondary-container": "#e1dfdf", "inverse-surface": "#2f312e", "surface-variant": "#e3e3de", "on-tertiary": "#ffffff", "surface-container-low": "#f4f4ef", "secondary-fixed": "#e4e2e2", "tertiary-fixed": "#e3e2e2", "on-tertiary-container": "#838484", "on-tertiary-fixed-variant": "#454747", "on-primary-container": "#858383", "on-secondary-fixed-variant": "#464747", "on-secondary": "#ffffff", "primary-container": "#1c1b1b", "on-error": "#ffffff", outline: "#747878", "on-primary": "#ffffff", "on-background": "#1a1c19", "surface-container-high": "#e8e8e3", "surface-container": "#eeeee9", "secondary-fixed-dim": "#c7c6c6", "on-secondary-container": "#626262", surface: "#fafaf5", "inverse-on-surface": "#f1f1ec", "on-surface-variant": "#444748", "on-secondary-fixed": "#1b1c1c", secondary: "#5e5e5e", "on-primary-fixed-variant": "#474646", "on-error-container": "#93000a"}, borderRadius: {DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px"}, spacing: {"margin-mobile": "20px", gutter: "24px", unit: "4px", "margin-desktop": "64px", "container-max": "1440px"}, fontFamily: {"mono-data": ["IBM Plex Sans"], "hero-lg": ["Bitter"], "headline-md": ["Bitter"], "label-caps": ["IBM Plex Sans"], "hero-lg-mobile": ["Bitter"], "body-md": ["IBM Plex Sans"], "body-lg": ["IBM Plex Sans"], headline: ["Bitter"], display: ["Bitter"], body: ["Cormorant Garamond"], label: ["Ibm Plex Sans"]}, fontSize: {"mono-data": ["14px", {lineHeight: "20px", letterSpacing: "0em", fontWeight: "400"}], "hero-lg": ["80px", {lineHeight: "90px", letterSpacing: "-0.01em", fontWeight: "300"}], "headline-md": ["32px", {lineHeight: "40px", letterSpacing: "0em", fontWeight: "400"}], "label-caps": ["12px", {lineHeight: "16px", letterSpacing: "0.1em", fontWeight: "600"}], "hero-lg-mobile": ["40px", {lineHeight: "48px", letterSpacing: "-0.01em", fontWeight: "300"}], "body-md": ["16px", {lineHeight: "24px", letterSpacing: "0em", fontWeight: "400"}], "body-lg": ["18px", {lineHeight: "28px", letterSpacing: "0em", fontWeight: "400"}]}}}};</script>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        body { background-color: #fafaf5; color: #111111; scroll-behavior: smooth; }
+        .grid-bg { background-image: linear-gradient(#d0d0d0 1px, transparent 1px), linear-gradient(90deg, #d0d0d0 1px, transparent 1px); background-size: 24px 24px; opacity: 0.05; position: fixed; inset: 0; pointer-events: none; }
+        .divider-v { width: 1px; background-color: #747878; opacity: 0.3; }
+        .divider-h { height: 1px; background-color: #747878; opacity: 0.3; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+
+        /* Motion Design Implementations */
+        @keyframes soft-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+            50% { transform: scale(1.2); opacity: 0.7; box-shadow: 0 0 8px 2px rgba(34, 197, 94, 0.2); }
+        }
+        .status-dot-pulse {
+            animation: soft-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes terminal-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .terminal-cursor::after {
+            content: '_';
+            animation: terminal-blink 1s step-end infinite;
+            margin-left: 2px;
+        }
+
+        @keyframes breathing {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+        .breathing-oled {
+            animation: breathing 6s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
+        }
+        .btn-shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-shimmer::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);
+            animation: shimmer 4s infinite linear;
+        }
+
+        .project-card {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-4px);
+            border-color: #111;
+        }
+
+        /* Scroll Reveal Utility */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Focus Pulse Animation */
+        @keyframes black-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.5); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+        }
+        .pulse-focus {
+            animation: black-pulse 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 4px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .status-dot-pulse, .terminal-cursor::after, .breathing-oled, .btn-shimmer::after, .project-card, .project-card:hover, .pulse-focus {
+                animation: none !important;
+                transition: none !important;
+                transform: none !important;
+            }
+            .reveal { opacity: 1; }
+        }
+    /* Landing & transition animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleUp {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.reveal, .project-card, .btn-shimmer {
+  animation: fadeInUp 0.8s ease-out forwards;
+  animation-delay: calc(var(--i) * 0.1s);
+}
+body, .bg-background, .bg-surface-container-low {
+  transition: background-color 0.5s ease;
+}
+/* subtle hover transitions */
+a, button, .material-symbols-outlined {
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+<!-- End animations -->
+</style>
+</head>
+<body class="font-body-md text-on-surface m-0">
+<div class="grid-bg"></div>
+<!-- SIDE NAVIGATION -->
+<aside class="h-screen w-64 fixed top-0 left-0 border-r border-outline-variant bg-background flex flex-col py-6 px-6 z-50 overflow-y-auto no-scrollbar" style="background-image:url('/vectorizer/fee93e0d-1d82-4761-8be5-4d277d0f6bfa.svg');background-size:cover;background-position:center;background-repeat:no-repeat;">
+<div class="mb-6">
+<h1 class="font-label-caps text-label-caps tracking-widest text-primary mb-1">S. RAWAT</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant opacity-60">AI SYSTEMS ENG.</p>
+</div>
+<nav class="flex-grow space-y-2"><a class="flex items-center gap-3 text-primary font-bold border-r-2 border-primary py-2 transition-all duration-150 ease-in-out" href="#home">
+<span class="material-symbols-outlined text-[20px]" data-icon="home">home</span>
+<span class="font-label-caps text-label-caps terminal-cursor">Home</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary hover:bg-surface-container py-2 transition-all duration-150 ease-in-out" href="#about">
+<span class="material-symbols-outlined text-[20px]" data-icon="person">person</span>
+<span class="font-label-caps text-label-caps">About</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary hover:bg-surface-container py-2 transition-all duration-150 ease-in-out" href="#projects">
+<span class="material-symbols-outlined text-[20px]" data-icon="biotech">biotech</span>
+<span class="font-label-caps text-label-caps">Projects</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary hover:bg-surface-container py-2 transition-all duration-150 ease-in-out" href="#skills">
+<span class="material-symbols-outlined text-[20px]" data-icon="psychology">psychology</span>
+<span class="font-label-caps text-label-caps">Skills</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary hover:bg-surface-container py-2 transition-all duration-150 ease-in-out" href="#education">
+<span class="material-symbols-outlined text-[20px]" data-icon="work_history">work_history</span>
+<span class="font-label-caps text-label-caps">Experience</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary hover:bg-surface-container py-2 transition-all duration-150 ease-in-out" href="#education">
+<span class="material-symbols-outlined text-[20px]" data-icon="school">school</span>
+<span class="font-label-caps text-label-caps">Education</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary hover:bg-surface-container py-2 transition-all duration-150 ease-in-out" href="#interests">
+<span class="material-symbols-outlined text-[20px]" data-icon="interests">interests</span>
+<span class="font-label-caps text-label-caps">Interests</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary hover:bg-surface-container py-2 transition-all duration-150 ease-in-out" href="#contact">
+<span class="material-symbols-outlined text-[20px]" data-icon="alternate_email">alternate_email</span>
+<span class="font-label-caps text-label-caps">Contact</span>
+</a></nav>
+<div class="mt-auto space-y-4">
+</div>
+</aside>
+<!-- MAIN CANVAS -->
+<main class="ml-64 min-h-screen">
+<!-- TOP BAR -->
+<!-- CONTENT -->
+<div class="space-y-6 max-w-container-max mx-auto w-full px-6">
+<!-- HERO SECTION -->
+<section class="grid grid-cols-12 gap-6 pt-12 reveal visible" id="home">
+<div class="col-span-12 lg:col-span-8" style="background-image:url('/vectorizer/fe654b34-04ec-4ef9-9f96-d6154398cc79.svg');background-size:contain;background-position:right center;background-repeat:no-repeat;">
+<div class="space-y-1">
+<p class="font-label-caps text-label-caps text-on-surface-variant tracking-[0.2em]">APPLIED AI SYSTEMS ENGINEER</p>
+<h1 class="font-hero-lg text-6xl lg:text-7xl leading-none uppercase -ml-1">SAMARTH<br>SINGH RAWAT</h1>
+</div>
+<div class="max-w-xs mt-4">
+<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-1 mb-1">
+<span class="w-1.5 h-1.5 bg-primary rounded-none"></span>
+<span class="font-['Inter_Tight'] text-[10px] font-medium uppercase tracking-[0.15em] text-on-surface-variant">INTERACTIVE SYSTEMS</span>
+</div>
+<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-1 mb-1">
+<span class="w-1.5 h-1.5 bg-primary rounded-none"></span>
+<span class="font-['Inter_Tight'] text-[10px] font-medium uppercase tracking-[0.15em] text-on-surface-variant">BEHAVIORAL ARCHITECTURES</span>
+</div>
+<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-1">
+<span class="w-1.5 h-1.5 bg-primary rounded-none"></span>
+<span class="font-['Inter_Tight'] text-[10px] font-medium uppercase tracking-[0.15em] text-on-surface-variant">AI-ENHANCED USER EXPERIENCES</span>
+</div>
+</div>
+<div class="flex gap-3 pt-4">
+<button class="bg-primary text-on-primary px-6 py-2 font-label-caps text-[10px] flex items-center gap-2 transition-colors hover:bg-secondary btn-shimmer">
+                        VIEW PROJECTS <span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<a href="Samarth_Updated_resume26.pdf" download class="border border-outline px-6 py-2 font-label-caps text-[10px] flex items-center gap-2 hover:bg-surface-container transition-colors text-primary no-underline inline-flex">
+                        DOWNLOAD RESUME <span class="material-symbols-outlined text-[16px]" data-icon="download">download</span>
+</a>
+</div>
+</div>
+<!-- SYSTEM DASHBOARD -->
+<div class="col-span-12 lg:col-span-4 border border-outline-variant p-4 bg-surface-container-low flex flex-col rounded-xl">
+<div class="flex justify-between items-center mb-4 border-b border-outline-variant pb-2">
+<h3 class="font-label-caps text-label-caps font-bold">SYSTEM DASHBOARD</h3>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 bg-green-500 rounded-full status-dot-pulse"></div>
+</div>
+</div>
+<div class="space-y-3">
+<div class="space-y-1">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="fiber_manual_record">fiber_manual_record</span>
+<p class="font-label-caps text-[9px] uppercase">Status</p>
+</div>
+<p class="font-body-md text-sm text-on-surface">Building innovative AI-driven applications that merge machine learning, IoT, and scalable web solutions.</p>
+</div>
+<div class="space-y-1">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="location_on">location_on</span>
+<p class="font-label-caps text-[9px] uppercase">Location</p>
+</div>
+<p class="font-body-md text-sm text-on-surface">Bhubaneswar, India</p>
+</div>
+<div class="space-y-1">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="architecture">architecture</span>
+<p class="font-label-caps text-[9px] uppercase">Current Focus</p>
+</div>
+<p class="font-body-md text-sm text-on-surface">Agentic AI • Embedded Systems</p>
+</div>
+<div class="space-y-1">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="lock_open">lock_open</span>
+<p class="font-label-caps text-[9px] uppercase">Availability</p>
+</div>
+<p class="font-body-md text-sm text-on-surface flex items-center gap-2">Open to Opportunities <span class="w-1.5 h-1.5 bg-primary rounded-full"></span></p>
+</div>
+</div>
+</div>
+</section>
+<!-- STACK OVERVIEW -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 border border-outline-variant divide-y md:divide-y-0 md:divide-x divide-outline-variant mt-4 reveal visible">
+<div class="space-y-2 hover:bg-surface-container-low transition-colors p-4">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[24px]" data-icon="code">code</span>
+<h4 class="font-label-caps text-[10px] font-bold">Programming Languages</h4>
+</div>
+<p class="font-body-md text-on-surface-variant text-xs">Python, Java, C, HTML/CSS</p>
+</div>
+<div class="space-y-2 hover:bg-surface-container-low transition-colors p-4">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[24px]" data-icon="palette">palette</span>
+<h4 class="font-label-caps text-[10px] font-bold">Frameworks/Libraries</h4>
+</div>
+<p class="font-body-md text-on-surface-variant text-xs">TensorFlow, Scikit-learn, NumPy, Pandas, Matplotlib</p>
+</div>
+<div class="space-y-2 hover:bg-surface-container-low transition-colors p-4">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[24px]" data-icon="terminal">terminal</span>
+<h4 class="font-label-caps text-[10px] font-bold">Tools</h4>
+</div>
+<p class="font-body-md text-on-surface-variant text-xs">Git, Microsoft Office, Power BI, Arduino, LATEX, VS Code</p>
+</div>
+<div class="space-y-2 hover:bg-surface-container-low transition-colors p-4">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[24px]" data-icon="memory">memory</span>
+<h4 class="font-label-caps text-[10px] font-bold">Databases</h4>
+</div>
+<p class="font-body-md text-on-surface-variant text-xs">MySQL</p>
+</div>
+</section>
+<!-- PROJECTS -->
+<section class="pt-4 reveal visible" id="projects">
+<div class="flex justify-between items-end mb-4">
+<div class="space-y-1">
+<p class="font-label-caps text-[9px] tracking-widest opacity-50 uppercase">Portfolio / Lab</p>
+<h2 class="font-headline-md text-2xl uppercase">Projects / Open-Source</h2>
+</div>
+<a class="font-label-caps text-[10px] flex items-center gap-1 hover:underline text-primary" href="#">
+                    VIEW ALL <span class="material-symbols-outlined text-[16px]" data-icon="arrow_outward">arrow_outward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Project 1 -->
+<div class="reveal border border-outline-variant p-4 space-y-4 flex flex-col group cursor-pointer project-card bg-background visible rounded-xl" style="--i:1;">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-[24px] text-primary" data-icon="terminal">terminal</span>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+<span class="font-label-caps text-[9px] uppercase">Completed</span>
+</div>
+</div>
+<div>
+<h3 class="font-label-caps text-sm font-bold mb-1">CRITIC-OS</h3>
+<p class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-wider">AI-Driven Web Application</p>
+</div>
+<div class="flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Python</span>
+<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Flask</span>
+<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Groq</span>
+<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">HuggingFace</span>
+<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Redis</span>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant leading-relaxed">
+• Developed an AI-driven web application that generates real-time, satirical music critiques...<br>• Engineered a parallel enrichment engine that integrates Spotify, Last.fm, and LRC LIB APIs...
+</p>
+<div class="mt-auto pt-3 border-t border-outline-variant flex justify-between items-center group-hover:text-primary text-secondary">
+<span class="font-label-caps text-[9px]">VIEW CASE STUDY</span>
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+<!-- Project 2 -->
+<div class="reveal border border-outline-variant p-4 space-y-4 flex flex-col group cursor-pointer project-card bg-background visible rounded-xl" style="--i:2;">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-[24px] text-primary" data-icon="terminal">terminal</span>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+<span class="font-label-caps text-[9px] uppercase">Completed</span>
+</div>
+</div>
+<div>
+<h3 class="font-label-caps text-sm font-bold mb-1">MOVIE RECOMMENDATION SYSTEM</h3>
+<p class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-wider">Collaborative Filtering Engine</p>
+</div>
+<div class="flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Python</span>
+<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Scikit-learn</span>
+<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">NumPy</span>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant leading-relaxed">
+• Built a collaborative filtering engine to generate personalized movie suggestions.<br>• Processed large datasets and designed a simple web UI for user input and recommendations.
+</p>
+<div class="mt-auto pt-3 border-t border-outline-variant flex justify-between items-center group-hover:text-primary text-secondary">
+<span class="font-label-caps text-[9px]">VIEW CASE STUDY</span>
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+<!-- Project 3 -->
+<div class="reveal border border-outline-variant p-4 space-y-4 flex flex-col group cursor-pointer project-card bg-background visible rounded-xl" style="--i:3;">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-[24px] text-primary" data-icon="terminal">terminal</span>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+<span class="font-label-caps text-[9px] uppercase">Completed</span>
+</div>
+</div>
+<div>
+<h3 class="font-label-caps text-sm font-bold mb-1">IOT SMART ALARM CLOCK</h3>
+<p class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-wider">ESP32-C3 Architecture</p>
+</div>
+<div class="flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">ESP32</span>
+<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">C++</span>
+<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">LittleFS</span>
+<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">I2C/SPI</span>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant leading-relaxed">
+• Engineered a custom .bin streaming animation engine to bypass ESP32-C3 RAM limitations,...<br>• Implemented a multi-tier throttling strategy (I2C capping, sensor polling reduction with...
+</p>
+<div class="mt-auto pt-3 border-t border-outline-variant flex justify-between items-center group-hover:text-primary text-secondary">
+<span class="font-label-caps text-[9px]">VIEW CASE STUDY</span>
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+<!-- Project 4 -->
+<div class="reveal border border-outline-variant p-4 space-y-4 flex flex-col group cursor-pointer project-card bg-background visible rounded-xl" style="--i:4;">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-[24px] text-primary" data-icon="terminal">terminal</span>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+<span class="font-label-caps text-[9px] uppercase">Completed</span>
+</div>
+</div>
+<div>
+<h3 class="font-label-caps text-sm font-bold mb-1">ISL HAND GESTURE RECOGNITION</h3>
+<p class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-wider">Random Forest Model</p>
+</div>
+<div class="flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Python</span>
+<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Scikit-learn</span>
+<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">NumPy</span>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant leading-relaxed">
+• Processed ISL hand gesture datasets in CSV format with landmark and movement data.<br>• Trained a Random Forest model to classify Indian Sign Language gestures accurately.
+</p>
+<div class="mt-auto pt-3 border-t border-outline-variant flex justify-between items-center group-hover:text-primary text-secondary">
+<span class="font-label-caps text-[9px]">VIEW CASE STUDY</span>
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+</div>
+</section>
+<!-- DETAILS GRID -->
+<div class="border border-outline-variant mt-4 reveal visible rounded-xl">
+<div class="grid grid-cols-1 lg:grid-cols-3 -m-[1px]"><!-- Row 1: About Me & Technical Skills -->
+<div class="col-span-3 grid grid-cols-1 lg:grid-cols-2 border-b border-outline-variant">
+<div class="space-y-4 border-r border-outline-variant p-4" id="about">
+<div class="flex items-baseline justify-between">
+<h2 class="font-label-caps text-[11px] font-bold uppercase">Summary</h2>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant leading-relaxed">
+            Applied AI developer and B.Tech IT student at KIIT Bhubaneswar, specializing in interactive systems, behavioral architectures, and AI-enhanced user experiences.
+        </p>
+<div class="grid grid-cols-2 gap-3 pt-2">
+<div class="space-y-1">
+<span class="font-label-caps text-[9px] text-on-surface-variant opacity-60 uppercase">CGPA</span>
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[20px]">fitness_center</span>
+<span class="font-bold text-sm">8.24</span>
+</div>
+</div>
+<div class="space-y-1">
+<span class="font-label-caps text-[9px] text-on-surface-variant opacity-60 uppercase">Projects</span>
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[20px]">sports_basketball</span>
+<span class="font-bold text-sm">4</span>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4 p-4" id="skills">
+<div class="flex items-baseline justify-between">
+<h2 class="font-label-caps text-[11px] font-bold uppercase">Technical Skills</h2>   
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="space-y-3">
+<div class="space-y-1">
+<h4 class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-widest">Programming Languages</h4>
+<p class="font-body-md text-xs">Python, Java, C, HTML/CSS</p>
+</div>
+<div class="space-y-1">
+<h4 class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-widest">Frameworks/Libraries</h4>
+<p class="font-body-md text-xs">TensorFlow, Scikit-learn, NumPy, Pandas, Matplotlib</p>
+</div>
+</div>
+<div class="space-y-3">
+<div class="space-y-1">
+<h4 class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-widest">Tools</h4>
+<p class="font-body-md text-xs">Git, Microsoft Office, Power BI, Arduino, LATEX, VS Code</p>
+</div>
+<div class="space-y-1">
+<h4 class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-widest">Databases</h4>
+<p class="font-body-md text-xs">MySQL</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Row 2: Education, Hobbies, Interests & Strengths -->
+<div class="col-span-3 grid grid-cols-1 lg:grid-cols-3">
+<div class="space-y-4 border-r border-outline-variant p-4 rounded-bl-xl" id="education">
+<h2 class="font-label-caps text-[11px] font-bold uppercase">Education</h2>
+<div class="relative pl-4 space-y-4">
+<div class="absolute left-1 top-0 bottom-0 w-px bg-outline-variant/30"></div>
+<div class="relative">
+<div class="absolute -left-[15px] top-1 w-2 h-2 bg-primary rounded-full"></div>
+<p class="font-label-caps text-[8px] text-on-surface-variant mb-0.5">2026</p>
+<h4 class="font-bold text-[11px] leading-tight">Kalinga Institute of Industrial Technology (KIIT)</h4>
+<p class="text-[10px] text-on-surface-variant">Bachelor of Technology in Information Technology</p>
+</div>
+<div class="relative">
+<div class="absolute -left-[15px] top-1 w-2 h-2 bg-primary rounded-full opacity-40"></div>
+<p class="font-label-caps text-[8px] text-on-surface-variant mb-0.5">2022</p>
+<h4 class="font-bold text-[11px] leading-tight">Lal Bahadur Shastri Public School</h4>
+<p class="text-[10px] text-on-surface-variant">12th Grade, CBSE</p>
+</div>
+<div class="relative">
+<div class="absolute -left-[15px] top-1 w-2 h-2 bg-primary rounded-full opacity-40"></div>
+<p class="font-label-caps text-[8px] text-on-surface-variant mb-0.5">2020</p>
+<h4 class="font-bold text-[11px] leading-tight">GMR DAV Varalakshmi Public School</h4>
+<p class="text-[10px] text-on-surface-variant">10th Grade, CBSE</p>
+</div>
+</div>
+</div>
+<div class="space-y-4 border-r border-outline-variant p-4 rounded-none"><h2 class="font-label-caps text-[11px] font-bold uppercase">Hobbies</h2><div class="grid grid-cols-5 gap-2">
+ <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: 'wght' 300, 'opsz' 24;">menu_book</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Reading books</span> </div>
+ <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: 'wght' 300, 'opsz' 24;">movie_filter</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Watching movies</span> </div>
+ <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: 'wght' 300, 'opsz' 24;">podcasts</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Listening to stories</span> </div>
+ <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: 'wght' 300, 'opsz' 24;">podcasts</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">podcasts</span> </div>
+ <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: 'wght' 300, 'opsz' 24;">precision_manufacturing</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Building</span> </div>
+ <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: 'wght' 300, 'opsz' 24;">precision_manufacturing</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">innovating</span> </div>
+ <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: 'wght' 300, 'opsz' 24;">explore</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Learning new things</span> </div>
+</div>
+</div>
+<div class="space-y-3 p-4 rounded-br-xl" id="interests">
+<h2 class="font-label-caps text-[11px] font-bold uppercase">Interests & Strengths</h2>
+<ul class="space-y-1">
+<li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> Interactive Systems</li>
+<li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> Behavioral Architectures</li>
+<li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> AI-Enhanced User Experiences</li>
+</ul>
+<div class="pt-2 border-t border-outline-variant/30">
+<ul class="space-y-1 text-[10px] text-on-surface-variant italic">
+<li class="">• Systems-oriented embedded developer</li>
+<li class="">• Strong problem-solving and systems-thinking skills</li>
+<li class="">• Rapid prototyping and iterative development capability</li>
+</ul>
+</div>
+</div>
+</div></div>
+</div>
+<!-- FOOTER CONTACT -->
+<footer class="border-t border-outline-variant mt-8 pb-12 pt-6 grid grid-cols-1 md:grid-cols-12 gap-6" id="contact">
+<div class="md:col-span-4 space-y-4">
+<div class="space-y-1">
+<h2 class="font-label-caps text-[11px] font-bold">LET'S CONNECT</h2>
+</div>
+<ul class="space-y-2 text-xs">
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-secondary" data-icon="mail">mail</span>
+<a class="hover:underline" href="mailto:samarthrawat18@email.com">samarthrawat18@email.com</a>
+</li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-secondary" data-icon="call">call</span>
+<span class="">+91 8984100922</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[20px] text-secondary mt-0.5" data-icon="location_on">location_on</span>
+<span class="">DGM-2 201, TATA Steel Meramandali Colony, Meramandali, Narendrapur, Odisha - 759121, India</span>
+</li>
+</ul>
+</div>
+<div class="md:col-span-3 space-y-4">
+<div class="space-y-1">
+<h2 class="font-label-caps text-[11px] font-bold uppercase">Find me online</h2>
+</div>
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-2 text-xs hover:text-primary transition-colors text-secondary" href="GitHub">
+<span class="material-symbols-outlined text-[20px]" data-icon="code">code</span> GitHub
+                    </a>
+<a class="flex items-center gap-2 text-xs hover:text-primary transition-colors text-secondary" href="LinkedIn">
+<span class="material-symbols-outlined text-[20px]" data-icon="link">link</span> LinkedIn
+                    </a>
+</div>
+</div>
+<div class="md:col-span-5 space-y-4 flex flex-col justify-between items-end text-right">
+<div class="max-w-xs space-y-2">
+<span class="material-symbols-outlined text-[32px] opacity-20 text-secondary" data-icon="format_quote">format_quote</span>
+<p class="font-body-md text-xs text-on-surface-variant italic leading-relaxed">
+                        Innovation distinguishes between a leader and a follower.
+                    </p>
+</div>
+<div class="w-16 h-px bg-outline-variant mt-2"></div>
+<div class="space-y-1">
+<p class="font-label-caps text-[9px] opacity-40 uppercase">© 2026 SAMARTH SINGH RAWAT. All rights reserved.</p>
+<p class="font-label-caps text-[9px] opacity-60 tracking-wider">&gt; designed &amp; built with purpose</p>
+</div>
+</div>
+</footer>
+</div>
+</main>
+<script>
+    // Smooth scroll implementation with focus pulse
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            const target = document.querySelector(targetId);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+                
+                // Reset and apply animation
+                target.classList.remove('pulse-focus');
+                void target.offsetWidth; // Trigger reflow to restart animation
+                target.classList.add('pulse-focus');
+                
+                // Remove class after animation completes to allow re-triggering
+                setTimeout(() => {
+                    target.classList.remove('pulse-focus');
+                }, 1500);
+            }
+        });
+    });
+
+    // Intersection Observer for Scroll Reveals
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Optional: stop observing once revealed
+                // revealObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Check for prefers-reduced-motion to avoid unnecessary observation
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    }
+
+    // Theme toggle logic (simulated)
+    const toggleTheme = () => {
+        document.documentElement.classList.toggle('dark');
+    };
+</script>
+
+
+</body></html>

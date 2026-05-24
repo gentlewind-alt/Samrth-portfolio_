@@ -1,0 +1,110 @@
+\documentclass[a4paper,10pt]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[margin=0.7in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{parskip}
+
+% Section formatting
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+\titleformat{\subsection}[runin]{\bfseries}{}{0em}{}[:]
+
+% Adjust list spacing
+\setlist[itemize]{noitemsep, topsep=0pt, left=1em}
+
+% Resume starts
+\begin{document}
+
+% ---------- HEADER ----------
+\begin{center}
+    {\Huge \textbf{Samarth Singh Rawat}} \\
+    \vspace{3pt}
+    \href{mailto:samarthrawat18@email.com}{samarthrawat18@email.com} \,|\, +91 8984100922 \,|\, DGM-2 201, TATA Steel Meramandali Colony, Meramandali, Narendrapur, Odisha - 759121, India \\
+    \href{https://github.com/gentlewind-alt}{GitHub}: \,|\, 
+    \href{https://www.linkedin.com/in/samarth-rawat}{LinkedIn}
+\end{center}
+
+% ---------- SUMMARY ----------
+\section*{Summary}
+Applied AI developer and B.Tech IT student at KIIT Bhubaneswar, specializing in interactive systems, behavioral architectures, and AI-enhanced user experiences. Experienced in integrating embedded systems, real-time interfaces, and intelligent workflow automation into cohesive, product-oriented applications that merge machine learning, IoT, and scalable web solutions.
+
+% ---------- EDUCATION ----------
+\section*{Education}
+\textbf{Kalinga Institute of Industrial Technology (KIIT)}, Bhubaneswar, Odisha \\
+Bachelor of Technology in Information Technology \hfill 2026 \\
+8th Semester CGPA: 8.24
+
+\vspace{4pt}
+\textbf{Lal Bahadur Shastri Public School}, Kota \\
+12th Grade, CBSE \hfill 2022 \\
+Percentage: 79.4\%
+
+\vspace{4pt}
+\textbf{GMR DAV Varalakshmi Public School}, Dhenkanal \\
+10th Grade, CBSE \hfill 2020 \\
+Percentage: 90\%
+
+% ---------- FIELDS OF INTEREST ----------
+\section*{Fields of Interest}
+LLMs, Artificial Intelligence, Fine tuning, Deep Learning, Agentic AI, Data Visualization, Machine Learning, IoT Systems, Embedded Systems, Human-Computer Interaction, Data Analysis, Web Designing
+
+% ---------- TECHNICAL SKILLS ----------
+\section*{Technical Skills}
+\textbf{Programming Languages:} Python, Java, C, HTML/CSS \\
+\textbf{Frameworks/Libraries:} TensorFlow, Scikit-learn, NumPy, Pandas, Matplotlib \\
+\textbf{Tools:} Git, Microsoft Office, Power BI, Arduino, \LaTeX, VS Code \\
+\textbf{Databases:} MySQL \\
+\textbf{Platforms:} ESP32, Spotify API
+
+% ---------- PROJECTS ----------
+\section*{Projects / Open-Source}
+
+\textbf{Critic-OS (Completed)}:
+\textit{Python (Flask), Groq (Llama-3.3), HuggingFace, Redis, Spotify API, Last.fm API, Vercel}
+\begin{itemize}
+    \item Developed an AI-driven web application that generates real-time, satirical music critiques using Groq (Llama-3.3) and 6 distinct AI personas (e.g., Gordon Ramsay, Cyberpunk Hacker).
+    \item Engineered a parallel enrichment engine that integrates Spotify, Last.fm, and LRC\_LIB APIs with HuggingFace emotion classification to analyze user playlists in under 6 seconds.
+    \item Optimized for production using Vercel Serverless and Redis-backed session management to ensure high-speed performance and efficient memory usage.
+\end{itemize}
+
+\vspace{8pt}
+\textbf{Movie Recommendation System (Completed)}:
+\textit{Python, Scikit-learn, NumPy, HTML}  
+\begin{itemize}
+    \item Built a collaborative filtering engine to generate personalized movie suggestions.
+    \item Processed large datasets and designed a simple web UI for user input and recommendations.
+\end{itemize}
+
+\textbf{IoT Smart Alarm Clock (Completed)}:
+\textit{ESP32-C3, C++, LittleFS, I2C/SPI, FreeRTOS, Python (Asset Packing)}  
+\begin{itemize}
+    \item \textbf{Memory-Constrained Architecture}: Engineered a custom \texttt{.bin} streaming animation engine to bypass ESP32-C3 RAM limitations, enabling high-quality animations via LittleFS frame-streaming with 16-byte header verification.
+    \item \textbf{Resource Optimization}: Implemented a multi-tier throttling strategy (I2C capping, sensor polling reduction with median filtering, and UI string caching), reducing CPU overhead by 40\% and enhancing system stability.
+    \item \textbf{Modular Firmware Design}: Developed a feature-toggle architecture that reduced BSS memory allocation by 65\%, ensuring compatibility with WiFi/BT stacks while maintaining a responsive, interrupt-driven multi-page menu system.
+    \item \textbf{System Reliability}: Integrated a heterogeneous sensor suite (PIR, Ultrasonic, IMU) for gesture control and motion wake, synchronized with a dual-source (NTP + Hardware RTC) timekeeping system for offline resilience.
+\end{itemize}
+
+\textbf{ISL Hand Gesture Recognition Using Random Forest (Completed)}:
+\textit{Python, Scikit-learn, NumPy, Pandas}  
+\begin{itemize}
+    \item Processed ISL hand gesture datasets in CSV format with landmark and movement data.
+    \item Trained a Random Forest model to classify Indian Sign Language gestures accurately.
+\end{itemize}
+
+% ---------- STRENGTHS ----------
+\section*{Strengths}
+\begin{itemize}
+    \item Systems-oriented embedded developer experienced in modular ESP32 architecture, real-time interaction systems, and hardware-software integration.
+    \item Strong problem-solving and systems-thinking skills with focus on scalable, maintainable, and extensible design patterns.
+    \item Experienced in integrating sensors, displays, RTC modules, animation systems, and input handling into cohesive embedded applications.
+    \item Rapid prototyping and iterative development capability with practical debugging experience across complex firmware and hardware interactions.
+    \item Cross-domain technical exposure spanning embedded systems, UI/UX interaction design, simulation workflows, and AI-assisted development tools.
+\end{itemize}
+
+% ---------- HOBBIES ----------
+\section*{Hobbies}
+Reading books, Watching movies, Learning new things, Building and innovating, Listening to stories and podcasts
+\end{document}
