@@ -119,10 +119,18 @@ def run_auto_deploy(resume_id: int):
         if auto_git:
             print("[Auto-Deploy] Triggering Git push...")
             root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+            
+            # Staging and committing static files
             subprocess.run(["git", "add", "dist/"], cwd=root_dir)
             subprocess.run(["git", "commit", "-m", "CMS: Auto-update resume static assets"], cwd=root_dir)
-            subprocess.run(["git", "push"], cwd=root_dir)
-            print("[Auto-Deploy] Git push completed.")
+            
+            # Dynamically determine the active branch name (main or master)
+            branch_result = subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=root_dir, capture_output=True, text=True)
+            active_branch = branch_result.stdout.strip() or "main"
+            
+            # Explicitly push the active branch
+            subprocess.run(["git", "push", "origin", active_branch], cwd=root_dir)
+            print(f"[Auto-Deploy] Git push to {active_branch} completed.")
             
         # Check for Vercel Deploy Hook
         deploy_hook = os.environ.get("VERCEL_DEPLOY_HOOK_URL")
