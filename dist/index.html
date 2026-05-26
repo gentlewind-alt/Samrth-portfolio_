@@ -136,10 +136,15 @@ a, button, .material-symbols-outlined {
 <body class="font-body-md text-on-surface m-0">
 <div class="grid-bg"></div>
 <!-- SIDE NAVIGATION -->
-<aside class="h-screen w-64 fixed top-0 left-0 border-r border-outline-variant bg-background flex flex-col py-6 px-6 z-50 overflow-y-auto no-scrollbar" style="background-image:url('/vectorizer/fee93e0d-1d82-4761-8be5-4d277d0f6bfa.svg');background-size:cover;background-position:center;background-repeat:no-repeat;">
+<aside id="nav-drawer" class="h-screen w-64 fixed top-0 left-0 border-r border-outline-variant bg-background flex flex-col py-6 px-6 z-50 overflow-y-auto no-scrollbar transition-transform duration-300 -translate-x-full lg:translate-x-0 lg:flex" style="background-image:url('/vectorizer/fee93e0d-1d82-4761-8be5-4d277d0f6bfa.svg');background-size:cover;background-position:center;background-repeat:no-repeat;">
 <div class="mb-6">
+<div class="flex justify-between items-center lg:block">
+<div>
 <h1 class="font-label-caps text-label-caps tracking-widest text-primary mb-1">S. RAWAT</h1>
 <p class="font-label-caps text-label-caps text-on-surface-variant opacity-60">AI SYSTEMS ENG.</p>
+</div>
+<button onclick="toggleSidebar()" class="lg:hidden material-symbols-outlined text-primary p-1 hover:bg-surface-container rounded-full" data-icon="close">close</button>
+</div>
 </div>
 <nav class="flex-grow space-y-2"><a class="flex items-center gap-3 text-primary font-bold border-r-2 border-primary py-2 transition-all duration-150 ease-in-out" href="#home">
 <span class="material-symbols-outlined text-[20px]" data-icon="home">home</span>
@@ -176,8 +181,20 @@ a, button, .material-symbols-outlined {
 <div class="mt-auto space-y-4">
 </div>
 </aside>
+<!-- MOBILE HEADER & OVERLAY -->
+<div id="drawer-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden"></div>
+<header class="lg:hidden fixed top-0 left-0 right-0 h-14 bg-background/80 backdrop-blur border-b border-outline-variant/30 flex items-center justify-between px-6 z-40">
+<div class="flex items-center gap-3">
+<button onclick="toggleSidebar()" class="material-symbols-outlined text-primary p-1 hover:bg-surface-container rounded-full" data-icon="menu">menu</button>
+<h1 class="font-label-caps text-label-caps tracking-widest text-primary mb-1">S. RAWAT</h1>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-emerald-500 status-dot-pulse"></div>
+<span class="font-label-caps text-[9px] uppercase tracking-tighter">Available</span>
+</div>
+</header>
 <!-- MAIN CANVAS -->
-<main class="ml-64 min-h-screen">
+<main class="ml-0 lg:ml-64 min-h-screen pt-14 lg:pt-0">
 <!-- TOP BAR -->
 <!-- CONTENT -->
 <div class="space-y-6 max-w-container-max mx-auto w-full px-6">
@@ -229,7 +246,7 @@ a, button, .material-symbols-outlined {
 <span class="material-symbols-outlined text-[20px]" data-icon="location_on">location_on</span>
 <p class="font-label-caps text-[9px] uppercase">Location</p>
 </div>
-<p class="font-body-md text-sm text-on-surface">Bhubaneswar, India</p>
+<p class="font-body-md text-sm text-on-surface">Bhubaneswar, Odisha, India</p>
 </div>
 <div class="space-y-1">
 <div class="flex items-center gap-2 text-on-surface-variant">
@@ -310,9 +327,6 @@ a, button, .material-symbols-outlined {
 <span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Groq</span>
 <span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">HuggingFace</span>
 <span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Redis</span>
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Spotify API</span>
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Last.fm API</span>
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Vercel</span>
 </div>
 <p class="font-body-md text-xs text-on-surface-variant leading-relaxed">
 • Developed an AI-driven web application that generates real-time, satirical music critiques.<br>• Engineered a parallel enrichment engine that integrates Spotify, Last.fm, and LRC LIB APIs...
@@ -360,7 +374,7 @@ a, button, .material-symbols-outlined {
 </div>
 <div>
 <h3 class="font-label-caps text-sm font-bold mb-1">IOT SMART ALARM CLOCK</h3>
-<p class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-wider">ESP32-C3 Embedded System</p>
+<p class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-wider">ESP32-C3-Based Embedded System</p>
 </div>
 <div class="flex flex-wrap gap-1">
 <span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">ESP32-C3</span>
@@ -368,10 +382,9 @@ a, button, .material-symbols-outlined {
 <span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">LittleFS</span>
 <span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">I2C/SPI</span>
 <span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">FreeRTOS</span>
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Python</span>
 </div>
 <p class="font-body-md text-xs text-on-surface-variant leading-relaxed">
-• Engineered a custom .bin streaming animation engine to bypass ESP32-C3 RAM limitations.<br>• Implemented a multi-tier throttling strategy to reduce CPU overhead by 40%.
+• Engineered a custom .bin streaming animation engine to bypass ESP32-C3 RAM limitations.<br>• Implemented a multi-tier throttling strategy to reduce CPU overhead by 40% and enhance...
 </p>
 <div class="mt-auto pt-3 border-t border-outline-variant flex justify-between items-center group-hover:text-primary text-secondary">
 <span class="font-label-caps text-[9px]">VIEW CASE STUDY</span>
@@ -388,8 +401,8 @@ a, button, .material-symbols-outlined {
 </div>
 </div>
 <div>
-<h3 class="font-label-caps text-sm font-bold mb-1">ISL HAND GESTURE RECOGNITION</h3>
-<p class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-wider">Random Forest Model</p>
+<h3 class="font-label-caps text-sm font-bold mb-1">ISL HAND GESTURE RECOGNITION USING RANDOM FOREST</h3>
+<p class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-wider">Python-Based Machine Learning Model</p>
 </div>
 <div class="flex flex-wrap gap-1">
 <span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Python</span>
@@ -431,20 +444,6 @@ a, button, .material-symbols-outlined {
 <div class="flex items-center gap-2 text-primary">
 <span class="material-symbols-outlined text-[20px]">sports_basketball</span>
 <span class="font-bold text-sm">4</span>
-</div>
-</div>
-<div class="space-y-1">
-<span class="font-label-caps text-[9px] text-on-surface-variant opacity-60 uppercase">Books Read</span>
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[20px]">menu_book</span>
-<span class="font-bold text-sm">Not specified</span>
-</div>
-</div>
-<div class="space-y-1">
-<span class="font-label-caps text-[9px] text-on-surface-variant opacity-60 uppercase">Movies Watched</span>
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[20px]">movie_filter</span>
-<span class="font-bold text-sm">Not specified</span>
 </div>
 </div>
 </div>
@@ -518,14 +517,6 @@ a, button, .material-symbols-outlined {
 <li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> Artificial Intelligence</li>
 <li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> Fine tuning</li>
 <li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> Deep Learning</li>
-<li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> Agentic AI</li>
-<li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> Data Visualization</li>
-<li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> Machine Learning</li>
-<li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> IoT Systems</li>
-<li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> Embedded Systems</li>
-<li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> Human-Computer Interaction</li>
-<li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> Data Analysis</li>
-<li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> Web Designing</li>
 </ul>
 <div class="pt-2 border-t border-outline-variant/30">
 <ul class="space-y-1 text-[10px] text-on-surface-variant italic">
@@ -597,6 +588,15 @@ a, button, .material-symbols-outlined {
             if (targetId === '#') return;
             const target = document.querySelector(targetId);
             if (target) {
+                // Close sidebar if it's open on mobile
+                const drawer = document.getElementById('nav-drawer');
+                const overlay = document.getElementById('drawer-overlay');
+                if (drawer && drawer.classList.contains('translate-x-0')) {
+                    drawer.classList.remove('translate-x-0');
+                    drawer.classList.add('-translate-x-full');
+                    overlay.classList.add('hidden');
+                }
+
                 target.scrollIntoView({ behavior: 'smooth' });
                 
                 // Reset and apply animation
@@ -635,6 +635,23 @@ a, button, .material-symbols-outlined {
     const toggleTheme = () => {
         document.documentElement.classList.toggle('dark');
     };
+
+    // Sidebar drawer toggle logic for mobile
+    function toggleSidebar() {
+        const drawer = document.getElementById('nav-drawer');
+        const overlay = document.getElementById('drawer-overlay');
+        const isOpen = drawer.classList.contains('translate-x-0');
+        
+        if (isOpen) {
+            drawer.classList.remove('translate-x-0');
+            drawer.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        } else {
+            drawer.classList.remove('-translate-x-full');
+            drawer.classList.add('translate-x-0');
+            overlay.classList.remove('hidden');
+        }
+    }
 </script>
 
 
