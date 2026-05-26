@@ -9,6 +9,7 @@ Future: POST /resumes/{id}/parse to trigger OCR/AI mapping.
 """
 
 import os
+import re
 import shutil
 from fastapi import APIRouter, Depends, File, UploadFile, HTTPException, BackgroundTasks
 from sqlalchemy.orm import Session
@@ -862,6 +863,13 @@ def render_resume_html(resume_id: int, db: Session = Depends(dependencies.get_db
 </footer>"""
 
     # Perform final string replacements to inject the AI/user content into the locked template
+    # Disable projects VIEW ALL button if the name is not "samarth singh rawat"
+    full_name_clean = " ".join(f"{first_name} {last_name}".split()).lower()
+    if full_name_clean != "samarth singh rawat":
+        pattern = r'<a class="font-label-caps text-\[10px\] flex items-center gap-1 hover:underline text-primary" href="[^"]*"[^>]*>\s*VIEW ALL\s*<span class="material-symbols-outlined text-\[16px\]" data-icon="arrow_outward">arrow_outward</span>\s*</a>'
+        disabled_button = '<span class="font-label-caps text-[10px] flex items-center gap-1 text-on-surface-variant opacity-40 cursor-not-allowed">\n                    VIEW ALL <span class="material-symbols-outlined text-[16px]" data-icon="arrow_outward">arrow_outward</span>\n</span>'
+        html_content = re.sub(pattern, disabled_button, html_content)
+
     # Replace S. RAWAT occurrences
     html_content = html_content.replace("<title>S. RAWAT</title>", f"<title>{short_name}</title>")
     html_content = html_content.replace('<h1 class="font-label-caps text-label-caps tracking-widest text-primary mb-1">S. RAWAT</h1>', f'<h1 class="font-label-caps text-label-caps tracking-widest text-primary mb-1">{short_name}</h1>')
