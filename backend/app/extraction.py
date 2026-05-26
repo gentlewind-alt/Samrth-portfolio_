@@ -152,7 +152,7 @@ def _run_groq_extraction(raw_text: str, api_key: str) -> Dict:
         "User-Agent": "Mozilla/5.0"
     }
     data = {
-        "model": "llama-3.3-70b-versatile",
+        "model": "openai/gpt-oss-120b",
         "messages": [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": f"Extract raw resume text:\n\n{raw_text}"}
