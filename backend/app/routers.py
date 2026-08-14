@@ -606,653 +606,180 @@ def render_resume_html(resume_id: int, db: Session = Depends(dependencies.get_db
     # Extract all structured fields to build component HTMLs
     s = structured_data
     
-    # 1. Short and hero details
-    short_name = s.get("short_name", "S. RAWAT")
-    short_title = s.get("short_title", "AI SYSTEMS ENG.")
+    # 1. Candidate names and titles
+    raw_name = resume.content_json.get("name") if (resume.content_json and isinstance(resume.content_json, dict)) else ""
+    if raw_name:
+        parts = raw_name.strip().split()
+        first_name = parts[0] if parts else "SAMARTH"
+        last_name = " ".join(parts[1:]) if len(parts) > 1 else "RAWAT"
+    else:
+        first_name = s.get("first_name", "SAMARTH")
+        last_name = s.get("last_name", "RAWAT")
+
+    first_letter = first_name[0].upper() if first_name else "S"
+    last_upper = last_name.split()[-1].upper() if last_name else "RAWAT"
+    short_name = s.get("short_name") or f"{first_letter}. {last_upper}"
+    short_title = s.get("short_title", "APPLIED AI · EMBEDDED")
     hero_tracking = s.get("hero_tracking", "APPLIED AI SYSTEMS ENGINEER")
-    first_name = s.get("first_name", "SAMARTH")
-    last_name = s.get("last_name", "RAWAT")
     
-    # 2. Hero taglines list
-    hero_taglines = [t.strip() for t in s.get("hero_taglines", []) if t and t.strip()]
-    taglines_html = '<div class="max-w-xs mt-4">\n'
-    for i, tagline in enumerate(hero_taglines):
-        border_class = " mb-1" if i < len(hero_taglines) - 1 else ""
-        taglines_html += f"""<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-1{border_class}">
-<span class="w-1.5 h-1.5 bg-primary rounded-none"></span>
-<span class="font-['Inter_Tight'] text-[10px] font-medium uppercase tracking-[0.15em] text-on-surface-variant">{tagline}</span>
-</div>\n"""
-    taglines_html += '</div>'
+    # 2. Hero and Profile descriptions
+    desc_content = resume.content_json.get("description", {}) if (resume.content_json and isinstance(resume.content_json, dict)) else {}
+    if isinstance(desc_content, dict):
+        raw_desc = desc_content.get("body") or ""
+    elif isinstance(desc_content, str):
+        raw_desc = desc_content
+    else:
+        raw_desc = ""
+
+    about_me = raw_desc or s.get("about_me") or "I build AI-driven applications and embedded systems — from real-time LLM products to firmware running on 400KB of RAM. Available for freelance work."
     
-    # 3. System Dashboard
-    status_text = s.get("status_text") or ""
-    loc = s.get("location") or ""
-    curr_focus = s.get("current_focus") or ""
-    avail = s.get("availability") or ""
-    dashboard_html = f"""<div class="col-span-12 lg:col-span-4 border border-outline-variant p-4 bg-surface-container-low flex flex-col rounded-xl">
-<div class="flex justify-between items-center mb-4 border-b border-outline-variant pb-2">
-<h3 class="font-label-caps text-label-caps font-bold">SYSTEM DASHBOARD</h3>
-<div class="flex items-center gap-2">
-<div class="w-2 h-2 bg-green-500 rounded-full status-dot-pulse"></div>
-</div>
-</div>
-<div class="space-y-3">
-<div class="space-y-1">
-<div class="flex items-center gap-2 text-on-surface-variant">
-<span class="material-symbols-outlined text-[20px]" data-icon="fiber_manual_record">fiber_manual_record</span>
-<p class="font-label-caps text-[9px] uppercase">Status</p>
-</div>
-<p class="font-body-md text-sm text-on-surface">{status_text}</p>
-</div>
-<div class="space-y-1">
-<div class="flex items-center gap-2 text-on-surface-variant">
-<span class="material-symbols-outlined text-[20px]" data-icon="location_on">location_on</span>
-<p class="font-label-caps text-[9px] uppercase">Location</p>
-</div>
-<p class="font-body-md text-sm text-on-surface">{loc}</p>
-</div>
-<div class="space-y-1">
-<div class="flex items-center gap-2 text-on-surface-variant">
-<span class="material-symbols-outlined text-[20px]" data-icon="architecture">architecture</span>
-<p class="font-label-caps text-[9px] uppercase">Current Focus</p>
-</div>
-<p class="font-body-md text-sm text-on-surface">{curr_focus}</p>
-</div>
-<div class="space-y-1">
-<div class="flex items-center gap-2 text-on-surface-variant">
-<span class="material-symbols-outlined text-[20px]" data-icon="lock_open">lock_open</span>
-<p class="font-label-caps text-[9px] uppercase">Availability</p>
-</div>
-<p class="font-body-md text-sm text-on-surface flex items-center gap-2">{avail} <span class="w-1.5 h-1.5 bg-primary rounded-full"></span></p>
-</div>
-</div>
-</div>"""
+    # Split about me into two paragraphs if possible
+    about_paragraphs = [p.strip() for p in about_me.split("\n\n") if p.strip()]
+    if not about_paragraphs:
+        about_paragraphs = [p.strip() for p in about_me.split("\n") if p.strip()]
+    if len(about_paragraphs) == 1 and len(about_paragraphs[0]) > 140:
+        # Split roughly by sentence
+        sentences = [sent.strip() + "." for sent in about_paragraphs[0].split(". ") if sent.strip()]
+        mid_idx = max(1, len(sentences) // 2)
+        p1 = " ".join(sentences[:mid_idx]).rstrip(".") + "."
+        p2 = " ".join(sentences[mid_idx:]).rstrip(".") + "." if len(sentences) > mid_idx else ""
+    elif len(about_paragraphs) >= 2:
+        p1 = about_paragraphs[0]
+        p2 = " ".join(about_paragraphs[1:])
+    else:
+        p1 = about_me
+        p2 = ""
 
-    # 4. Stack Overview
-    stack_overview = [item for item in s.get("stack_overview", []) if item and item.get("title") and item.get("title").strip()]
-    stack_overview_html = '<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 border border-outline-variant divide-y md:divide-y-0 md:divide-x divide-outline-variant mt-4 reveal visible">\n'
-    for item in stack_overview:
-        icon = item.get('icon', 'terminal')
-        stack_overview_html += f"""<div class="space-y-2 hover:bg-surface-container-low transition-colors p-4">
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[24px]" data-icon="{icon}">{icon}</span>
-<h4 class="font-label-caps text-[10px] font-bold">{item.get('title', '')}</h4>
-</div>
-<p class="font-body-md text-on-surface-variant text-xs">{item.get('description', '')}</p>
-</div>\n"""
-    stack_overview_html += '</section>'
-
-    # 5. Projects
-    projects = [p for p in s.get("projects", []) if p and p.get("title") and p.get("title").strip()]
-    proj_headline = resume.content_json.get("project", {}).get("headline") or "PROJECTS / ENGINEERING SYSTEMS"
-    projects_grid_html = '<div class="grid grid-cols-1 md:grid-cols-3 gap-4">\n'
-    for idx, proj in enumerate(projects):
-        tags_html = "".join([f'<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">{tag}</span>\n' for tag in proj.get('tags', [])])
-        status = proj.get('status', 'Completed')
-        icon = proj.get('icon', 'terminal')
-        projects_grid_html += f"""<!-- Project {idx+1} -->
-<div class="reveal border border-outline-variant p-4 space-y-4 flex flex-col group cursor-pointer project-card bg-background visible rounded-xl" style="--i:{idx+1};">
-<div class="flex justify-between items-start">
-<span class="material-symbols-outlined text-[24px] text-primary" data-icon="{icon}">{icon}</span>
-<div class="flex items-center gap-1">
-<span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
-<span class="font-label-caps text-[9px] uppercase">{status}</span>
-</div>
-</div>
-<div>
-<h3 class="font-label-caps text-sm font-bold mb-1">{proj.get('title', '')}</h3>
-<p class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-wider">{proj.get('subtitle', '')}</p>
-</div>
-<div class="flex flex-wrap gap-1">
-{tags_html}</div>
-<p class="font-body-md text-xs text-on-surface-variant leading-relaxed">
-{proj.get('description', '')}
-</p>
-<div class="mt-auto pt-3 border-t border-outline-variant flex justify-between items-center group-hover:text-primary text-secondary">
-<span class="font-label-caps text-[9px]">VIEW CASE STUDY</span>
-<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
-</div>
-</div>\n"""
-    projects_grid_html += '</div>'
-
-    # 6. About Me / Metrics
-    about_headline = resume.content_json.get("description", {}).get("headline") or "About Me"
-    about_me = s.get("about_me", "")
-    metrics = [m for m in s.get("metrics", []) if m and m.get("label") and m.get("label").strip() and m.get("value") and m.get("value").strip()]
-    metrics_grid_html = '<div class="grid grid-cols-2 gap-3 pt-2">\n'
-    for item in metrics:
-        metrics_grid_html += f"""<div class="space-y-1">
-<span class="font-label-caps text-[9px] text-on-surface-variant opacity-60 uppercase">{item.get('label', '')}</span>
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[20px]">{item.get('icon', 'star')}</span>
-<span class="font-bold text-sm">{item.get('value', '')}</span>
-</div>
-</div>\n"""
-    metrics_grid_html += '</div>'
-
-    # 7. Skills
-    skills_headline = resume.content_json.get("skills", {}).get("headline") or "Technical Skills"
-    skills_raw = s.get("skills", [])
-    skills = []
-    for item in skills_raw:
-        cat = item.get("category", "")
-        s_list = [sk.strip() for sk in item.get("skills", []) if sk and sk.strip()]
-        if cat and cat.strip() and s_list:
-            skills.append({"category": cat, "skills": s_list})
-            
-    skills_cols_html = '<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">\n'
-    mid = (len(skills) + 1) // 2
-    col1_categories = skills[:mid]
-    col2_categories = skills[mid:]
-
-    skills_cols_html += '<div class="space-y-3">\n'
-    for item in col1_categories:
-        skills_str = ", ".join(item.get('skills', []))
-        skills_cols_html += f"""<div class="space-y-1">
-<h4 class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-widest">{item.get('category', '')}</h4>
-<p class="font-body-md text-xs">{skills_str}</p>
-</div>\n"""
-    skills_cols_html += '</div>\n'
-
-    skills_cols_html += '<div class="space-y-3">\n'
-    for item in col2_categories:
-        skills_str = ", ".join(item.get('skills', []))
-        skills_cols_html += f"""<div class="space-y-1">
-<h4 class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-widest">{item.get('category', '')}</h4>
-<p class="font-body-md text-xs">{skills_str}</p>
-</div>\n"""
-    skills_cols_html += '</div>\n'
-    skills_cols_html += '</div>'
-
-    # 8. Education & Experience Timeline
-    edu_headline = resume.content_json.get("education", {}).get("headline") or "Education"
-    education_and_experience = [item for item in s.get("education_and_experience", []) if item and item.get("school") and item.get("school").strip()]
-    edu_timeline_html = f"""<div class="space-y-4 border-r border-outline-variant p-4 rounded-bl-xl" id="education">
-<h2 class="font-label-caps text-[11px] font-bold uppercase">{edu_headline}</h2>
-<div class="relative pl-4 space-y-4">
-<div class="absolute left-1 top-0 bottom-0 w-px bg-outline-variant/30"></div>"""
-    for idx, item in enumerate(education_and_experience):
-        opacity_class = "" if idx == 0 else " opacity-40"
-        edu_timeline_html += f"""\n<div class="relative">
-<div class="absolute -left-[15px] top-1 w-2 h-2 bg-primary rounded-full{opacity_class}"></div>
-<p class="font-label-caps text-[8px] text-on-surface-variant mb-0.5">{item.get('years', '')}</p>
-<h4 class="font-bold text-[11px] leading-tight">{item.get('school', '')}</h4>
-<p class="text-[10px] text-on-surface-variant">{item.get('degree_gpa', '')}</p>
-</div>"""
-    edu_timeline_html += '\n</div>\n</div>'
-
-    # 9. Hobbies
-    hobbies_headline = resume.content_json.get("hobbies", {}).get("headline") or "Hobbies"
-    hobbies = [item for item in s.get("hobbies", []) if item and item.get("label") and item.get("label").strip()]
-    hobbies_grid_html = f"""<div class="space-y-4 border-r border-outline-variant p-4 rounded-none"><h2 class="font-label-caps text-[11px] font-bold uppercase">{hobbies_headline}</h2><div class="grid grid-cols-5 gap-2">"""
-    for item in hobbies:
-        icon = item.get('icon', 'star')
-        label = item.get('label', '')
-        hobbies_grid_html += f"""\n <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: 'wght' 300, 'opsz' 24;">{icon}</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">{label}</span> </div>"""
-    hobbies_grid_html += '\n</div>\n</div>'
-
-    # 10. Interests & Strengths
-    interests_headline = resume.content_json.get("interests", {}).get("headline") or "Interests & Strengths"
-    interests = [i.strip() for i in s.get("interests", []) if i and i.strip()]
-    strengths = [st.strip() for st in s.get("strengths", []) if st and st.strip()]
-    interests_and_strengths_html = f"""<div class="space-y-3 p-4 rounded-br-xl" id="interests">
-<h2 class="font-label-caps text-[11px] font-bold uppercase">{interests_headline}</h2>
-<ul class="space-y-1">"""
-    for interest in interests:
-        interests_and_strengths_html += f"""\n<li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> {interest}</li>"""
-    interests_and_strengths_html += """\n</ul>
-<div class="pt-2 border-t border-outline-variant/30">
-<ul class="space-y-1 text-[10px] text-on-surface-variant italic">"""
-    for strength in strengths:
-        interests_and_strengths_html += f"""\n<li class="">• {strength}</li>"""
-    interests_and_strengths_html += '\n</ul>\n</div>\n</div>'
-
-    # 11. Footer details
-    email = s.get("email", "samarthrawat10@email.com")
-    phone = s.get("phone", "+91 8984100922")
-    address = s.get("address", "")
+    # 3. Location, focus, status
+    loc = s.get("location") or (resume.content_json.get("address") if isinstance(resume.content_json, dict) else "") or "Bhubaneswar, Odisha, India"
+    curr_focus = s.get("current_focus") or "Agentic AI · Embedded Systems"
+    
+    # 4. Contact details
+    email = s.get("email") or (resume.content_json.get("email") if isinstance(resume.content_json, dict) else "") or "samarthrawat18@email.com"
+    phone = s.get("phone") or (resume.content_json.get("number") if isinstance(resume.content_json, dict) else "") or "+91 8984100922"
+    address = s.get("address") or loc
     github_url = s.get("github_url", "#")
     linkedin_url = s.get("linkedin_url", "#")
-    quote = s.get("quote", "Building systems that understand, adapt and connect.")
-    footer_html = f"""<footer class="border-t border-outline-variant mt-8 pb-12 pt-6 grid grid-cols-1 md:grid-cols-12 gap-6" id="contact">
-<div class="md:col-span-4 space-y-4">
-<div class="space-y-1">
-<h2 class="font-label-caps text-[11px] font-bold">LET'S CONNECT</h2>
-</div>
-<ul class="space-y-2 text-xs">
-<li class="flex items-center gap-2">
-<span class="material-symbols-outlined text-[20px] text-secondary" data-icon="mail">mail</span>
-<a class="hover:underline" href="mailto:{email}">{email}</a>
-</li>
-<li class="flex items-center gap-2">
-<span class="material-symbols-outlined text-[20px] text-secondary" data-icon="call">call</span>
-<span class="">{phone}</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="material-symbols-outlined text-[20px] text-secondary mt-0.5" data-icon="location_on">location_on</span>
-<span class="">{address}</span>
-</li>
-</ul>
-</div>
-<div class="md:col-span-3 space-y-4">
-<div class="space-y-1">
-<h2 class="font-label-caps text-[11px] font-bold uppercase">Find me online</h2>
-</div>
-<div class="flex flex-col gap-2">
-<a class="flex items-center gap-2 text-xs hover:text-primary transition-colors text-secondary" href="{github_url}">
-<span class="material-symbols-outlined text-[20px]" data-icon="code">code</span> GitHub
-                    </a>
-<a class="flex items-center gap-2 text-xs hover:text-primary transition-colors text-secondary" href="{linkedin_url}">
-<span class="material-symbols-outlined text-[20px]" data-icon="link">link</span> LinkedIn
-                    </a>
-</div>
-</div>
-<div class="md:col-span-5 space-y-4 flex flex-col justify-between items-end text-right">
-<div class="max-w-xs space-y-2">
-<span class="material-symbols-outlined text-[32px] opacity-20 text-secondary" data-icon="format_quote">format_quote</span>
-<p class="font-body-md text-xs text-on-surface-variant italic leading-relaxed">
-                        {quote}
-                    </p>
-</div>
-<div class="w-16 h-px bg-outline-variant mt-2"></div>
-<div class="space-y-1">
-<p class="font-label-caps text-[9px] opacity-40 uppercase">© 2026 {first_name} {last_name}. All rights reserved.</p>
-<p class="font-label-caps text-[9px] opacity-60 tracking-wider">&gt; designed &amp; built with purpose</p>
-</div>
-</div>
-</footer>"""
+    
+    if isinstance(resume.content_json, dict) and "links" in resume.content_json:
+        raw_links = resume.content_json["links"]
+        if isinstance(raw_links, str):
+            raw_links = [l.strip() for l in raw_links.split(",") if l.strip()]
+        if isinstance(raw_links, list):
+            for link in raw_links:
+                if "github.com" in link.lower():
+                    github_url = link
+                elif "linkedin.com" in link.lower():
+                    linkedin_url = link
 
-    # Perform final string replacements to inject the AI/user content into the locked template
-    # Disable projects VIEW ALL button if the name is not "samarth singh rawat"
-    full_name_clean = " ".join(f"{first_name} {last_name}".split()).lower()
-    if full_name_clean != "samarth singh rawat":
-        pattern = r'<a class="font-label-caps text-\[10px\] flex items-center gap-1 hover:underline text-primary" href="[^"]*"[^>]*>\s*VIEW ALL\s*<span class="material-symbols-outlined text-\[16px\]" data-icon="arrow_outward">arrow_outward</span>\s*</a>'
-        disabled_button = '<span class="font-label-caps text-[10px] flex items-center gap-1 text-on-surface-variant opacity-40 cursor-not-allowed">\n                    VIEW ALL <span class="material-symbols-outlined text-[16px]" data-icon="arrow_outward">arrow_outward</span>\n</span>'
-        html_content = re.sub(pattern, disabled_button, html_content)
+    # 5. Build Technical Stack Rows HTML
+    skills_raw = s.get("skills", [])
+    if skills_raw:
+        skills_html = ""
+        for idx, item in enumerate(skills_raw):
+            cat = item.get("category", "Skills")
+            s_list = item.get("skills", [])
+            skills_str = ", ".join(s_list) if isinstance(s_list, list) else str(s_list)
+            border_style = ' style="border-bottom:1px solid #c4c7c7"' if idx == len(skills_raw) - 1 else ''
+            skills_html += f"""              <div class="stack-row"{border_style}>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8a8d8d">{cat}</span>
+                <span style="font-size:14px;line-height:1.5;color:#1a1c19">{skills_str}</span>
+              </div>\n"""
+    else:
+        skills_html = None
 
-    # Replace S. RAWAT occurrences
-    html_content = html_content.replace("<title>S. RAWAT</title>", f"<title>{short_name}</title>")
-    html_content = html_content.replace('<h1 class="font-label-caps text-label-caps tracking-widest text-primary mb-1">S. RAWAT</h1>', f'<h1 class="font-label-caps text-label-caps tracking-widest text-primary mb-1">{short_name}</h1>')
-    
-    # Replace AI SYSTEMS ENG.
-    html_content = html_content.replace('<p class="font-label-caps text-label-caps text-on-surface-variant opacity-60">AI SYSTEMS ENG.</p>', f'<p class="font-label-caps text-label-caps text-on-surface-variant opacity-60">{short_title}</p>')
-    
-    # Replace Tracking title
-    html_content = html_content.replace('<p class="font-label-caps text-label-caps text-on-surface-variant tracking-[0.2em]">APPLIED AI SYSTEMS ENGINEER</p>', f'<p class="font-label-caps text-label-caps text-on-surface-variant tracking-[0.2em]">{hero_tracking}</p>')
-    
-    # Replace Full Name
-    html_content = html_content.replace('<h1 class="font-hero-lg text-6xl lg:text-7xl leading-none uppercase -ml-1">SAMARTH<br>RAWAT</h1>', f'<h1 class="font-hero-lg text-6xl lg:text-7xl leading-none uppercase -ml-1">{first_name}<br>{last_name}</h1>')
-    
-    # Replace Taglines block
-    original_taglines_block = """<div class="max-w-xs mt-4">
-<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-1 mb-1">
-<span class="w-1.5 h-1.5 bg-primary rounded-none"></span>
-<span class="font-['Inter_Tight'] text-[10px] font-medium uppercase tracking-[0.15em] text-on-surface-variant">Embedded Intelligence</span>
-</div>
-<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-1 mb-1">
-<span class="w-1.5 h-1.5 bg-primary rounded-none"></span>
-<span class="font-['Inter_Tight'] text-[10px] font-medium uppercase tracking-[0.15em] text-on-surface-variant">Behavioral Interfaces</span>
-</div>
-<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-1 mb-1">
-<span class="w-1.5 h-1.5 bg-primary rounded-none"></span>
-<span class="font-['Inter_Tight'] text-[10px] font-medium uppercase tracking-[0.15em] text-on-surface-variant">Agentic Systems</span>
-</div>
-<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-1">
-<span class="w-1.5 h-1.5 bg-primary rounded-none"></span>
-<span class="font-['Inter_Tight'] text-[10px] font-medium uppercase tracking-[0.15em] text-on-surface-variant">Human-Machine Interaction</span>
-</div>
-</div>"""
-    html_content = html_content.replace(original_taglines_block, taglines_html)
-    
-    # Replace Dashboard
-    original_dashboard_block = """<div class="col-span-12 lg:col-span-4 border border-outline-variant p-4 bg-surface-container-low flex flex-col rounded-xl">
-<div class="flex justify-between items-center mb-4 border-b border-outline-variant pb-2">
-<h3 class="font-label-caps text-label-caps font-bold">SYSTEM DASHBOARD</h3>
-<div class="flex items-center gap-2">
-<div class="w-2 h-2 bg-green-500 rounded-full status-dot-pulse"></div>
-</div>
-</div>
-<div class="space-y-3">
-<div class="space-y-1">
-<div class="flex items-center gap-2 text-on-surface-variant">
-<span class="material-symbols-outlined text-[20px]" data-icon="fiber_manual_record">fiber_manual_record</span>
-<p class="font-label-caps text-[9px] uppercase">Status</p>
-</div>
-<p class="font-body-md text-sm text-on-surface">Building intelligent systems that feel expressive.</p>
-</div>
-<div class="space-y-1">
-<div class="flex items-center gap-2 text-on-surface-variant">
-<span class="material-symbols-outlined text-[20px]" data-icon="location_on">location_on</span>
-<p class="font-label-caps text-[9px] uppercase">Location</p>
-</div>
-<p class="font-body-md text-sm text-on-surface">Bhubaneswar, Odisha, India</p>
-</div>
-<div class="space-y-1">
-<div class="flex items-center gap-2 text-on-surface-variant">
-<span class="material-symbols-outlined text-[20px]" data-icon="architecture">architecture</span>
-<p class="font-label-caps text-[9px] uppercase">Current Focus</p>
-</div>
-<p class="font-body-md text-sm text-on-surface">Agentic AI • Embedded Systems Behavioral Architectures</p>
-</div>
-<div class="space-y-1">
-<div class="flex items-center gap-2 text-on-surface-variant">
-<span class="material-symbols-outlined text-[20px]" data-icon="lock_open">lock_open</span>
-<p class="font-label-caps text-[9px] uppercase">Availability</p>
-</div>
-<p class="font-body-md text-sm text-on-surface flex items-center gap-2">Open to Opportunities <span class="w-1.5 h-1.5 bg-primary rounded-full"></span></p>
-</div>
-</div>
-</div>"""
-    html_content = html_content.replace(original_dashboard_block, dashboard_html)
-    
-    # Replace Stack Overview
-    original_stack_overview_block = """<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 border border-outline-variant divide-y md:divide-y-0 md:divide-x divide-outline-variant mt-4 reveal visible">
-<div class="space-y-2 hover:bg-surface-container-low transition-colors p-4">
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[24px]" data-icon="neurology">neurology</span>
-<h4 class="font-label-caps text-[10px] font-bold">AI/ML STACK</h4>
-</div>
-<p class="font-body-md text-on-surface-variant text-xs">LLMs, Deep Learning, Machine Learning, Data Visualization</p>
-</div>
-<div class="space-y-2 hover:bg-surface-container-low transition-colors p-4">
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[24px]" data-icon="memory">memory</span>
-<h4 class="font-label-caps text-[10px] font-bold">EMBEDDED STACK</h4>
-</div>
-<p class="font-body-md text-on-surface-variant text-xs">ESP32, FreeRTOS, Sensors, IoT Systems, Real-time Interfaces</p>
-</div>
-<div class="space-y-2 hover:bg-surface-container-low transition-colors p-4">
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[24px]" data-icon="terminal">terminal</span>
-<h4 class="font-label-caps text-[10px] font-bold">TOOLS &amp; PLATFORMS</h4>
-</div>
-<p class="font-body-md text-on-surface-variant text-xs">Python, Git, VS Code, TensorFlow, Arduino, Power BI, MySQL</p>
-</div>
-<div class="space-y-2 hover:bg-surface-container-low transition-colors p-4">
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[24px]" data-icon="webhook">webhook</span>
-<h4 class="font-label-caps text-[10px] font-bold">SYSTEMS PHILOSOPHY</h4>
-</div>
-<p class="font-body-md text-on-surface-variant text-xs">Designing constrained systems that are performative, reliable and human-centered.</p>
-</div>
-</section>"""
-    html_content = html_content.replace(original_stack_overview_block, stack_overview_html)
-    
-    # Replace Projects Block
-    original_projects_headline = '<h2 class="font-headline-md text-2xl uppercase">PROJECTS / ENGINEERING SYSTEMS</h2>'
-    html_content = html_content.replace(original_projects_headline, f'<h2 class="font-headline-md text-2xl uppercase">{proj_headline}</h2>')
-    
-    original_projects_grid_block = """<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-<!-- Project 1 -->
-<div class="reveal border border-outline-variant p-4 space-y-4 flex flex-col group cursor-pointer project-card bg-background visible rounded-xl">
-<div class="flex justify-between items-start">
-<span class="material-symbols-outlined text-[24px] text-primary" data-icon="terminal">terminal</span>
-<div class="flex items-center gap-1">
-<span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
-<span class="font-label-caps text-[9px] uppercase">Completed</span>
-</div>
-</div>
-<div>
-<h3 class="font-label-caps text-sm font-bold mb-1">CRITIC-OS</h3>
-<p class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-wider">AI Music Critique System</p>
-</div>
-<div class="flex flex-wrap gap-1">
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Python</span>
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Flask</span>
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Groq</span>
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Redis</span>
-</div>
-<p class="font-body-md text-xs text-on-surface-variant leading-relaxed">
-                        AI-driven web app that generates satirical music critiques using 6 unique AI personas. Integrates Spotify API and emotion analysis.
-                    </p>
-<div class="mt-auto pt-3 border-t border-outline-variant flex justify-between items-center group-hover:text-primary text-secondary">
-<span class="font-label-caps text-[9px]">VIEW CASE STUDY</span>
-<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
-</div>
-</div>
-<!-- Project 2 -->
-<div class="reveal border border-outline-variant p-4 space-y-4 flex flex-col group cursor-pointer project-card bg-background visible rounded-xl">
-<div class="flex justify-between items-start">
-<span class="material-symbols-outlined text-[24px] text-primary" data-icon="alarm">alarm</span>
-<div class="flex items-center gap-1">
-<span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
-<span class="font-label-caps text-[9px] uppercase">Completed</span>
-</div>
-</div>
-<div>
-<h3 class="font-label-caps text-sm font-bold mb-1">IOT SMART ALARM CLOCK</h3>
-<p class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-wider">Embedded Interaction System</p>
-</div>
-<div class="flex flex-wrap gap-1">
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">ESP32-C3</span>
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">C++</span>
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">FreeRTOS</span>
-</div>
-<p class="font-body-md text-xs text-on-surface-variant leading-relaxed">
-                        Gesture-controlled smart alarm with custom animation engine, multi-sensor fusion (PIR, IMU) and dual-source timekeeping.
-                    </p>
-<div class="mt-auto pt-3 border-t border-outline-variant flex justify-between items-center group-hover:text-primary text-secondary">
-<span class="font-label-caps text-[9px]">VIEW CASE STUDY</span>
-<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
-</div>
-</div>
-<!-- Project 3 -->
-<div class="reveal border border-outline-variant p-4 space-y-4 flex flex-col group cursor-pointer project-card bg-background visible rounded-xl">
-<div class="flex justify-between items-start">
-<span class="material-symbols-outlined text-[24px] text-primary" data-icon="front_hand">front_hand</span>
-<div class="flex items-center gap-1">
-<span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
-<span class="font-label-caps text-[9px] uppercase">Completed</span>
-</div>
-</div>
-<div>
-<h3 class="font-label-caps text-sm font-bold mb-1">ISL GESTURE RECOGNITION</h3>
-<p class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-wider">ML Classification System</p>
-</div>
-<div class="flex flex-wrap gap-1">
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Python</span>
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Scikit-learn</span>
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Pandas</span>
-</div>
-<p class="font-body-md text-xs text-on-surface-variant leading-relaxed">
-                        Processed ISL hand gesture datasets and trained a Random Forest model to classify Indian Sign Language gestures with high accuracy.
-                    </p>
-<div class="mt-auto pt-3 border-t border-outline-variant flex justify-between items-center group-hover:text-primary text-secondary">
-<span class="font-label-caps text-[9px]">VIEW CASE STUDY</span>
-<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
-</div>
-</div>
-</div>"""
-    html_content = html_content.replace(original_projects_grid_block, projects_grid_html)
-    
-    # Replace About Me Headline and Description
-    html_content = html_content.replace('<h2 class="font-label-caps text-[11px] font-bold uppercase">About Me</h2>', f'<h2 class="font-label-caps text-[11px] font-bold uppercase">{about_headline}</h2>')
-    
-    original_about_me_text_block = """<p class="font-body-md text-xs text-on-surface-variant leading-relaxed">
-            Applied AI developer and B.Tech IT student at KIIT Bhubaneswar, specializing in interactive systems, behavioral architectures, and AI-enhanced user experiences. Experienced in integrating embedded systems, real-time interfaces, and intelligent workflow automation.
-        </p>"""
-    html_content = html_content.replace(original_about_me_text_block, f'<p class="font-body-md text-xs text-on-surface-variant leading-relaxed">\n            {about_me}\n        </p>')
-    
-    # Replace Metrics Grid
-    original_metrics_grid_block = """<div class="grid grid-cols-2 gap-3 pt-2">
-<div class="space-y-1">
-<span class="font-label-caps text-[9px] text-on-surface-variant opacity-60 uppercase">CGPA (8th Sem)</span>
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[20px]">school</span>
-<span class="font-bold text-sm">8.24</span>
-</div>
-</div>
-<div class="space-y-1">
-<span class="font-label-caps text-[9px] text-on-surface-variant opacity-60 uppercase">Major Projects</span>
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[20px]">rocket_launch</span>
-<span class="font-bold text-sm">3+</span>
-</div>
-</div>
-<div class="space-y-1">
-<span class="font-label-caps text-[9px] text-on-surface-variant opacity-60 uppercase">Tech Domains</span>
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[20px]">dataset</span>
-<span class="font-bold text-sm">5+</span>
-</div>
-</div>
-<div class="space-y-1">
-<span class="font-label-caps text-[9px] text-on-surface-variant opacity-60 uppercase">Hours Building</span>
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[20px]">speed</span>
-<span class="font-bold text-sm">1200+</span>
-</div>
-</div>
-</div>"""
-    html_content = html_content.replace(original_metrics_grid_block, metrics_grid_html)
-    
-    # Replace Skills Block
-    original_skills_block = """<div class="space-y-4 p-4" id="skills">
-<div class="flex items-baseline justify-between">
-<h2 class="font-label-caps text-[11px] font-bold uppercase">Technical Skills</h2>   
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-<div class="space-y-3">
-<div class="space-y-1">
-<h4 class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-widest">Programming</h4>
-<p class="font-body-md text-xs">Python, Java, C, HTML/CSS</p>
-</div>
-<div class="space-y-1">
-<h4 class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-widest">Databases</h4>
-<p class="font-body-md text-xs">MySQL</p>
-</div>
-<div class="space-y-1">
-<h4 class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-widest">Tools</h4>
-<p class="font-body-md text-xs">Git, VS Code, MS Office, Power BI, Arduino, LATEX</p>
-</div>
-</div>
-<div class="space-y-3">
-<div class="space-y-1">
-<h4 class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-widest">Frameworks / Libs</h4>
-<p class="font-body-md text-xs">TensorFlow, Scikit-learn, NumPy, Pandas, Matplotlib</p>
-</div>
-<div class="space-y-1">
-<h4 class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-widest">Platforms / APIs</h4>
-<p class="font-body-md text-xs">Spotify API, OpenAI/Groq, Redis, FreeRTOS</p>
-</div>
-</div>
-</div>
-</div>"""
-    html_content = html_content.replace(original_skills_block, f"""<div class="space-y-4 p-4" id="skills">
-<div class="flex items-baseline justify-between">
-<h2 class="font-label-caps text-[11px] font-bold uppercase">{skills_headline}</h2>   
-</div>
-{skills_cols_html}
-</div>""")
+    # 6. Build Education Timeline HTML
+    edu_raw = s.get("education_and_experience", [])
+    if edu_raw:
+        edu_html = '<div style="position:absolute;left:3px;top:6px;bottom:6px;width:1px;background:#c4c7c7"></div>\n'
+        for idx, item in enumerate(edu_raw):
+            accent_color = "var(--accent)" if idx == 0 else "#c4c7c7"
+            years = item.get("years", "")
+            school = item.get("school", "")
+            degree = item.get("degree_gpa", "")
+            pad_style = ' style="position:relative"' if idx == len(edu_raw) - 1 else ' style="position:relative;padding-bottom:26px"'
+            edu_html += f"""            <div{pad_style}>
+              <div style="position:absolute;left:-26px;top:5px;width:7px;height:7px;border-radius:9999px;background:{accent_color}"></div>
+              <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#8a8d8d;margin:0 0 5px 0">{years}</p>
+              <h4 style="font-family:Bitter,serif;font-size:17px;font-weight:500;line-height:1.3;margin:0 0 3px 0">{school}</h4>
+              <p style="font-size:13px;color:#444748;margin:0">{degree}</p>
+            </div>\n"""
+    else:
+        edu_html = None
 
-    # Replace Education Block
-    original_education_block = """<div class="space-y-4 border-r border-outline-variant p-4 rounded-bl-xl" id="education">
-<h2 class="font-label-caps text-[11px] font-bold uppercase">Education</h2>
-<div class="relative pl-4 space-y-4">
-<div class="absolute left-1 top-0 bottom-0 w-px bg-outline-variant/30"></div>
-<div class="relative">
-<div class="absolute -left-[15px] top-1 w-2 h-2 bg-primary rounded-full"></div>
-<p class="font-label-caps text-[8px] text-on-surface-variant mb-0.5">2022 — 2026</p>
-<h4 class="font-bold text-[11px] leading-tight">KIIT, Bhubaneswar</h4>
-<p class="text-[10px] text-on-surface-variant">B.Tech IT • CGPA: 8.24</p>
-</div>
-<div class="relative">
-<div class="absolute -left-[15px] top-1 w-2 h-2 bg-primary rounded-full opacity-40"></div>
-<p class="font-label-caps text-[8px] text-on-surface-variant mb-0.5">2022</p>
-<h4 class="font-bold text-[11px] leading-tight">LBS Public School, Kota</h4>
-<p class="text-[10px] text-on-surface-variant">12th CBSE • 79.4%</p>
-</div>
-<div class="relative">
-<div class="absolute -left-[15px] top-1 w-2 h-2 bg-primary rounded-full opacity-40"></div>
-<p class="font-label-caps text-[8px] text-on-surface-variant mb-0.5">2022</p>
-<h4 class="font-bold text-[11px] leading-tight">GMR VARALAKSHMI DAV PUBLIC SCHOOL, DHENKANAL</h4>
-<p class="text-[10px] text-on-surface-variant">10th CBSE • 90.0%</p>
-</div>
-</div>
-</div>"""
-    html_content = html_content.replace(original_education_block, edu_timeline_html)
+    # 7. Build Interests Pills HTML
+    interests_raw = s.get("interests", [])
+    if interests_raw:
+        interests_html = "".join([f'            <span class="interest-tag">{interest.strip()}</span>\n' for interest in interests_raw if interest and interest.strip()])
+    else:
+        interests_html = None
+
+    # 8. Build Strengths HTML
+    strengths_raw = s.get("strengths", [])
+    if strengths_raw:
+        strengths_html = "".join([f'            <p style="font-size:13px;line-height:1.65;color:#444748;margin:0;text-wrap:pretty">{st.lstrip("•- ").strip()}</p>\n' for st in strengths_raw if st and st.strip()])
+    else:
+        strengths_html = None
+
+    # 9. Build Hobbies Badges HTML
+    hobbies_raw = s.get("hobbies", [])
+    if hobbies_raw:
+        hobbies_html = ""
+        for h in hobbies_raw:
+            icon = h.get("icon", "star") if isinstance(h, dict) else "star"
+            label = h.get("label", str(h)) if isinstance(h, dict) else str(h)
+            hobbies_html += f'            <span class="hobby-badge"><span class="material-symbols-outlined" style="font-size:18px;">{icon}</span>{label}</span>\n'
+    else:
+        hobbies_html = None
+
+    # 10. Perform string replacements in the template
+    # Replace Titles & Headers
+    html_content = re.sub(r'<title>.*?</title>', f'<title>{short_name} — Applied AI Systems</title>', html_content, count=1)
+    html_content = re.sub(r'<h1 id="sidebarName"[^>]*>.*?</h1>', f'<h1 id="sidebarName" style="font-size:12px;line-height:16px;font-weight:600;letter-spacing:.18em;color:#000;margin:0 0 5px 0">{short_name}</h1>', html_content)
+    html_content = re.sub(r'<p id="sidebarTitle"[^>]*>.*?</p>', f'<p id="sidebarTitle" style="font-size:10px;line-height:14px;font-weight:500;letter-spacing:.16em;color:#444748;margin:0">{short_title}</p>', html_content)
+    html_content = re.sub(r'<span id="heroTracking"[^>]*>.*?</span>', f'<span id="heroTracking" style="font-family:\'IBM Plex Mono\',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#747878;animation:fadeUp .7s ease-out both;animation-delay:.05s">{hero_tracking}</span>', html_content)
+    html_content = re.sub(r'<span id="heroFirstName"[^>]*>.*?</span>', f'<span id="heroFirstName" style="display:block;animation:maskUp .95s cubic-bezier(.16,1,.3,1) both;animation-delay:.1s">{first_name}</span>', html_content)
+    html_content = re.sub(r'<span id="heroLastName"[^>]*>.*?</span>', f'<span id="heroLastName" style="display:block;animation:maskUp .95s cubic-bezier(.16,1,.3,1) both;animation-delay:.22s">{last_name}</span>', html_content)
     
-    # Replace Hobbies Block
-    original_hobbies_block = """<div class="space-y-4 border-r border-outline-variant p-4 rounded-none"><h2 class="font-label-caps text-[11px] font-bold uppercase">Hobbies</h2><div class="grid grid-cols-5 gap-2"> <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: &quot;wght&quot; 300, &quot;opsz&quot; 24;">menu_book</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Reading</span> </div> <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: &quot;wght&quot; 300, &quot;opsz&quot; 24;">movie_filter</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Movies</span> </div> <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: &quot;wght&quot; 300, &quot;opsz&quot; 24;">psychology</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Learning</span> </div> <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: &quot;wght&quot; 300, &quot;opsz&quot; 24;">precision_manufacturing</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Building</span> </div> <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: &quot;wght&quot; 300, &quot;opsz&quot; 24;">podcasts</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Podcasts</span> </div><div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: 'wght' 300, 'opsz' 24;">headset</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Music</span> </div> <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: 'wght' 300, 'opsz' 24;">restaurant</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Cooking</span> </div></div></div>"""
-    html_content = html_content.replace(original_hobbies_block, hobbies_grid_html)
+    # Hero Intro & Contact Buttons
+    html_content = re.sub(r'<p id="heroIntro"[^>]*>.*?</p>', f'<p id="heroIntro" style="font-family:Bitter,serif;font-size:21px;line-height:1.5;color:#1a1c19;margin:0 0 26px 0;max-width:44ch;text-wrap:pretty">{p1}</p>', html_content)
+    html_content = re.sub(r'<a id="heroContactBtn"[^>]*href="[^"]*"', f'<a id="heroContactBtn" href="mailto:{email}"', html_content)
+    html_content = re.sub(r'<a id="heroDownloadBtn"[^>]*href="[^"]*"', f'<a id="heroDownloadBtn" href="/api/resumes/{resume_id}/pdf"', html_content)
     
-    # Replace Interests & Strengths Block
-    original_interests_block = """<div class="space-y-3 p-4 rounded-br-xl" id="interests">
-<h2 class="font-label-caps text-[11px] font-bold uppercase">Interests &amp; Strengths</h2>
-<ul class="space-y-1">
-<li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> LLMs &amp; Fine Tuning</li>
-<li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> Agentic AI</li>
-<li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> Human-Computer Interaction</li>
-</ul>
-<div class="pt-2 border-t border-outline-variant/30">
-<ul class="space-y-1 text-[10px] text-on-surface-variant italic">
-<li class="">• Architecture integration expert.</li>
-<li class="">• Scalable system design.</li>
-<li class="">• Cross-domain exposure: Embedded, AI, UX.</li>
-</ul>
-</div>
-</div>"""
-    html_content = html_content.replace(original_interests_block, interests_and_strengths_html)
-    
-    # Replace Footer Block
-    original_footer_block = """<footer class="border-t border-outline-variant mt-8 pb-12 pt-6 grid grid-cols-1 md:grid-cols-12 gap-6" id="contact">
-<div class="md:col-span-4 space-y-4">
-<div class="space-y-1">
-<h2 class="font-label-caps text-[11px] font-bold">LET'S CONNECT</h2>
-</div>
-<ul class="space-y-2 text-xs">
-<li class="flex items-center gap-2">
-<span class="material-symbols-outlined text-[20px] text-secondary" data-icon="mail">mail</span>
-<a class="hover:underline" href="mailto:samarthrawat10@email.com">samarthrawat10@email.com</a>
-</li>
-<li class="flex items-center gap-2">
-<span class="material-symbols-outlined text-[20px] text-secondary" data-icon="call">call</span>
-<span class="">+91 8984100922</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="material-symbols-outlined text-[20px] text-secondary mt-0.5" data-icon="location_on">location_on</span>
-<span class="">DGM-2 201, TATA Steel Meramandali Colony, Meramandali, Narendrapur, Odisha — 759121, India</span>
-</li>
-</ul>
-</div>
-<div class="md:col-span-3 space-y-4">
-<div class="space-y-1">
-<h2 class="font-label-caps text-[11px] font-bold uppercase">Find me online</h2>
-</div>
-<div class="flex flex-col gap-2">
-<a class="flex items-center gap-2 text-xs hover:text-primary transition-colors text-secondary" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="code">code</span> GitHub
-                    </a>
-<a class="flex items-center gap-2 text-xs hover:text-primary transition-colors text-secondary" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="link">link</span> LinkedIn
-                    </a>
-</div>
-</div>
-<div class="md:col-span-5 space-y-4 flex flex-col justify-between items-end text-right">
-<div class="max-w-xs space-y-2">
-<span class="material-symbols-outlined text-[32px] opacity-20 text-secondary" data-icon="format_quote">format_quote</span>
-<p class="font-body-md text-xs text-on-surface-variant italic leading-relaxed">
-                        Building systems that understand, adapt and connect.
-                    </p>
-</div>
-<div class="w-16 h-px bg-outline-variant mt-2"></div>
-<div class="space-y-1">
-<p class="font-label-caps text-[9px] opacity-40 uppercase">© 2024 Samarth Rawat. All rights reserved.</p>
-<p class="font-label-caps text-[9px] opacity-60 tracking-wider">&gt; designed &amp; built with purpose</p>
-</div>
-</div>
-</footer>"""
-    html_content = html_content.replace(original_footer_block, footer_html)
-    
-    # Replace Download Button with dynamic link to actual PDF
-    original_download_button = """<button class="border border-outline px-6 py-2 font-label-caps text-[10px] flex items-center gap-2 hover:bg-surface-container transition-colors text-primary">
-                        DOWNLOAD RESUME <span class="material-symbols-outlined text-[16px]" data-icon="download">download</span>
-</button>"""
-    dynamic_download_link = f"""<a href="/api/resumes/{resume_id}/pdf" download class="border border-outline px-6 py-2 font-label-caps text-[10px] flex items-center gap-2 hover:bg-surface-container transition-colors text-primary no-underline inline-flex">
-                        DOWNLOAD RESUME <span class="material-symbols-outlined text-[16px]" data-icon="download">download</span>
-</a>"""
-    html_content = html_content.replace(original_download_button, dynamic_download_link)
-    
+    # Dashboard Fields
+    html_content = re.sub(r'<span id="dashboardLocation"[^>]*>.*?</span>', f'<span id="dashboardLocation" style="font-size:13px;line-height:1.45;color:#1a1c19">{loc}</span>', html_content)
+    html_content = re.sub(r'<span id="dashboardFocus"[^>]*>.*?</span>', f'<span id="dashboardFocus" style="font-size:13px;line-height:1.45;color:#1a1c19">{curr_focus}</span>', html_content)
+
+    # About Paragraphs
+    html_content = re.sub(r'<p id="aboutParagraph1"[^>]*>.*?</p>', f'<p id="aboutParagraph1" style="font-family:Bitter,serif;font-size:19px;line-height:1.6;color:#1a1c19;margin:0 0 22px 0;text-wrap:pretty">{p1}</p>', html_content)
+    if p2:
+        html_content = re.sub(r'<p id="aboutParagraph2"[^>]*>.*?</p>', f'<p id="aboutParagraph2" style="font-size:14px;line-height:1.7;color:#444748;margin:0 0 28px 0;text-wrap:pretty">{p2}</p>', html_content)
+
+    # Skills Table
+    if skills_html:
+        html_content = re.sub(r'<div id="skillsListContainer"[^>]*>[\s\S]*?</div>\s*</div>\s*</div>\s*</section>', f'<div id="skillsListContainer" style="display:flex;flex-direction:column">\n{skills_html}            </div>\n          </div>\n        </div>\n      </section>', html_content)
+
+    # Education Timeline
+    if edu_html:
+        html_content = re.sub(r'<div id="educationTimelineContainer"[^>]*>[\s\S]*?</div>\s*</div>\s*<!-- Interests', f'<div id="educationTimelineContainer" style="position:relative;padding-left:26px">\n{edu_html}          </div>\n        </div>\n\n        <!-- Interests', html_content)
+
+    # Interests, Strengths, Hobbies
+    if interests_html:
+        html_content = re.sub(r'<div id="interestsPillsContainer"[^>]*>[\s\S]*?</div>', f'<div id="interestsPillsContainer" style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:26px">\n{interests_html}          </div>', html_content)
+    if strengths_html:
+        html_content = re.sub(r'<div id="strengthsListContainer"[^>]*>[\s\S]*?</div>', f'<div id="strengthsListContainer" style="display:flex;flex-direction:column;gap:14px;padding-top:22px;border-top:1px solid #c4c7c7">\n{strengths_html}          </div>', html_content)
+    if hobbies_html:
+        html_content = re.sub(r'<div id="hobbiesBadgesContainer"[^>]*>[\s\S]*?</div>', f'<div id="hobbiesBadgesContainer" style="display:flex;flex-wrap:wrap;gap:18px;margin-top:26px;padding-top:20px;border-top:1px solid #c4c7c7">\n{hobbies_html}          </div>', html_content)
+
+    # Contact Info & Footer
+    html_content = re.sub(r'<a id="contactEmailLink"[^>]*>.*?</a>', f'<a id="contactEmailLink" href="mailto:{email}" class="contact-email">{email} <span class="material-symbols-outlined" style="font-size:22px;">arrow_outward</span></a>', html_content)
+    html_content = re.sub(r'<span id="contactPhone"[^>]*>.*?</span>', f'<span id="contactPhone" style="font-size:13px;color:#1a1c19">{phone}</span>', html_content)
+    html_content = re.sub(r'<span id="contactLocation"[^>]*>.*?</span>', f'<span id="contactLocation" style="font-size:13px;line-height:1.55;color:#1a1c19">{address}</span>', html_content)
+    html_content = re.sub(r'<a id="contactGithubLink"[^>]*href="[^"]*"', f'<a id="contactGithubLink" href="{github_url}"', html_content)
+    html_content = re.sub(r'<a id="contactLinkedinLink"[^>]*href="[^"]*"', f'<a id="contactLinkedinLink" href="{linkedin_url}"', html_content)
+    html_content = re.sub(r'<p id="footerCopyright"[^>]*>.*?</p>', f'<p id="footerCopyright" style="font-family:\'IBM Plex Mono\',monospace;font-size:10px;letter-spacing:.1em;color:#8a8d8d;margin:0">© 2026 {first_name} {last_name}</p>', html_content)
+    html_content = re.sub(r'<a id="drawerContactBtn"[^>]*href="[^"]*"', f'<a id="drawerContactBtn" href="mailto:{email}"', html_content)
+
     # Global replace of vectorizer SVGs relative path to root-relative path
     html_content = html_content.replace("url('vectorizer/", "url('/vectorizer/")
     html_content = html_content.replace('url("vectorizer/', 'url("/vectorizer/')

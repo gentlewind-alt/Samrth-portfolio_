@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>S. RAWAT | Applied AI Systems Engineer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;600&amp;family=EB+Garamond&amp;family=IBM+Plex+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .grid-bg {
+            background-image: radial-gradient(circle, #c4c7c7 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .shimmer-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(250, 250, 245, 0.2), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+        }
+        .shimmer-btn:hover::after {
+            left: 120%;
+        }
+        @keyframes pulse-status {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.5; }
+        }
+        .pulse-green {
+            animation: pulse-status 2s infinite;
+        }
+        .terminal-cursor {
+            border-right: 2px solid currentColor;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: currentColor }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-container": "#828485",
+                      "on-surface": "#1a1c19",
+                      "surface-dim": "#dadad6",
+                      "on-error-container": "#93000a",
+                      "outline": "#7e7576",
+                      "primary-fixed": "#e2e2e2",
+                      "parchment": "#fafaf5",
+                      "outline-variant": "#cfc4c5",
+                      "tertiary": "#000000",
+                      "on-error": "#ffffff",
+                      "on-surface-variant": "#4c4546",
+                      "secondary-fixed-dim": "#c6c7c2",
+                      "slate": "#444748",
+                      "surface-bright": "#fafaf5",
+                      "tertiary-fixed-dim": "#c5c7c8",
+                      "tertiary-fixed": "#e1e3e4",
+                      "ink": "#000000",
+                      "surface-container": "#eeeee9",
+                      "tertiary-container": "#191c1d",
+                      "error-container": "#ffdad6",
+                      "surface-container-high": "#e8e8e4",
+                      "background": "#fafaf5",
+                      "surface-tint": "#5e5e5e",
+                      "on-primary-fixed-variant": "#474747",
+                      "on-primary-container": "#848484",
+                      "on-primary-fixed": "#1b1b1b",
+                      "on-secondary-container": "#62635f",
+                      "border-gray": "#c4c7c7",
+                      "primary-container": "#1b1b1b",
+                      "surface": "#fafaf5",
+                      "on-background": "#1a1c19",
+                      "on-secondary-fixed": "#1a1c19",
+                      "secondary": "#5d5f5b",
+                      "error": "#ba1a1a",
+                      "surface-container-highest": "#e2e3de",
+                      "primary-fixed-dim": "#c6c6c6",
+                      "inverse-primary": "#c6c6c6",
+                      "inverse-surface": "#2f312e",
+                      "surface-container-low": "#f4f4ef",
+                      "on-tertiary-fixed-variant": "#444748",
+                      "primary": "#000000",
+                      "secondary-container": "#e0e0db",
+                      "on-primary": "#ffffff",
+                      "secondary-fixed": "#e3e3de",
+                      "inverse-on-surface": "#f1f1ec",
+                      "on-tertiary-fixed": "#191c1d",
+                      "surface-subtle": "#f4f4ef",
+                      "charcoal": "#1a1c19",
+                      "surface-variant": "#e2e3de",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-fixed-variant": "#464744"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "margin-desktop": "64px",
+                      "stack-gap": "1.5rem",
+                      "column-12": "1fr",
+                      "margin-mobile": "20px"
+              },
+              "fontFamily": {
+                      "body-technical": ["IBM Plex Sans"],
+                      "label-caps": ["IBM Plex Sans"],
+                      "hero-lg-mobile": ["Bitter"],
+                      "headline-md": ["Bitter"],
+                      "hero-lg": ["Bitter"],
+                      "body-classic": ["EB Garamond"]
+              },
+              "fontSize": {
+                      "body-technical": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "label-caps": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                      "hero-lg-mobile": ["40px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                      "hero-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "body-classic": ["20px", {"lineHeight": "1.6", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-parchment text-ink grid-bg min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface border-b border-gray" id="top-bar">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary hover:bg-secondary-container transition-colors p-2 rounded-full" onclick="toggleDrawer()">menu</button>
+<span class="font-label-caps text-label-caps tracking-widest text-primary">S. RAWAT</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-emerald-500 pulse-green"></div>
+<span class="font-label-caps text-[10px] uppercase tracking-tighter">Available for collab</span>
+</div>
+</header>
+<!-- NavigationDrawer (Mobile) -->
+<nav class="fixed inset-0 z-[60] flex flex-col bg-parchment w-80 h-full border-r border-gray shadow-xl transition-transform -translate-x-full" id="nav-drawer">
+<div class="p-gutter flex flex-col h-full">
+<div class="flex justify-between items-center mb-12">
+<span class="font-label-caps text-label-caps font-bold text-primary">S. RAWAT</span>
+<button class="material-symbols-outlined" onclick="toggleDrawer()">close</button>
+</div>
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-4 bg-primary text-parchment px-4 py-3 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">home</span> Home
+                </a>
+<a class="flex items-center gap-4 text-on-surface-variant px-4 py-3 font-label-caps text-label-caps hover:translate-x-1 transition-transform duration-200" href="#about">
+<span class="material-symbols-outlined">person</span> About
+                </a>
+<a class="flex items-center gap-4 text-on-surface-variant px-4 py-3 font-label-caps text-label-caps hover:translate-x-1 transition-transform duration-200" href="#projects">
+<span class="material-symbols-outlined">terminal</span> Projects
+                </a>
+<a class="flex items-center gap-4 text-on-surface-variant px-4 py-3 font-label-caps text-label-caps hover:translate-x-1 transition-transform duration-200" href="#skills">
+<span class="material-symbols-outlined">settings_input_component</span> Skills
+                </a>
+<a class="flex items-center gap-4 text-on-surface-variant px-4 py-3 font-label-caps text-label-caps hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">work</span> Experience
+                </a>
+<a class="flex items-center gap-4 text-on-surface-variant px-4 py-3 font-label-caps text-label-caps hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">mail</span> Contact
+                </a>
+</div>
+<div class="mt-auto pt-12">
+<p class="font-body-technical text-[12px] text-on-surface-variant opacity-60">© 2024 S. RAWAT. ARCHITECTING INTELLIGENCE.</p>
+</div>
+</div>
+</nav>
+<!-- Overlay for drawer -->
+<div class="fixed inset-0 bg-charcoal/50 z-[55] hidden" id="drawer-overlay" onclick="toggleDrawer()"></div>
+<main class="pt-24 px-gutter pb-12 flex flex-col gap-12">
+<!-- Hero Section -->
+<section class="flex flex-col gap-6">
+<div class="flex flex-col">
+<h1 class="font-hero-lg-mobile text-hero-lg-mobile text-ink uppercase leading-none">SAMARTH</h1>
+<h1 class="font-hero-lg-mobile text-hero-lg-mobile text-ink uppercase leading-none">RAWAT</h1>
+</div>
+<p class="font-body-classic text-body-classic text-slate italic border-l-2 border-ink pl-4 py-2">
+                Applied AI Systems Engineer. <span class="terminal-cursor"></span>
+</p>
+<div class="flex flex-wrap gap-2">
+<span class="flex items-center gap-2 px-3 py-1 bg-surface-container border border-gray rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-ink"></span>
+<span class="font-label-caps text-[10px]">LLM OPS</span>
+</span>
+<span class="flex items-center gap-2 px-3 py-1 bg-surface-container border border-gray rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-ink"></span>
+<span class="font-label-caps text-[10px]">ROBOTICS</span>
+</span>
+<span class="flex items-center gap-2 px-3 py-1 bg-surface-container border border-gray rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-ink"></span>
+<span class="font-label-caps text-[10px]">CV ARCHITECT</span>
+</span>
+<span class="flex items-center gap-2 px-3 py-1 bg-surface-container border border-gray rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-ink"></span>
+<span class="font-label-caps text-[10px]">RAG SYSTEMS</span>
+</span>
+</div>
+</section>
+<!-- System Dashboard -->
+<section class="bg-white border border-gray rounded-xl p-6 shadow-sm flex flex-col gap-6">
+<div class="flex justify-between items-center">
+<h3 class="font-label-caps text-label-caps text-slate uppercase">System Status</h3>
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-emerald-500 pulse-green"></div>
+<span class="font-label-caps text-[10px] uppercase font-bold">Operational</span>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<div class="flex flex-col border-b border-surface-container-highest pb-3">
+<span class="font-label-caps text-[10px] text-on-surface-variant">LOCATION</span>
+<span class="font-body-technical text-body-technical">Bhubaneswar, IN</span>
+</div>
+<div class="flex flex-col border-b border-surface-container-highest pb-3">
+<span class="font-label-caps text-[10px] text-on-surface-variant">FOCUS</span>
+<span class="font-body-technical text-body-technical">Agentic AI &amp; Edge Deployment</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant">AVAILABILITY</span>
+<span class="font-body-technical text-body-technical">Open for Q3 Ventures</span>
+</div>
+</div>
+<button class="shimmer-btn w-full bg-ink text-parchment py-4 font-label-caps text-label-caps flex justify-center items-center gap-2 hover:-translate-y-1 transition-transform">
+                DOWNLOAD CV <span class="material-symbols-outlined text-sm">download</span>
+</button>
+</section>
+<!-- Stack Overview -->
+<section class="flex flex-col gap-4">
+<h2 class="font-label-caps text-label-caps text-ink">01 // CORE STACK</h2>
+<div class="grid grid-cols-1 gap-gutter">
+<div class="p-6 bg-surface border border-gray flex flex-col gap-2">
+<span class="material-symbols-outlined text-3xl">psychology</span>
+<h4 class="font-label-caps text-label-caps mt-2">AI &amp; MACHINE LEARNING</h4>
+<p class="font-body-technical text-[14px] text-on-surface-variant">PyTorch, TensorFlow, LangChain, OpenAI API, HuggingFace Transformers.</p>
+</div>
+<div class="p-6 bg-surface border border-gray flex flex-col gap-2">
+<span class="material-symbols-outlined text-3xl">memory</span>
+<h4 class="font-label-caps text-label-caps mt-2">EMBEDDED SYSTEMS</h4>
+<p class="font-body-technical text-[14px] text-on-surface-variant">ESP32, Arduino, RTOS, C++, MQTT Protocols, Edge Impulse.</p>
+</div>
+<div class="p-6 bg-surface border border-gray flex flex-col gap-2">
+<span class="material-symbols-outlined text-3xl">construction</span>
+<h4 class="font-label-caps text-label-caps mt-2">TOOLS &amp; OPS</h4>
+<p class="font-body-technical text-[14px] text-on-surface-variant">Docker, Git, AWS, GCP, Pinecone VectorDB, Streamlit.</p>
+</div>
+<div class="p-6 bg-surface border border-gray flex flex-col gap-2">
+<span class="material-symbols-outlined text-3xl">lightbulb</span>
+<h4 class="font-label-caps text-label-caps mt-2">PHILOSOPHY</h4>
+<p class="font-body-technical text-[14px] text-on-surface-variant">Minimalism, Functional Design, Reliability-first AI, User-centric agency.</p>
+</div>
+</div>
+</section>
+<!-- Projects -->
+<section class="flex flex-col gap-4" id="projects">
+<div class="flex justify-between items-end">
+<h2 class="font-label-caps text-label-caps text-ink">02 // PROJECTS</h2>
+<span class="font-label-caps text-[10px] text-on-tertiary-container">VIEW ALL (12)</span>
+</div>
+<div class="flex flex-col gap-stack-gap">
+<!-- Project 1 -->
+<div class="group relative flex flex-col bg-white border border-gray hover:border-slate hover:-translate-y-1 transition-all duration-300">
+<div class="aspect-video w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A professional close-up shot of a sophisticated AI interface displayed on a clean glass tablet. The visual style is clinical and laboratory-inspired, featuring high-contrast black and white data visualizations with thin architectural lines. The lighting is bright and ethereal, suggesting a high-end engineering office environment with a palette of whites, light grays, and sharp black accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdn-mUsjZsx6nci9kBw-JltXPczvCrbBRSAmqd2eX1zg1O0BXuvx4NEnt67FkHZ9opYTOM01P4k9-u42tHsFgyZbk_XvxH7B4Tvv7fzfZW2CFurHTiUZ0kc8eQYZA5JQJdSMtPt0WGndpyUJcdGc65zzrrQDx3JO8uoPlZnQ1VdEc_QKQX3tdu9DsuhG5eSnH480iKXZANJclPwr47KtccSsxahGnp0R-n42isSnWdMy-gNLwVnoMre_bx9Kdbqy4EQwFMtXOel5lN"/>
+</div>
+<div class="p-6 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-md text-[24px] uppercase tracking-tight">CRITIC-OS</h3>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+<p class="font-body-technical text-[14px] text-on-surface-variant">An autonomous LLM agent framework for collaborative peer-review and code validation.</p>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="text-[10px] font-label-caps border border-gray px-2 py-0.5">PYTHON</span>
+<span class="text-[10px] font-label-caps border border-gray px-2 py-0.5">LLAMAIndex</span>
+<span class="text-[10px] font-label-caps border border-gray px-2 py-0.5">AGENTIC</span>
+</div>
+</div>
+</div>
+<!-- Project 2 -->
+<div class="group relative flex flex-col bg-white border border-gray hover:border-slate hover:-translate-y-1 transition-all duration-300">
+<div class="aspect-video w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="An artistic macro photograph of a complex electronic motherboard and hardware components. The shot is meticulously lit to highlight the technical precision of the circuits and chips. The aesthetic is clean and industrial, using a neutral parchment-colored background with deep charcoal shadows. The mood is one of rigorous technical craftsmanship and modern architectural design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpGVx2QbRu3xCzl55P00gnRfEjuR9arcRygA1UnwB7WsNp7NQ132VDe170lJBCyaHl8711WkoGhjzuujxaUpvTpunB-Ds8JHn5WdAoar4cNRhXCpzOGPtX47PxQN9KLbiMQlKky7BivVSwhjqZBBXFKcejMwoICn-C7luSUrOg2ardqRus9v8kcg6SE6xdhdfk-Kz2xId-bIyXUlcCjedvjdGzd_0OKsHEtVxuljSL1a81MEbaRkA3QjY_0lVaNLtIYIv4ccfCG0fi"/>
+</div>
+<div class="p-6 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-md text-[24px] uppercase tracking-tight">IOT SMART ALOCK</h3>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+<p class="font-body-technical text-[14px] text-on-surface-variant">Secure biometric authentication system for smart city lockers using ESP32 and MQTT.</p>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="text-[10px] font-label-caps border border-gray px-2 py-0.5">C++</span>
+<span class="text-[10px] font-label-caps border border-gray px-2 py-0.5">EMBEDDED</span>
+<span class="text-[10px] font-label-caps border border-gray px-2 py-0.5">SECURITY</span>
+</div>
+</div>
+</div>
+<!-- Project 3 -->
+<div class="group relative flex flex-col bg-white border border-gray hover:border-slate hover:-translate-y-1 transition-all duration-300">
+<div class="aspect-video w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A minimalist digital visualization of gesture recognition points overlaid on a human hand. The design is sleek and scientific, utilizing vibrant red glow points against a stark black and white technical diagram. The atmosphere is that of a modern R&amp;D lab, emphasizing intellectual curiosity and cutting-edge computer vision research." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzjLaP1aQyQ8f7zkS6SX1diCRCPH45myZo-GsKtba0KzVXIK9v5uVqSR7166KLJ7gDIFIYVKRZwGk3ezZhkKOU43-GtmmaobhZqo3vzz4XAVDoNaCRuuYQimsBAgY_wGIUTtLCrpPYiZ6X_rwvDelTINYujmzq--gVu6pa4itClUwgy1j3Qpz3i4NXYIO8Vs7U9HuEa1_nmUKBbfc3_iF8Tm62lR7kFYyQd0uNZmez14zJYsGpVk17BSwWBJNGx3KQybuRod-ec_VU"/>
+</div>
+<div class="p-6 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-md text-[24px] uppercase tracking-tight">ISL RECOGNITION</h3>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+<p class="font-body-technical text-[14px] text-on-surface-variant">Real-time Indian Sign Language recognition using Mediapipe and LSTM networks.</p>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="text-[10px] font-label-caps border border-gray px-2 py-0.5">OPENCV</span>
+<span class="text-[10px] font-label-caps border border-gray px-2 py-0.5">TENSORFLOW</span>
+<span class="text-[10px] font-label-caps border border-gray px-2 py-0.5">LSTM</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Details Section (About, Skills, Education) -->
+<section class="flex flex-col gap-12 pt-8 border-t border-gray" id="about">
+<!-- About Me -->
+<div class="flex flex-col gap-4">
+<h2 class="font-label-caps text-label-caps text-ink">03 // INTELLECT</h2>
+<p class="font-body-classic text-body-classic leading-relaxed">
+                    I am an engineer focused on the intersection of <strong class="text-ink">Generative AI</strong> and <strong class="text-ink">Physical Systems</strong>. My work revolves around making machines not just follow scripts, but reason through environments. I build tools that translate abstract intelligence into tangible utility.
+                </p>
+</div>
+<!-- Technical Skills Stack -->
+<div class="flex flex-col gap-6" id="skills">
+<h3 class="font-label-caps text-label-caps text-ink border-b border-gray pb-2">TECHNICAL INDEX</h3>
+<div class="flex flex-col gap-6">
+<div>
+<span class="font-label-caps text-[10px] text-slate block mb-2">PROGRAMMING</span>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-ink text-parchment font-body-technical text-[12px]">Python</span>
+<span class="px-3 py-1 bg-ink text-parchment font-body-technical text-[12px]">C++</span>
+<span class="px-3 py-1 bg-ink text-parchment font-body-technical text-[12px]">JavaScript</span>
+<span class="px-3 py-1 bg-ink text-parchment font-body-technical text-[12px]">SQL</span>
+</div>
+</div>
+<div>
+<span class="font-label-caps text-[10px] text-slate block mb-2">DATABASES</span>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 border border-ink font-body-technical text-[12px]">PostgreSQL</span>
+<span class="px-3 py-1 border border-ink font-body-technical text-[12px]">Pinecone</span>
+<span class="px-3 py-1 border border-ink font-body-technical text-[12px]">MongoDB</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Education -->
+<div class="flex flex-col gap-6">
+<h3 class="font-label-caps text-label-caps text-ink border-b border-gray pb-2">EDUCATION</h3>
+<div class="flex flex-col gap-4">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-ink">KIIT UNIVERSITY</span>
+<span class="font-body-technical text-[14px] text-on-surface-variant italic">B.Tech in Computer Science &amp; Engineering</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-ink">LBS CONVENT SCHOOL</span>
+<span class="font-body-technical text-[14px] text-on-surface-variant italic">Higher Secondary Certification</span>
+</div>
+</div>
+</div>
+<!-- Hobbies Icon Grid -->
+<div class="flex flex-col gap-6">
+<h3 class="font-label-caps text-label-caps text-ink border-b border-gray pb-2">INTERESTS</h3>
+<div class="grid grid-cols-4 gap-4">
+<div class="flex flex-col items-center gap-2">
+<span class="material-symbols-outlined p-4 bg-surface-container rounded-lg">photo</span>
+<span class="font-label-caps text-[8px]">OPTICS</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<span class="material-symbols-outlined p-4 bg-surface-container rounded-lg">palette</span>
+<span class="font-label-caps text-[8px]">DESIGN</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<span class="material-symbols-outlined p-4 bg-surface-container rounded-lg">rocket_launch</span>
+<span class="font-label-caps text-[8px]">SPACE</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<span class="material-symbols-outlined p-4 bg-surface-container rounded-lg">auto_stories</span>
+<span class="font-label-caps text-[8px]">LOGIC</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full px-gutter py-12 flex flex-col justify-between items-center gap-stack-gap bg-surface border-t border-gray">
+<div class="flex flex-col items-center gap-4">
+<span class="font-label-caps text-label-caps font-semibold text-primary">S. RAWAT</span>
+<div class="flex gap-6">
+<a class="font-body-technical text-body-technical text-on-surface-variant hover:text-primary underline transition-all" href="#">LinkedIn</a>
+<a class="font-body-technical text-body-technical text-on-surface-variant hover:text-primary underline transition-all" href="#">GitHub</a>
+<a class="font-body-technical text-body-technical text-on-surface-variant hover:text-primary underline transition-all" href="#">Twitter</a>
+</div>
+</div>
+<p class="font-body-technical text-body-technical text-[10px] text-center opacity-60">
+            © 2024 S. RAWAT. DESIGNED &amp; BUILT WITH PURPOSE.
+        </p>
+</footer>
+<script>
+        function toggleDrawer() {
+            const drawer = document.getElementById('nav-drawer');
+            const overlay = document.getElementById('drawer-overlay');
+            const isOpen = !drawer.classList.contains('-translate-x-full');
+            
+            if (isOpen) {
+                drawer.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            } else {
+                drawer.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            }
+        }
+
+        // Entrance Reveal animations
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+            observer.observe(section);
+        });
+    </script>
+</body></html>

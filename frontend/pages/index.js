@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 export async function getServerSideProps() {
   try {
@@ -44,6 +44,28 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ html }) {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    // Extract and run scripts within the injected HTML
+    const scripts = containerRef.current.querySelectorAll('script');
+    scripts.forEach((oldScript) => {
+      // Avoid re-executing remote analytic tags if already present
+      if (oldScript.src && document.querySelector(`script[src="${oldScript.src}"]`)) {
+        return;
+      }
+      const newScript = document.createElement('script');
+      Array.from(oldScript.attributes).forEach((attr) => {
+        newScript.setAttribute(attr.name, attr.value);
+      });
+      newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+      if (oldScript.parentNode) {
+        oldScript.parentNode.replaceChild(newScript, oldScript);
+      }
+    });
+  }, [html]);
+
   // Render the fetched portfolio HTML directly
-  return <div dangerouslySetInnerHTML={{ __html: html }} />;
+  return <div ref={containerRef} dangerouslySetInnerHTML={{ __html: html }} />;
 }

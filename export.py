@@ -32,7 +32,8 @@ def export_portfolio():
         db = SessionLocal()
         
         from app.models import Resume
-        resume = db.query(Resume).order_by(Resume.id.desc()).first()
+        # Prioritize primary resume or latest resume
+        resume = db.query(Resume).filter(Resume.filename.ilike("%samarth%")).first() or db.query(Resume).order_by(Resume.id.desc()).first()
         if not resume:
             print("No resumes found in the database. Please upload a resume first.")
             db.close()

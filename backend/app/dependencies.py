@@ -6,8 +6,11 @@ Uses SQLAlchemy with SQLite for the prototype. In production you can switch to P
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 
-# Default to SQLite file in the backend folder for quick local testing.
-DATABASE_URL = "sqlite:///./resume.db"
+import os
+
+# Default to SQLite file in the backend folder
+DB_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "resume.db"))
+DATABASE_URL = f"sqlite:///{DB_PATH}"
 
 engine = create_engine(
     DATABASE_URL, connect_args={"check_same_thread": False}

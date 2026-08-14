@@ -1,597 +1,1057 @@
-<!DOCTYPE html><html class="light" lang="en" style="scroll-behavior: smooth;"><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>S. RAWAT</title>
-<!-- Vercel Web Analytics -->
-<script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
-<!-- End Vercel Web Analytics -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;500;700&amp;family=Cormorant+Garamond:wght@400;500;700&amp;family=Ibm+Plex+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {background: "#fafaf5", tertiary: "#000000", "primary-fixed-dim": "#c8c6c5", "error-container": "#ffdad6", "primary-fixed": "#e5e2e1", error: "#ba1a1a", primary: "#000000", "outline-variant": "#c4c7c7", "surface-dim": "#dadad5", "on-surface": "#1a1c19", "tertiary-container": "#1a1c1c", "surface-container-lowest": "#ffffff", "tertiary-fixed-dim": "#c6c6c6", "inverse-primary": "#c8c6c5", "surface-container-highest": "#e3e3de", "on-primary-fixed": "#1c1b1b", "on-tertiary-fixed": "#1a1c1c", "surface-tint": "#5f5e5e", "surface-bright": "#fafaf5", "secondary-container": "#e1dfdf", "inverse-surface": "#2f312e", "surface-variant": "#e3e3de", "on-tertiary": "#ffffff", "surface-container-low": "#f4f4ef", "secondary-fixed": "#e4e2e2", "tertiary-fixed": "#e3e2e2", "on-tertiary-container": "#838484", "on-tertiary-fixed-variant": "#454747", "on-primary-container": "#858383", "on-secondary-fixed-variant": "#464747", "on-secondary": "#ffffff", "primary-container": "#1c1b1b", "on-error": "#ffffff", outline: "#747878", "on-primary": "#ffffff", "on-background": "#1a1c19", "surface-container-high": "#e8e8e3", "surface-container": "#eeeee9", "secondary-fixed-dim": "#c7c6c6", "on-secondary-container": "#626262", surface: "#fafaf5", "inverse-on-surface": "#f1f1ec", "on-surface-variant": "#444748", "on-secondary-fixed": "#1b1c1c", secondary: "#5e5e5e", "on-primary-fixed-variant": "#474646", "on-error-container": "#93000a"}, borderRadius: {DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px"}, spacing: {"margin-mobile": "20px", gutter: "24px", unit: "4px", "margin-desktop": "64px", "container-max": "1440px"}, fontFamily: {"mono-data": ["IBM Plex Sans"], "hero-lg": ["Bitter"], "headline-md": ["Bitter"], "label-caps": ["IBM Plex Sans"], "hero-lg-mobile": ["Bitter"], "body-md": ["IBM Plex Sans"], "body-lg": ["IBM Plex Sans"], headline: ["Bitter"], display: ["Bitter"], body: ["Cormorant Garamond"], label: ["Ibm Plex Sans"]}, fontSize: {"mono-data": ["14px", {lineHeight: "20px", letterSpacing: "0em", fontWeight: "400"}], "hero-lg": ["80px", {lineHeight: "90px", letterSpacing: "-0.01em", fontWeight: "300"}], "headline-md": ["32px", {lineHeight: "40px", letterSpacing: "0em", fontWeight: "400"}], "label-caps": ["12px", {lineHeight: "16px", letterSpacing: "0.1em", fontWeight: "600"}], "hero-lg-mobile": ["40px", {lineHeight: "48px", letterSpacing: "-0.01em", fontWeight: "300"}], "body-md": ["16px", {lineHeight: "24px", letterSpacing: "0em", fontWeight: "400"}], "body-lg": ["18px", {lineHeight: "28px", letterSpacing: "0em", fontWeight: "400"}]}}}};</script>
-<style>
-        .material-symbols-outlined {
-            font-family: 'Material Symbols Outlined';
-            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-            vertical-align: middle;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-        body { background-color: #fafaf5; color: #111111; scroll-behavior: smooth; }
-        .grid-bg { background-image: linear-gradient(#d0d0d0 1px, transparent 1px), linear-gradient(90deg, #d0d0d0 1px, transparent 1px); background-size: 24px 24px; opacity: 0.05; position: fixed; inset: 0; pointer-events: none; }
-        .divider-v { width: 1px; background-color: #747878; opacity: 0.3; }
-        .divider-h { height: 1px; background-color: #747878; opacity: 0.3; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
+<!DOCTYPE html>
+<html class="light" lang="en" style="scroll-behavior: smooth;">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S. RAWAT — Applied AI Systems</title>
+  
+  <!-- Vercel Web Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <!-- End Vercel Web Analytics -->
 
-        /* Motion Design Implementations */
-        @keyframes soft-pulse {
-            0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
-            50% { transform: scale(1.2); opacity: 0.7; box-shadow: 0 0 8px 2px rgba(34, 197, 94, 0.2); }
-        }
-        .status-dot-pulse {
-            animation: soft-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@300;400;500;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=swap" rel="stylesheet">
 
-        @keyframes terminal-blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        .terminal-cursor::after {
-            content: '_';
-            animation: terminal-blink 1s step-end infinite;
-            margin-left: 2px;
-        }
+  <style>
+    html { scroll-behavior: smooth; }
+    body { 
+      margin: 0; 
+      background-color: #fafaf5; 
+      color: #1a1c19; 
+      font-family: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+      --accent: #22c55e;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: #000000; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f1ec; }
+    ::-webkit-scrollbar-thumb { background: #c4c7c7; }
+    ::-webkit-scrollbar-thumb:hover { background: #747878; }
 
-        @keyframes breathing {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
-        }
-        .breathing-oled {
-            animation: breathing 6s ease-in-out infinite;
-        }
+    /* Keyframe Animations */
+    @keyframes soft-pulse { 0%,100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(34,197,94,.35); } 50% { transform: scale(1.25); opacity: .65; box-shadow: 0 0 8px 2px rgba(34,197,94,.18); } }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+    @keyframes maskUp { from { transform: translateY(105%) skewY(4deg); } to { transform: translateY(0) skewY(0); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes panelIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+    @keyframes panelOut { from { transform: translateX(0); } to { transform: translateX(100%); } }
+    @keyframes backdropIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes gridDrift { from { background-position: 0 0, 0 0; } to { background-position: 32px 32px, 32px 32px; } }
+    @keyframes ruleGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @keyframes sway { 0%, 100% { transform: rotate(-0.7deg) translateY(0) scale(1); } 50% { transform: rotate(0.8deg) translateY(-14px) scale(1.012); } }
+    @keyframes swayAlt { 0%, 100% { transform: scaleX(-1) rotate(0.6deg) translateY(-10px); } 50% { transform: scaleX(-1) rotate(-0.9deg) translateY(6px); } }
+    @keyframes inkIn { from { opacity: 0; } to { opacity: 1; } }
 
-        @keyframes shimmer {
-            0% { left: -100%; }
-            20% { left: 200%; }
-            100% { left: 200%; }
-        }
-        .btn-shimmer {
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-shimmer::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);
-            animation: shimmer 4s infinite linear;
-        }
-
-        .project-card {
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s ease;
-        }
-        .project-card:hover {
-            transform: translateY(-4px);
-            border-color: #111;
-        }
-
-        /* Scroll Reveal Utility */
-        .reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Focus Pulse Animation */
-        @keyframes black-pulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.5); }
-            70% { box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
-        }
-        .pulse-focus {
-            animation: black-pulse 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 4px;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .reveal, .status-dot-pulse, .terminal-cursor::after, .breathing-oled, .btn-shimmer::after, .project-card, .project-card:hover, .pulse-focus {
-                animation: none !important;
-                transition: none !important;
-                transform: none !important;
-            }
-            .reveal { opacity: 1; }
-        }
-    /* Landing & transition animations */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes scaleUp {
-  0% { transform: scale(0.9); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
-.reveal, .project-card, .btn-shimmer {
-  animation: fadeInUp 0.8s ease-out forwards;
-  animation-delay: calc(var(--i) * 0.1s);
-}
-body, .bg-background, .bg-surface-container-low {
-  transition: background-color 0.5s ease;
-}
-/* subtle hover transitions */
-a, button, .material-symbols-outlined {
-  transition: color 0.3s ease, background-color 0.3s ease;
-}
-
-<!-- End animations -->
-</style>
-</head>
-<body class="font-body-md text-on-surface m-0">
-<div class="grid-bg"></div>
-<!-- SIDE NAVIGATION -->
-<aside class="h-screen w-64 fixed top-0 left-0 border-r border-outline-variant bg-background flex flex-col py-6 px-6 z-50 overflow-y-auto no-scrollbar" style="background-image:url('vectorizer/fee93e0d-1d82-4761-8be5-4d277d0f6bfa.svg');background-size:cover;background-position:center;background-repeat:no-repeat;">
-<div class="mb-6">
-<h1 class="font-label-caps text-label-caps tracking-widest text-primary mb-1">S. RAWAT</h1>
-<p class="font-label-caps text-label-caps text-on-surface-variant opacity-60">AI SYSTEMS ENG.</p>
-</div>
-<nav class="flex-grow space-y-2"><a class="flex items-center gap-3 text-primary font-bold border-r-2 border-primary py-2 transition-all duration-150 ease-in-out" href="#home">
-<span class="material-symbols-outlined text-[20px]" data-icon="home">home</span>
-<span class="font-label-caps text-label-caps terminal-cursor">Home</span>
-</a>
-<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary hover:bg-surface-container py-2 transition-all duration-150 ease-in-out" href="#about">
-<span class="material-symbols-outlined text-[20px]" data-icon="person">person</span>
-<span class="font-label-caps text-label-caps">About</span>
-</a>
-<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary hover:bg-surface-container py-2 transition-all duration-150 ease-in-out" href="#projects">
-<span class="material-symbols-outlined text-[20px]" data-icon="biotech">biotech</span>
-<span class="font-label-caps text-label-caps">Projects</span>
-</a>
-<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary hover:bg-surface-container py-2 transition-all duration-150 ease-in-out" href="#skills">
-<span class="material-symbols-outlined text-[20px]" data-icon="psychology">psychology</span>
-<span class="font-label-caps text-label-caps">Skills</span>
-</a>
-<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary hover:bg-surface-container py-2 transition-all duration-150 ease-in-out" href="#education">
-<span class="material-symbols-outlined text-[20px]" data-icon="work_history">work_history</span>
-<span class="font-label-caps text-label-caps">Experience</span>
-</a>
-<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary hover:bg-surface-container py-2 transition-all duration-150 ease-in-out" href="#education">
-<span class="material-symbols-outlined text-[20px]" data-icon="school">school</span>
-<span class="font-label-caps text-label-caps">Education</span>
-</a>
-<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary hover:bg-surface-container py-2 transition-all duration-150 ease-in-out" href="#interests">
-<span class="material-symbols-outlined text-[20px]" data-icon="interests">interests</span>
-<span class="font-label-caps text-label-caps">Interests</span>
-</a>
-<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary hover:bg-surface-container py-2 transition-all duration-150 ease-in-out" href="#contact">
-<span class="material-symbols-outlined text-[20px]" data-icon="alternate_email">alternate_email</span>
-<span class="font-label-caps text-label-caps">Contact</span>
-</a></nav>
-<div class="mt-auto space-y-4">
-</div>
-</aside>
-<!-- MAIN CANVAS -->
-<main class="ml-64 min-h-screen">
-<!-- TOP BAR -->
-<!-- CONTENT -->
-<div class="space-y-6 max-w-container-max mx-auto w-full px-6">
-<!-- HERO SECTION -->
-<section class="grid grid-cols-12 gap-6 pt-12 reveal visible" id="home">
-<div class="col-span-12 lg:col-span-8" style="background-image:linear-gradient(rgba(255, 255, 255, 0.00), rgba(255, 255, 255, 0.75)), url('vectorizer/fe654b34-04ec-4ef9-9f96-d6154398cc79.svg');background-size:contain;background-position:right center;background-repeat:no-repeat;">
-<div class="space-y-1">
-<p class="font-label-caps text-label-caps text-on-surface-variant tracking-[0.2em]">APPLIED AI SYSTEMS ENGINEER</p>
-<h1 class="font-hero-lg text-6xl lg:text-7xl leading-none uppercase -ml-1">SAMARTH<br>RAWAT</h1>
-</div>
-<div class="max-w-xs mt-4">
-<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-1 mb-1">
-<span class="w-1.5 h-1.5 bg-primary rounded-none"></span>
-<span class="font-['Inter_Tight'] text-[10px] font-medium uppercase tracking-[0.15em] text-on-surface-variant">Embedded Intelligence</span>
-</div>
-<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-1 mb-1">
-<span class="w-1.5 h-1.5 bg-primary rounded-none"></span>
-<span class="font-['Inter_Tight'] text-[10px] font-medium uppercase tracking-[0.15em] text-on-surface-variant">Behavioral Interfaces</span>
-</div>
-<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-1 mb-1">
-<span class="w-1.5 h-1.5 bg-primary rounded-none"></span>
-<span class="font-['Inter_Tight'] text-[10px] font-medium uppercase tracking-[0.15em] text-on-surface-variant">Agentic Systems</span>
-</div>
-<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-1">
-<span class="w-1.5 h-1.5 bg-primary rounded-none"></span>
-<span class="font-['Inter_Tight'] text-[10px] font-medium uppercase tracking-[0.15em] text-on-surface-variant">Human-Machine Interaction</span>
-</div>
-</div>
-<div class="flex gap-3 pt-4">
-<button class="border border-outline px-6 py-2 font-label-caps text-[10px] flex items-center gap-2 hover:bg-surface-container transition-colors text-primary">
-                        DOWNLOAD RESUME <span class="material-symbols-outlined text-[16px]" data-icon="download">download</span>
-</button>
-</div>
-</div>
-<!-- SYSTEM DASHBOARD -->
-<div class="col-span-12 lg:col-span-4 border border-outline-variant p-4 bg-surface-container-low flex flex-col rounded-xl">
-<div class="flex justify-between items-center mb-4 border-b border-outline-variant pb-2">
-<h3 class="font-label-caps text-label-caps font-bold">SYSTEM DASHBOARD</h3>
-<div class="flex items-center gap-2">
-<div class="w-2 h-2 bg-green-500 rounded-full status-dot-pulse"></div>
-</div>
-</div>
-<div class="space-y-3">
-<div class="space-y-1">
-<div class="flex items-center gap-2 text-on-surface-variant">
-<span class="material-symbols-outlined text-[20px]" data-icon="fiber_manual_record">fiber_manual_record</span>
-<p class="font-label-caps text-[9px] uppercase">Status</p>
-</div>
-<p class="font-body-md text-sm text-on-surface">Building intelligent systems that feel expressive.</p>
-</div>
-<div class="space-y-1">
-<div class="flex items-center gap-2 text-on-surface-variant">
-<span class="material-symbols-outlined text-[20px]" data-icon="location_on">location_on</span>
-<p class="font-label-caps text-[9px] uppercase">Location</p>
-</div>
-<p class="font-body-md text-sm text-on-surface">Bhubaneswar, Odisha, India</p>
-</div>
-<div class="space-y-1">
-<div class="flex items-center gap-2 text-on-surface-variant">
-<span class="material-symbols-outlined text-[20px]" data-icon="architecture">architecture</span>
-<p class="font-label-caps text-[9px] uppercase">Current Focus</p>
-</div>
-<p class="font-body-md text-sm text-on-surface">Agentic AI • Embedded Systems Behavioral Architectures</p>
-</div>
-<div class="space-y-1">
-<div class="flex items-center gap-2 text-on-surface-variant">
-<span class="material-symbols-outlined text-[20px]" data-icon="lock_open">lock_open</span>
-<p class="font-label-caps text-[9px] uppercase">Availability</p>
-</div>
-<p class="font-body-md text-sm text-on-surface flex items-center gap-2">Open to Opportunities <span class="w-1.5 h-1.5 bg-primary rounded-full"></span></p>
-</div>
-</div>
-</div>
-</section>
-<!-- STACK OVERVIEW -->
-<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 border border-outline-variant divide-y md:divide-y-0 md:divide-x divide-outline-variant mt-4 reveal visible">
-<div class="space-y-2 hover:bg-surface-container-low transition-colors p-4">
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[24px]" data-icon="neurology">neurology</span>
-<h4 class="font-label-caps text-[10px] font-bold">AI/ML STACK</h4>
-</div>
-<p class="font-body-md text-on-surface-variant text-xs">LLMs, Deep Learning, Machine Learning, Data Visualization</p>
-</div>
-<div class="space-y-2 hover:bg-surface-container-low transition-colors p-4">
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[24px]" data-icon="memory">memory</span>
-<h4 class="font-label-caps text-[10px] font-bold">EMBEDDED STACK</h4>
-</div>
-<p class="font-body-md text-on-surface-variant text-xs">ESP32, FreeRTOS, Sensors, IoT Systems, Real-time Interfaces</p>
-</div>
-<div class="space-y-2 hover:bg-surface-container-low transition-colors p-4">
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[24px]" data-icon="terminal">terminal</span>
-<h4 class="font-label-caps text-[10px] font-bold">TOOLS &amp; PLATFORMS</h4>
-</div>
-<p class="font-body-md text-on-surface-variant text-xs">Python, Git, VS Code, TensorFlow, Arduino, Power BI, MySQL</p>
-</div>
-<div class="space-y-2 hover:bg-surface-container-low transition-colors p-4">
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[24px]" data-icon="webhook">webhook</span>
-<h4 class="font-label-caps text-[10px] font-bold">SYSTEMS PHILOSOPHY</h4>
-</div>
-<p class="font-body-md text-on-surface-variant text-xs">Designing constrained systems that are performative, reliable and human-centered.</p>
-</div>
-</section>
-<!-- PROJECTS -->
-<section class="pt-4 reveal visible" id="projects">
-<div class="flex justify-between items-end mb-4">
-<div class="space-y-1">
-<p class="font-label-caps text-[9px] tracking-widest opacity-50 uppercase">Portfolio / Lab</p>
-<h2 class="font-headline-md text-2xl uppercase">PROJECTS / ENGINEERING SYSTEMS</h2>
-</div>
-<a class="font-label-caps text-[10px] flex items-center gap-1 hover:underline text-primary" href="https://drive.google.com/drive/folders/1vqfYWG1C3KA-rb_5DO1uI2awG5tGS_9O?usp=sharing" target="_blank" rel="noopener noreferrer">
-                    VIEW ALL <span class="material-symbols-outlined text-[16px]" data-icon="arrow_outward">arrow_outward</span>
-</a>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-<!-- Project 1 -->
-<div class="reveal border border-outline-variant p-4 space-y-4 flex flex-col group cursor-pointer project-card bg-background visible rounded-xl">
-<div class="flex justify-between items-start">
-<span class="material-symbols-outlined text-[24px] text-primary" data-icon="terminal">terminal</span>
-<div class="flex items-center gap-1">
-<span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
-<span class="font-label-caps text-[9px] uppercase">Completed</span>
-</div>
-</div>
-<div>
-<h3 class="font-label-caps text-sm font-bold mb-1">CRITIC-OS</h3>
-<p class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-wider">AI Music Critique System</p>
-</div>
-<div class="flex flex-wrap gap-1">
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Python</span>
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Flask</span>
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Groq</span>
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Redis</span>
-</div>
-<p class="font-body-md text-xs text-on-surface-variant leading-relaxed">
-                        AI-driven web app that generates satirical music critiques using 6 unique AI personas. Integrates Spotify API and emotion analysis.
-                    </p>
-<div class="mt-auto pt-3 border-t border-outline-variant flex justify-between items-center group-hover:text-primary text-secondary">
-<span class="font-label-caps text-[9px]">VIEW CASE STUDY</span>
-<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
-</div>
-</div>
-<!-- Project 2 -->
-<div class="reveal border border-outline-variant p-4 space-y-4 flex flex-col group cursor-pointer project-card bg-background visible rounded-xl">
-<div class="flex justify-between items-start">
-<span class="material-symbols-outlined text-[24px] text-primary" data-icon="alarm">alarm</span>
-<div class="flex items-center gap-1">
-<span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
-<span class="font-label-caps text-[9px] uppercase">Completed</span>
-</div>
-</div>
-<div>
-<h3 class="font-label-caps text-sm font-bold mb-1">IOT SMART ALARM CLOCK</h3>
-<p class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-wider">Embedded Interaction System</p>
-</div>
-<div class="flex flex-wrap gap-1">
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">ESP32-C3</span>
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">C++</span>
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">FreeRTOS</span>
-</div>
-<p class="font-body-md text-xs text-on-surface-variant leading-relaxed">
-                        Gesture-controlled smart alarm with custom animation engine, multi-sensor fusion (PIR, IMU) and dual-source timekeeping.
-                    </p>
-<div class="mt-auto pt-3 border-t border-outline-variant flex justify-between items-center group-hover:text-primary text-secondary">
-<span class="font-label-caps text-[9px]">VIEW CASE STUDY</span>
-<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
-</div>
-</div>
-<!-- Project 3 -->
-<div class="reveal border border-outline-variant p-4 space-y-4 flex flex-col group cursor-pointer project-card bg-background visible rounded-xl">
-<div class="flex justify-between items-start">
-<span class="material-symbols-outlined text-[24px] text-primary" data-icon="front_hand">front_hand</span>
-<div class="flex items-center gap-1">
-<span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
-<span class="font-label-caps text-[9px] uppercase">Completed</span>
-</div>
-</div>
-<div>
-<h3 class="font-label-caps text-sm font-bold mb-1">ISL GESTURE RECOGNITION</h3>
-<p class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-wider">ML Classification System</p>
-</div>
-<div class="flex flex-wrap gap-1">
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Python</span>
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Scikit-learn</span>
-<span class="px-1.5 py-0.5 border border-outline-variant text-[9px] font-label-caps uppercase text-secondary">Pandas</span>
-</div>
-<p class="font-body-md text-xs text-on-surface-variant leading-relaxed">
-                        Processed ISL hand gesture datasets and trained a Random Forest model to classify Indian Sign Language gestures with high accuracy.
-                    </p>
-<div class="mt-auto pt-3 border-t border-outline-variant flex justify-between items-center group-hover:text-primary text-secondary">
-<span class="font-label-caps text-[9px]">VIEW CASE STUDY</span>
-<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
-</div>
-</div>
-</div>
-</section>
-<!-- DETAILS GRID -->
-<div class="border border-outline-variant mt-4 reveal visible rounded-xl">
-<div class="grid grid-cols-1 lg:grid-cols-3 -m-[1px]"><!-- Row 1: About Me & Technical Skills -->
-<div class="col-span-3 grid grid-cols-1 lg:grid-cols-2 border-b border-outline-variant">
-<div class="space-y-4 border-r border-outline-variant p-4" id="about">
-<div class="flex items-baseline justify-between">
-<h2 class="font-label-caps text-[11px] font-bold uppercase">About Me</h2>
-</div>
-<p class="font-body-md text-xs text-on-surface-variant leading-relaxed">
-            Applied AI developer and B.Tech IT student at KIIT Bhubaneswar, specializing in interactive systems, behavioral architectures, and AI-enhanced user experiences. Experienced in integrating embedded systems, real-time interfaces, and intelligent workflow automation.
-        </p>
-<div class="grid grid-cols-2 gap-3 pt-2">
-<div class="space-y-1">
-<span class="font-label-caps text-[9px] text-on-surface-variant opacity-60 uppercase">CGPA (8th Sem)</span>
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[20px]">school</span>
-<span class="font-bold text-sm">8.24</span>
-</div>
-</div>
-<div class="space-y-1">
-<span class="font-label-caps text-[9px] text-on-surface-variant opacity-60 uppercase">Major Projects</span>
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[20px]">rocket_launch</span>
-<span class="font-bold text-sm">3+</span>
-</div>
-</div>
-<div class="space-y-1">
-<span class="font-label-caps text-[9px] text-on-surface-variant opacity-60 uppercase">Tech Domains</span>
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[20px]">dataset</span>
-<span class="font-bold text-sm">5+</span>
-</div>
-</div>
-<div class="space-y-1">
-<span class="font-label-caps text-[9px] text-on-surface-variant opacity-60 uppercase">Hours Building</span>
-<div class="flex items-center gap-2 text-primary">
-<span class="material-symbols-outlined text-[20px]">speed</span>
-<span class="font-bold text-sm">1200+</span>
-</div>
-</div>
-</div>
-</div>
-<div class="space-y-4 p-4" id="skills">
-<div class="flex items-baseline justify-between">
-<h2 class="font-label-caps text-[11px] font-bold uppercase">Technical Skills</h2>   
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-<div class="space-y-3">
-<div class="space-y-1">
-<h4 class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-widest">Programming</h4>
-<p class="font-body-md text-xs">Python, Java, C, HTML/CSS</p>
-</div>
-<div class="space-y-1">
-<h4 class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-widest">Databases</h4>
-<p class="font-body-md text-xs">MySQL</p>
-</div>
-<div class="space-y-1">
-<h4 class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-widest">Tools</h4>
-<p class="font-body-md text-xs">Git, VS Code, MS Office, Power BI, Arduino, LATEX</p>
-</div>
-</div>
-<div class="space-y-3">
-<div class="space-y-1">
-<h4 class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-widest">Frameworks / Libs</h4>
-<p class="font-body-md text-xs">TensorFlow, Scikit-learn, NumPy, Pandas, Matplotlib</p>
-</div>
-<div class="space-y-1">
-<h4 class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-widest">Platforms / APIs</h4>
-<p class="font-body-md text-xs">Spotify API, OpenAI/Groq, Redis, FreeRTOS</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Row 2: Education, Hobbies, Interests & Strengths -->
-<div class="col-span-3 grid grid-cols-1 lg:grid-cols-3">
-<div class="space-y-4 border-r border-outline-variant p-4 rounded-bl-xl" id="education">
-<h2 class="font-label-caps text-[11px] font-bold uppercase">Education</h2>
-<div class="relative pl-4 space-y-4">
-<div class="absolute left-1 top-0 bottom-0 w-px bg-outline-variant/30"></div>
-<div class="relative">
-<div class="absolute -left-[15px] top-1 w-2 h-2 bg-primary rounded-full"></div>
-<p class="font-label-caps text-[8px] text-on-surface-variant mb-0.5">2022 — 2026</p>
-<h4 class="font-bold text-[11px] leading-tight">KIIT, Bhubaneswar</h4>
-<p class="text-[10px] text-on-surface-variant">B.Tech IT • CGPA: 8.24</p>
-</div>
-<div class="relative">
-<div class="absolute -left-[15px] top-1 w-2 h-2 bg-primary rounded-full opacity-40"></div>
-<p class="font-label-caps text-[8px] text-on-surface-variant mb-0.5">2022</p>
-<h4 class="font-bold text-[11px] leading-tight">LBS Public School, Kota</h4>
-<p class="text-[10px] text-on-surface-variant">12th CBSE • 79.4%</p>
-</div>
-<div class="relative">
-<div class="absolute -left-[15px] top-1 w-2 h-2 bg-primary rounded-full opacity-40"></div>
-<p class="font-label-caps text-[8px] text-on-surface-variant mb-0.5">2022</p>
-<h4 class="font-bold text-[11px] leading-tight">GMR VARALAKSHMI DAV PUBLIC SCHOOL, DHENKANAL</h4>
-<p class="text-[10px] text-on-surface-variant">10th CBSE • 90.0%</p>
-</div>
-</div>
-</div>
-<div class="space-y-4 border-r border-outline-variant p-4 rounded-none"><h2 class="font-label-caps text-[11px] font-bold uppercase">Hobbies</h2><div class="grid grid-cols-5 gap-2"> <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: &quot;wght&quot; 300, &quot;opsz&quot; 24;">menu_book</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Reading</span> </div> <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: &quot;wght&quot; 300, &quot;opsz&quot; 24;">movie_filter</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Movies</span> </div> <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: &quot;wght&quot; 300, &quot;opsz&quot; 24;">psychology</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Learning</span> </div> <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: &quot;wght&quot; 300, &quot;opsz&quot; 24;">precision_manufacturing</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Building</span> </div> <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: &quot;wght&quot; 300, &quot;opsz&quot; 24;">podcasts</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Podcasts</span> </div><div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: 'wght' 300, 'opsz' 24;">headset</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Music</span> </div> <div class="flex flex-col items-center gap-1.5 p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer group">  <span class="material-symbols-outlined text-[24px] text-secondary group-hover:text-primary" style="font-variation-settings: 'wght' 300, 'opsz' 24;">restaurant</span>  <span class="font-label-caps text-[8px] uppercase tracking-wider text-on-surface-variant group-hover:text-primary">Cooking</span> </div></div></div>
-<div class="space-y-3 p-4 rounded-br-xl" id="interests">
-<h2 class="font-label-caps text-[11px] font-bold uppercase">Interests &amp; Strengths</h2>
-<ul class="space-y-1">
-<li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> LLMs &amp; Fine Tuning</li>
-<li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> Agentic AI</li>
-<li class="flex items-center gap-2 text-[11px]"><span class="material-symbols-outlined text-[20px] text-secondary">arrow_right_alt</span> Human-Computer Interaction</li>
-</ul>
-<div class="pt-2 border-t border-outline-variant/30">
-<ul class="space-y-1 text-[10px] text-on-surface-variant italic">
-<li class="">• Architecture integration expert.</li>
-<li class="">• Scalable system design.</li>
-<li class="">• Cross-domain exposure: Embedded, AI, UX.</li>
-</ul>
-</div>
-</div>
-</div></div>
-</div>
-<!-- FOOTER CONTACT -->
-<footer class="border-t border-outline-variant mt-8 pb-12 pt-6 grid grid-cols-1 md:grid-cols-12 gap-6" id="contact">
-<div class="md:col-span-4 space-y-4">
-<div class="space-y-1">
-<h2 class="font-label-caps text-[11px] font-bold">LET'S CONNECT</h2>
-</div>
-<ul class="space-y-2 text-xs">
-<li class="flex items-center gap-2">
-<span class="material-symbols-outlined text-[20px] text-secondary" data-icon="mail">mail</span>
-<a class="hover:underline" href="mailto:samarthrawat10@email.com">samarthrawat10@email.com</a>
-</li>
-<li class="flex items-center gap-2">
-<span class="material-symbols-outlined text-[20px] text-secondary" data-icon="call">call</span>
-<span class="">+91 8984100922</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="material-symbols-outlined text-[20px] text-secondary mt-0.5" data-icon="location_on">location_on</span>
-<span class="">DGM-2 201, TATA Steel Meramandali Colony, Meramandali, Narendrapur, Odisha — 759121, India</span>
-</li>
-</ul>
-</div>
-<div class="md:col-span-3 space-y-4">
-<div class="space-y-1">
-<h2 class="font-label-caps text-[11px] font-bold uppercase">Find me online</h2>
-</div>
-<div class="flex flex-col gap-2">
-<a class="flex items-center gap-2 text-xs hover:text-primary transition-colors text-secondary" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="code">code</span> GitHub
-                    </a>
-<a class="flex items-center gap-2 text-xs hover:text-primary transition-colors text-secondary" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="link">link</span> LinkedIn
-                    </a>
-</div>
-</div>
-<div class="md:col-span-5 space-y-4 flex flex-col justify-between items-end text-right">
-<div class="max-w-xs space-y-2">
-<span class="material-symbols-outlined text-[32px] opacity-20 text-secondary" data-icon="format_quote">format_quote</span>
-<p class="font-body-md text-xs text-on-surface-variant italic leading-relaxed">
-                        Building systems that understand, adapt and connect.
-                    </p>
-</div>
-<div class="w-16 h-px bg-outline-variant mt-2"></div>
-<div class="space-y-1">
-<p class="font-label-caps text-[9px] opacity-40 uppercase">© 2024 Samarth Rawat. All rights reserved.</p>
-<p class="font-label-caps text-[9px] opacity-60 tracking-wider">&gt; designed &amp; built with purpose</p>
-</div>
-</div>
-</footer>
-</div>
-</main>
-<script>
-    // Smooth scroll implementation with focus pulse
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            const target = document.querySelector(targetId);
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-                
-                // Reset and apply animation
-                target.classList.remove('pulse-focus');
-                void target.offsetWidth; // Trigger reflow to restart animation
-                target.classList.add('pulse-focus');
-                
-                // Remove class after animation completes to allow re-triggering
-                setTimeout(() => {
-                    target.classList.remove('pulse-focus');
-                }, 1500);
-            }
-        });
-    });
-
-    // Intersection Observer for Scroll Reveals
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                // Optional: stop observing once revealed
-                // revealObserver.unobserve(entry.target);
-            }
-        });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    });
-
-    // Check for prefers-reduced-motion to avoid unnecessary observation
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
     }
 
-    // Theme toggle logic (simulated)
-    const toggleTheme = () => {
-        document.documentElement.classList.toggle('dark');
-    };
+    /* Interactive Component Classes */
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: 36px;
+      color: #444748;
+      transition: color .3s ease, padding-left .35s cubic-bezier(.16,1,.3,1);
+      cursor: pointer;
+    }
+    .nav-item:hover, .nav-item.active {
+      color: #000 !important;
+      padding-left: 6px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #111;
+      color: #fafaf5;
+      padding: 14px 24px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      transition: transform .35s cubic-bezier(.16,1,.3,1), background-color .3s ease;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      background: #000 !important;
+      color: #fafaf5 !important;
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid #747878;
+      padding: 14px 24px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: #111;
+      transition: transform .35s cubic-bezier(.16,1,.3,1), background-color .3s ease;
+      cursor: pointer;
+    }
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      background: #efefe9 !important;
+    }
+    .link-view-all {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #444748;
+      border-bottom: 1px solid #c4c7c7;
+      padding-bottom: 3px;
+      transition: color .3s ease, border-color .3s ease;
+    }
+    .link-view-all:hover {
+      color: #000 !important;
+      border-color: #000 !important;
+    }
+    .project-row {
+      display: grid;
+      grid-template-columns: 40px minmax(0,1.25fr) minmax(0,1fr) 138px;
+      gap: 22px;
+      align-items: start;
+      padding: 26px 8px;
+      border-bottom: 1px solid #c4c7c7;
+      cursor: pointer;
+      transition: background-color .4s ease, padding-left .4s cubic-bezier(.16,1,.3,1);
+    }
+    .project-row:hover {
+      background: rgba(238,238,233,.75) !important;
+      padding-left: 18px !important;
+    }
+    .stack-row {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 20px;
+      padding: 14px 0;
+      border-top: 1px solid #c4c7c7;
+      transition: padding-left .35s cubic-bezier(.16,1,.3,1);
+    }
+    .stack-row:hover {
+      padding-left: 8px !important;
+    }
+    .interest-tag {
+      font-size: 12px;
+      letter-spacing: .02em;
+      border: 1px solid #c4c7c7;
+      padding: 6px 12px;
+      transition: background-color .3s ease, border-color .3s ease, color .3s ease;
+      cursor: default;
+    }
+    .interest-tag:hover {
+      background: #111 !important;
+      border-color: #111 !important;
+      color: #fafaf5 !important;
+    }
+    .hobby-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #747878;
+      transition: color .3s ease;
+      cursor: default;
+    }
+    .hobby-badge:hover {
+      color: #111;
+    }
+    .contact-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: Bitter, serif;
+      font-size: 22px;
+      color: #111;
+      border-bottom: 1px solid #c4c7c7;
+      padding-bottom: 6px;
+      transition: border-color .35s ease, gap .35s cubic-bezier(.16,1,.3,1);
+    }
+    .contact-email:hover {
+      border-color: #111 !important;
+      gap: 18px !important;
+    }
+    .social-link {
+      font-size: 13px;
+      color: #1a1c19;
+      border-bottom: 1px solid #c4c7c7;
+      padding-bottom: 2px;
+      transition: border-color .3s ease;
+    }
+    .social-link:hover {
+      border-color: #111 !important;
+    }
+    .btn-close-panel {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: 1px solid #c4c7c7;
+      padding: 8px 14px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #111;
+      cursor: pointer;
+      transition: background-color .3s ease, border-color .3s ease, color .3s ease;
+    }
+    .btn-close-panel:hover {
+      background: #111 !important;
+      color: #fafaf5 !important;
+      border-color: #111 !important;
+    }
+    .btn-drawer-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #111;
+      color: #fafaf5;
+      padding: 12px 22px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      transition: transform .3s ease;
+      cursor: pointer;
+    }
+    .btn-drawer-cta:hover {
+      transform: translateY(-2px);
+      color: #fafaf5 !important;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .project-row {
+        grid-template-columns: 36px 1fr 1fr auto;
+        gap: 16px;
+      }
+    }
+    @media (max-width: 860px) {
+      aside#sidebar {
+        position: relative !important;
+        width: 100% !important;
+        height: auto !important;
+        border-right: none !important;
+        border-bottom: 1px solid #c4c7c7 !important;
+      }
+      main {
+        margin-left: 0 !important;
+      }
+      main > div {
+        padding: 0 24px !important;
+      }
+      .hero-grid {
+        grid-template-columns: 1fr !important;
+        gap: 36px !important;
+      }
+      .project-row {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+      .profile-grid, .edu-interest-grid, .contact-grid {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+      }
+      .side-drawer {
+        width: 100vw !important;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) { 
+      *, *::before, *::after { 
+        animation: none !important; 
+        transition: none !important; 
+      } 
+    }
+  </style>
+</head>
+<body>
+
+<div style="min-height:100vh;background:#fafaf5;color:#1a1c19;position:relative;overflow-x:hidden;--accent:#22c55e">
+
+  <!-- Background SVG Vector Graphics with Smooth Sway Animation -->
+  <div style="position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0;animation:inkIn 2.6s ease-out both">
+    <div id="ink1" style="position:absolute;left:-4vw;bottom:-16vh;height:132vh;will-change:transform">
+      <img src="vectorizer/fee93e0d-1d82-4761-8be5-4d277d0f6bfa.svg" alt="" style="height:100%;width:auto;display:block;opacity:.12;mix-blend-mode:multiply;transform-origin:50% 100%;animation:sway 26s ease-in-out infinite" />
+    </div>
+    <div id="ink2" style="position:absolute;right:-12vw;bottom:-28vh;height:172vh;will-change:transform">
+      <img src="vectorizer/fee93e0d-1d82-4761-8be5-4d277d0f6bfa.svg" alt="" style="height:100%;width:auto;display:block;opacity:.075;mix-blend-mode:multiply;transform-origin:50% 100%;animation:swayAlt 37s ease-in-out infinite" />
+    </div>
+    <div id="ink3" style="position:absolute;left:36vw;bottom:-10vh;height:86vh;will-change:transform">
+      <img src="vectorizer/fee93e0d-1d82-4761-8be5-4d277d0f6bfa.svg" alt="" style="height:100%;width:auto;display:block;opacity:.05;filter:blur(1.4px);mix-blend-mode:multiply;transform-origin:50% 100%;animation:sway 46s ease-in-out infinite reverse" />
+    </div>
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 64% 54% at 44% 40%, rgba(250,250,245,.88) 0%, rgba(250,250,245,.52) 46%, rgba(250,250,245,0) 80%)"></div>
+  </div>
+
+  <!-- Interactive Canvas Particle Field -->
+  <canvas id="particleCanvas" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1"></canvas>
+  
+  <!-- Subtle Background Grid -->
+  <div style="background-image:linear-gradient(#9a9a92 1px, transparent 1px), linear-gradient(90deg, #9a9a92 1px, transparent 1px);background-size:32px 32px;opacity:.055;position:fixed;inset:0;pointer-events:none;z-index:1;animation:gridDrift 24s linear infinite"></div>
+
+  <!-- Magnetic Custom Cursor Elements -->
+  <div id="cursorRing" style="position:fixed;top:0;left:0;width:34px;height:34px;border:1px solid rgba(26,28,25,.45);border-radius:9999px;pointer-events:none;z-index:9999;opacity:0;transform:translate3d(-100px,-100px,0);transition:width .25s ease, height .25s ease, background-color .25s ease, border-color .25s ease"></div>
+  <div id="cursorDot" style="position:fixed;top:0;left:0;width:5px;height:5px;background:#1a1c19;border-radius:9999px;pointer-events:none;z-index:9999;opacity:0;transform:translate3d(-100px,-100px,0)"></div>
+
+  <!-- Scroll Progress Indicator -->
+  <div style="position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:60;pointer-events:none">
+    <div id="scrollProgressBar" style="height:100%;width:100%;background:var(--accent);transform-origin:0 50%;transform:scaleX(0)"></div>
+  </div>
+
+  <!-- Fixed Left Sidebar -->
+  <aside id="sidebar" style="height:100vh;width:264px;position:fixed;top:0;left:0;border-right:1px solid #c4c7c7;background-color:#fafaf5;background-image:url('vectorizer/fee93e0d-1d82-4761-8be5-4d277d0f6bfa.svg');background-size:cover;background-position:center;background-repeat:no-repeat;display:flex;flex-direction:column;padding:28px 24px;z-index:50;box-sizing:border-box">
+    <div style="margin-bottom:36px">
+      <h1 id="sidebarName" style="font-size:12px;line-height:16px;font-weight:600;letter-spacing:.18em;color:#000;margin:0 0 5px 0">S. RAWAT</h1>
+      <p id="sidebarTitle" style="font-size:10px;line-height:14px;font-weight:500;letter-spacing:.16em;color:#444748;margin:0">APPLIED AI · EMBEDDED</p>
+    </div>
+    <nav style="flex-grow:1;position:relative">
+      <div id="navIndicator" style="position:absolute;left:-24px;top:0;width:2px;height:36px;background:var(--accent);transition:transform .5s cubic-bezier(.16,1,.3,1);transform:translateY(0px)"></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <a href="#home" class="nav-item active" data-nav="0">
+          <span class="material-symbols-outlined" style="font-size:19px;">home</span>
+          <span style="font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase">Home</span>
+        </a>
+        <a href="#projects" class="nav-item" data-nav="1">
+          <span class="material-symbols-outlined" style="font-size:19px;">biotech</span>
+          <span style="font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase">Work</span>
+        </a>
+        <a href="#about" class="nav-item" data-nav="2">
+          <span class="material-symbols-outlined" style="font-size:19px;">person</span>
+          <span style="font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase">About</span>
+        </a>
+        <a href="#skills" class="nav-item" data-nav="3">
+          <span class="material-symbols-outlined" style="font-size:19px;">psychology</span>
+          <span style="font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase">Stack</span>
+        </a>
+        <a href="#education" class="nav-item" data-nav="4">
+          <span class="material-symbols-outlined" style="font-size:19px;">school</span>
+          <span style="font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase">Education</span>
+        </a>
+        <a href="#interests" class="nav-item" data-nav="5">
+          <span class="material-symbols-outlined" style="font-size:19px;">interests</span>
+          <span style="font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase">Interests</span>
+        </a>
+        <a href="#contact" class="nav-item" data-nav="6">
+          <span class="material-symbols-outlined" style="font-size:19px;">alternate_email</span>
+          <span style="font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase">Contact</span>
+        </a>
+      </div>
+    </nav>
+    <div style="display:flex;flex-direction:column;gap:8px;padding-top:20px;border-top:1px solid rgba(196,199,199,.6)">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="width:7px;height:7px;border-radius:9999px;background:var(--accent);animation:soft-pulse 2.4s cubic-bezier(.4,0,.6,1) infinite"></span>
+        <span style="font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#1a1c19">Open for freelance</span>
+      </div>
+      <span id="sidebarClock" style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#747878;letter-spacing:.04em">IST --:--</span>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main style="margin-left:264px;min-height:100vh;position:relative;z-index:2">
+    <div style="max-width:1240px;margin:0 auto;width:100%;padding:0 48px;box-sizing:border-box">
+
+      <!-- Section 0: Home / Hero -->
+      <section id="home" style="padding:104px 0 72px 0">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:26px;overflow:hidden">
+          <span id="heroTracking" style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#747878;animation:fadeUp .7s ease-out both;animation-delay:.05s">Applied AI Systems Engineer</span>
+          <span style="flex:1;height:1px;background:#c4c7c7;transform-origin:0 50%;animation:ruleGrow 1.1s cubic-bezier(.16,1,.3,1) both;animation-delay:.15s"></span>
+        </div>
+        <h2 style="font-family:Bitter,serif;font-weight:300;font-size:clamp(56px,9.4vw,132px);line-height:.88;letter-spacing:-.025em;text-transform:uppercase;margin:0;color:#111">
+          <span style="display:block;overflow:hidden;padding-bottom:.04em"><span id="heroFirstName" style="display:block;animation:maskUp .95s cubic-bezier(.16,1,.3,1) both;animation-delay:.1s">Samarth</span></span>
+          <span style="display:block;overflow:hidden;padding-bottom:.04em"><span id="heroLastName" style="display:block;animation:maskUp .95s cubic-bezier(.16,1,.3,1) both;animation-delay:.22s">Singh Rawat</span></span>
+        </h2>
+        <div class="hero-grid" style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:56px;margin-top:44px;align-items:end">
+          <div style="animation:fadeUp .8s ease-out both;animation-delay:.5s">
+            <p id="heroIntro" style="font-family:Bitter,serif;font-size:21px;line-height:1.5;color:#1a1c19;margin:0 0 26px 0;max-width:44ch;text-wrap:pretty">I build AI-driven applications and embedded systems — from real-time LLM products to firmware running on 400KB of RAM. Available for freelance work.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:10px">
+              <a id="heroContactBtn" href="mailto:samarthrawat18@email.com" class="btn-primary">Start a project <span class="material-symbols-outlined" style="font-size:16px;">arrow_outward</span></a>
+              <a id="heroDownloadBtn" href="Samarth_Updated_resume26.pdf" download class="btn-secondary">Download resume <span class="material-symbols-outlined" style="font-size:16px;">download</span></a>
+            </div>
+          </div>
+          <div style="border:1px solid #c4c7c7;background:rgba(244,244,239,.72);backdrop-filter:blur(2px);padding:18px 20px;animation:fadeUp .8s ease-out both;animation-delay:.62s">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;margin-bottom:14px;border-bottom:1px solid #c4c7c7">
+              <h3 style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;margin:0;color:#444748">System dashboard</h3>
+              <span style="width:7px;height:7px;border-radius:9999px;background:var(--accent);animation:soft-pulse 2.4s cubic-bezier(.4,0,.6,1) infinite"></span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:13px">
+              <div style="display:grid;grid-template-columns:78px 1fr;gap:12px;align-items:baseline">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#8a8d8d">Now</span>
+                <span style="font-size:13px;line-height:1.45;color:#1a1c19;min-height:19px"><span id="dashboardTickerText">Building AI-driven applications</span><span style="animation:blink 1s step-end infinite;color:var(--accent);margin-left:2px">▌</span></span>
+              </div>
+              <div style="display:grid;grid-template-columns:78px 1fr;gap:12px;align-items:baseline">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#8a8d8d">Based</span>
+                <span id="dashboardLocation" style="font-size:13px;line-height:1.45;color:#1a1c19">Bhubaneswar, Odisha, India</span>
+              </div>
+              <div style="display:grid;grid-template-columns:78px 1fr;gap:12px;align-items:baseline">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#8a8d8d">Focus</span>
+                <span id="dashboardFocus" style="font-size:13px;line-height:1.45;color:#1a1c19">Agentic AI · Embedded Systems</span>
+              </div>
+              <div style="display:grid;grid-template-columns:78px 1fr;gap:12px;align-items:baseline">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#8a8d8d">Local</span>
+                <span id="dashboardClock" style="font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.45;color:#1a1c19">--:--:-- IST</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 1: Work / Projects -->
+      <section id="projects" data-reveal="1" style="padding-bottom:8px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:22px">
+          <div>
+            <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#8a8d8d;margin:0 0 6px 0">01 — Selected work</p>
+            <h2 id="projectsSectionTitle" style="font-family:Bitter,serif;font-weight:400;font-size:34px;line-height:1.1;text-transform:uppercase;letter-spacing:-.01em;margin:0">Projects / Open-Source</h2>
+          </div>
+          <a id="projectsViewAllBtn" href="https://drive.google.com/drive/folders/1vqfYWG1C3KA-rb_5DO1uI2awG5tGS_9O?usp=sharing" target="_blank" rel="noopener noreferrer" class="link-view-all">View all <span class="material-symbols-outlined" style="font-size:15px;">arrow_outward</span></a>
+        </div>
+        <div id="projectsListContainer" style="border-top:1px solid #c4c7c7">
+          <!-- Project Row 1 -->
+          <div class="project-row" data-project-idx="0" data-reveal="1">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8a8d8d;padding-top:5px">/01</span>
+            <div>
+              <h3 style="font-family:Bitter,serif;font-weight:400;font-size:clamp(20px,1.75vw,27px);line-height:1.15;margin:0 0 6px 0;letter-spacing:-.01em;overflow-wrap:break-word;hyphens:auto">Critic-OS</h3>
+              <p style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#747878;margin:0">AI-driven web application</p>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <p style="font-size:13px;line-height:1.62;color:#444748;margin:0;text-wrap:pretty">Real-time satirical music critiques from 6 distinct AI personas, with a parallel enrichment engine that analyses a playlist in under 6 seconds.</p>
+              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:3px 8px">Flask</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:3px 8px">Groq · Llama-3.3</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:3px 8px">HuggingFace</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:3px 8px">Redis</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:3px 8px">Spotify API</span>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;padding-top:4px">
+              <span style="display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#747878"><span style="width:6px;height:6px;border-radius:9999px;background:var(--accent)"></span>Completed</span>
+              <span style="display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#111">Case study <span class="material-symbols-outlined" style="font-size:17px;">arrow_forward</span></span>
+            </div>
+          </div>
+
+          <!-- Project Row 2 -->
+          <div class="project-row" data-project-idx="1" data-reveal="1">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8a8d8d;padding-top:5px">/02</span>
+            <div>
+              <h3 style="font-family:Bitter,serif;font-weight:400;font-size:clamp(20px,1.75vw,27px);line-height:1.15;margin:0 0 6px 0;letter-spacing:-.01em;overflow-wrap:break-word;hyphens:auto">IoT Smart Alarm Clock</h3>
+              <p style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#747878;margin:0">ESP32-C3 embedded system</p>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <p style="font-size:13px;line-height:1.62;color:#444748;margin:0;text-wrap:pretty">A memory-constrained firmware architecture: custom .bin frame-streaming animation engine, 40% lower CPU overhead, 65% less BSS allocation.</p>
+              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:3px 8px">ESP32-C3</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:3px 8px">C++</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:3px 8px">LittleFS</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:3px 8px">I2C/SPI</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:3px 8px">FreeRTOS</span>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;padding-top:4px">
+              <span style="display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#747878"><span style="width:6px;height:6px;border-radius:9999px;background:var(--accent)"></span>Completed</span>
+              <span style="display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#111">Case study <span class="material-symbols-outlined" style="font-size:17px;">arrow_forward</span></span>
+            </div>
+          </div>
+
+          <!-- Project Row 3 -->
+          <div class="project-row" data-project-idx="2" data-reveal="1">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8a8d8d;padding-top:5px">/03</span>
+            <div>
+              <h3 style="font-family:Bitter,serif;font-weight:400;font-size:clamp(20px,1.75vw,27px);line-height:1.15;margin:0 0 6px 0;letter-spacing:-.01em;overflow-wrap:break-word;hyphens:auto">ISL Gesture Recognition</h3>
+              <p style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#747878;margin:0">Random Forest classifier</p>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <p style="font-size:13px;line-height:1.62;color:#444748;margin:0;text-wrap:pretty">Landmark and movement data from Indian Sign Language datasets, processed and classified with a trained Random Forest model.</p>
+              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:3px 8px">Python</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:3px 8px">Scikit-learn</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:3px 8px">NumPy</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:3px 8px">Pandas</span>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;padding-top:4px">
+              <span style="display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#747878"><span style="width:6px;height:6px;border-radius:9999px;background:var(--accent)"></span>Completed</span>
+              <span style="display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#111">Case study <span class="material-symbols-outlined" style="font-size:17px;">arrow_forward</span></span>
+            </div>
+          </div>
+
+          <!-- Project Row 4 -->
+          <div class="project-row" data-project-idx="3" data-reveal="1">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8a8d8d;padding-top:5px">/04</span>
+            <div>
+              <h3 style="font-family:Bitter,serif;font-weight:400;font-size:clamp(20px,1.75vw,27px);line-height:1.15;margin:0 0 6px 0;letter-spacing:-.01em;overflow-wrap:break-word;hyphens:auto">Movie Recommender</h3>
+              <p style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#747878;margin:0">Collaborative filtering engine</p>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <p style="font-size:13px;line-height:1.62;color:#444748;margin:0;text-wrap:pretty">Personalised movie suggestions from a collaborative filtering engine, with a lightweight web UI for input and results.</p>
+              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:3px 8px">Python</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:3px 8px">Scikit-learn</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:3px 8px">NumPy</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:3px 8px">HTML</span>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;padding-top:4px">
+              <span style="display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#747878"><span style="width:6px;height:6px;border-radius:9999px;background:var(--accent)"></span>Completed</span>
+              <span style="display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#111">Case study <span class="material-symbols-outlined" style="font-size:17px;">arrow_forward</span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Profile / About -->
+      <section id="about" data-reveal="1" style="padding:72px 0 0 0">
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#8a8d8d;margin:0 0 26px 0">02 — Profile</p>
+        <div class="profile-grid" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start">
+          <div>
+            <p id="aboutParagraph1" style="font-family:Bitter,serif;font-size:19px;line-height:1.6;color:#1a1c19;margin:0 0 22px 0;text-wrap:pretty">Applied AI developer and B.Tech IT student at KIIT Bhubaneswar, specialising in interactive systems, behavioural architectures, and AI-enhanced user experiences.</p>
+            <p id="aboutParagraph2" style="font-size:14px;line-height:1.7;color:#444748;margin:0 0 28px 0;text-wrap:pretty">Experienced in integrating embedded systems, real-time interfaces, and intelligent workflow automation into cohesive, product-oriented applications that merge machine learning, IoT, and scalable web solutions.</p>
+            <div id="metricsContainer" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;padding-top:22px;border-top:1px solid #c4c7c7">
+              <div>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8a8d8d;display:block;margin-bottom:6px">CGPA</span>
+                <span style="font-family:Bitter,serif;font-size:30px;font-weight:400;line-height:1">8.24</span>
+              </div>
+              <div>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8a8d8d;display:block;margin-bottom:6px">Projects</span>
+                <span style="font-family:Bitter,serif;font-size:30px;font-weight:400;line-height:1">04</span>
+              </div>
+              <div>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8a8d8d;display:block;margin-bottom:6px">Grad year</span>
+                <span style="font-family:Bitter,serif;font-size:30px;font-weight:400;line-height:1">2026</span>
+              </div>
+            </div>
+          </div>
+          <div id="skills">
+            <h3 style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#444748;margin:0 0 18px 0">Technical stack</h3>
+            <div id="skillsListContainer" style="display:flex;flex-direction:column">
+              <div class="stack-row">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8a8d8d">Languages</span>
+                <span style="font-size:14px;line-height:1.5;color:#1a1c19">Python, Java, C, HTML/CSS</span>
+              </div>
+              <div class="stack-row">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8a8d8d">Frameworks</span>
+                <span style="font-size:14px;line-height:1.5;color:#1a1c19">TensorFlow, Scikit-learn, NumPy, Pandas, Matplotlib</span>
+              </div>
+              <div class="stack-row">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8a8d8d">Tools</span>
+                <span style="font-size:14px;line-height:1.5;color:#1a1c19">Git, Power BI, Arduino, LaTeX, VS Code, Microsoft Office</span>
+              </div>
+              <div class="stack-row">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8a8d8d">Data</span>
+                <span style="font-size:14px;line-height:1.5;color:#1a1c19">MySQL</span>
+              </div>
+              <div class="stack-row" style="border-bottom:1px solid #c4c7c7">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8a8d8d">Platforms</span>
+                <span style="font-size:14px;line-height:1.5;color:#1a1c19">ESP32, Spotify API</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Education & Interests -->
+      <section data-reveal="1" class="edu-interest-grid" style="padding:72px 0 0 0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start">
+        <!-- Education Column -->
+        <div id="education">
+          <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#8a8d8d;margin:0 0 26px 0">03 — Education</p>
+          <div id="educationTimelineContainer" style="position:relative;padding-left:26px">
+            <div style="position:absolute;left:3px;top:6px;bottom:6px;width:1px;background:#c4c7c7"></div>
+            
+            <div style="position:relative;padding-bottom:26px">
+              <div style="position:absolute;left:-26px;top:5px;width:7px;height:7px;border-radius:9999px;background:var(--accent)"></div>
+              <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#8a8d8d;margin:0 0 5px 0">2026</p>
+              <h4 style="font-family:Bitter,serif;font-size:17px;font-weight:500;line-height:1.3;margin:0 0 3px 0">Kalinga Institute of Industrial Technology</h4>
+              <p style="font-size:13px;color:#444748;margin:0">B.Tech, Information Technology · Bhubaneswar · CGPA 8.24</p>
+            </div>
+            
+            <div style="position:relative;padding-bottom:26px">
+              <div style="position:absolute;left:-26px;top:5px;width:7px;height:7px;border-radius:9999px;background:#c4c7c7"></div>
+              <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#8a8d8d;margin:0 0 5px 0">2022</p>
+              <h4 style="font-family:Bitter,serif;font-size:17px;font-weight:500;line-height:1.3;margin:0 0 3px 0">Lal Bahadur Shastri Public School</h4>
+              <p style="font-size:13px;color:#444748;margin:0">12th Grade, CBSE · Kota · 79.4%</p>
+            </div>
+            
+            <div style="position:relative">
+              <div style="position:absolute;left:-26px;top:5px;width:7px;height:7px;border-radius:9999px;background:#c4c7c7"></div>
+              <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#8a8d8d;margin:0 0 5px 0">2020</p>
+              <h4 style="font-family:Bitter,serif;font-size:17px;font-weight:500;line-height:1.3;margin:0 0 3px 0">GMR DAV Varalakshmi Public School</h4>
+              <p style="font-size:13px;color:#444748;margin:0">10th Grade, CBSE · Dhenkanal · 90%</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interests & Strengths Column -->
+        <div id="interests">
+          <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#8a8d8d;margin:0 0 26px 0">04 — Interests &amp; strengths</p>
+          <div id="interestsPillsContainer" style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:26px">
+            <span class="interest-tag">LLMs</span>
+            <span class="interest-tag">Agentic AI</span>
+            <span class="interest-tag">Fine tuning</span>
+            <span class="interest-tag">Deep Learning</span>
+            <span class="interest-tag">IoT Systems</span>
+            <span class="interest-tag">Embedded Systems</span>
+            <span class="interest-tag">Human-Computer Interaction</span>
+            <span class="interest-tag">Data Visualization</span>
+          </div>
+          <div id="strengthsListContainer" style="display:flex;flex-direction:column;gap:14px;padding-top:22px;border-top:1px solid #c4c7c7">
+            <p style="font-size:13px;line-height:1.65;color:#444748;margin:0;text-wrap:pretty">Systems-oriented embedded developer experienced in modular ESP32 architecture, real-time interaction systems, and hardware-software integration.</p>
+            <p style="font-size:13px;line-height:1.65;color:#444748;margin:0;text-wrap:pretty">Strong problem-solving and systems-thinking skills with focus on scalable, maintainable, and extensible design patterns.</p>
+            <p style="font-size:13px;line-height:1.65;color:#444748;margin:0;text-wrap:pretty">Rapid prototyping and iterative development capability, with cross-domain exposure spanning embedded systems, UI/UX interaction design, and AI-assisted development tools.</p>
+          </div>
+          <div id="hobbiesBadgesContainer" style="display:flex;flex-wrap:wrap;gap:18px;margin-top:26px;padding-top:20px;border-top:1px solid #c4c7c7">
+            <span class="hobby-badge"><span class="material-symbols-outlined" style="font-size:18px;">menu_book</span>Reading</span>
+            <span class="hobby-badge"><span class="material-symbols-outlined" style="font-size:18px;">movie_filter</span>Movies</span>
+            <span class="hobby-badge"><span class="material-symbols-outlined" style="font-size:18px;">podcasts</span>Podcasts</span>
+            <span class="hobby-badge"><span class="material-symbols-outlined" style="font-size:18px;">build</span>Building</span>
+            <span class="hobby-badge"><span class="material-symbols-outlined" style="font-size:18px;">explore</span>Learning</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Contact / Footer -->
+      <section id="contact" data-reveal="1" style="padding:96px 0 72px 0;margin-top:72px;border-top:1px solid #c4c7c7">
+        <div class="contact-grid" style="display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:64px;align-items:start">
+          <div>
+            <h2 style="font-family:Bitter,serif;font-weight:300;font-size:clamp(38px,5vw,64px);line-height:1.02;letter-spacing:-.02em;margin:0 0 24px 0;text-transform:uppercase">Let's build<br />something</h2>
+            <a id="contactEmailLink" href="mailto:samarthrawat18@email.com" class="contact-email">samarthrawat18@email.com <span class="material-symbols-outlined" style="font-size:22px;">arrow_outward</span></a>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:26px">
+            <div style="display:grid;grid-template-columns:80px 1fr;gap:14px;align-items:baseline">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8a8d8d">Phone</span>
+              <span id="contactPhone" style="font-size:13px;color:#1a1c19">+91 8984100922</span>
+            </div>
+            <div style="display:grid;grid-template-columns:80px 1fr;gap:14px;align-items:baseline">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8a8d8d">Located</span>
+              <span id="contactLocation" style="font-size:13px;line-height:1.55;color:#1a1c19">DGM-2 201, TATA Steel Meramandali Colony, Meramandali, Narendrapur, Odisha — 759121, India</span>
+            </div>
+            <div style="display:grid;grid-template-columns:80px 1fr;gap:14px;align-items:baseline">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8a8d8d">Online</span>
+              <span style="display:flex;gap:18px">
+                <a id="contactGithubLink" href="https://github.com/gentlewind-alt" target="_blank" rel="noopener noreferrer" class="social-link">GitHub</a>
+                <a id="contactLinkedinLink" href="https://www.linkedin.com/in/samarth-rawat" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:80px;padding-top:22px;border-top:1px solid #c4c7c7">
+          <p id="footerCopyright" style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:#8a8d8d;margin:0">© 2026 Samarth Singh Rawat</p>
+          <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:#8a8d8d;margin:0">&gt; designed &amp; built with purpose</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Slide-over Case Study Drawer Panel -->
+  <div id="drawerBackdrop" style="display:none;position:fixed;inset:0;background:rgba(17,17,17,.32);z-index:80;backdrop-filter:blur(2px);animation:backdropIn .35s ease-out both"></div>
+  <aside id="caseStudyDrawer" class="side-drawer" style="display:none;position:fixed;top:0;right:0;height:100vh;width:min(660px,92vw);background:#fafaf5;border-left:1px solid #c4c7c7;z-index:90;overflow-y:auto;box-shadow:-24px 0 60px rgba(17,17,17,.1);animation:panelIn .5s cubic-bezier(.16,1,.3,1) both">
+    <div style="position:sticky;top:0;background:rgba(250,250,245,.94);backdrop-filter:blur(6px);border-bottom:1px solid #c4c7c7;display:flex;justify-content:space-between;align-items:center;padding:20px 40px;z-index:2">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#8a8d8d">Case study</span>
+      <button id="closeDrawerBtn" class="btn-close-panel">Close <span class="material-symbols-outlined" style="font-size:16px;">close</span></button>
+    </div>
+    <div style="padding:44px 40px 80px 40px">
+      <!-- Case Study 0: Critic-OS -->
+      <div class="case-study-content" data-case-study="0" style="display:none">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8a8d8d">/01</span>
+        <h2 style="font-family:Bitter,serif;font-weight:300;font-size:48px;line-height:1.05;letter-spacing:-.02em;margin:10px 0 8px 0">Critic-OS</h2>
+        <p style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#747878;margin:0 0 30px 0">AI-driven web application · Completed</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:34px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">Python · Flask</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">Groq · Llama-3.3</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">HuggingFace</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">Redis</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">Spotify API</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">Last.fm API</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">Vercel</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;padding:22px 0;border-top:1px solid #c4c7c7;border-bottom:1px solid #c4c7c7;margin-bottom:34px">
+          <div><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8a8d8d;display:block;margin-bottom:6px">Personas</span><span style="font-family:Bitter,serif;font-size:28px">6</span></div>
+          <div><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8a8d8d;display:block;margin-bottom:6px">Analysis</span><span style="font-family:Bitter,serif;font-size:28px">&lt;6s</span></div>
+          <div><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8a8d8d;display:block;margin-bottom:6px">Runtime</span><span style="font-family:Bitter,serif;font-size:28px">Serverless</span></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:26px">
+          <div>
+            <h4 style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#444748;margin:0 0 10px 0">The product</h4>
+            <p style="font-size:15px;line-height:1.7;color:#1a1c19;margin:0;text-wrap:pretty">An AI-driven web application that generates real-time, satirical music critiques using Groq (Llama-3.3) and 6 distinct AI personas — from Gordon Ramsay to a cyberpunk hacker.</p>
+          </div>
+          <div>
+            <h4 style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#444748;margin:0 0 10px 0">Enrichment engine</h4>
+            <p style="font-size:15px;line-height:1.7;color:#1a1c19;margin:0;text-wrap:pretty">A parallel enrichment engine integrates Spotify, Last.fm, and LRC_LIB APIs with HuggingFace emotion classification, analysing a full user playlist in under 6 seconds.</p>
+          </div>
+          <div>
+            <h4 style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#444748;margin:0 0 10px 0">Production</h4>
+            <p style="font-size:15px;line-height:1.7;color:#1a1c19;margin:0;text-wrap:pretty">Optimised for Vercel Serverless with Redis-backed session management, keeping response times high and memory usage efficient under concurrent load.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case Study 1: IoT Smart Alarm Clock -->
+      <div class="case-study-content" data-case-study="1" style="display:none">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8a8d8d">/02</span>
+        <h2 style="font-family:Bitter,serif;font-weight:300;font-size:48px;line-height:1.05;letter-spacing:-.02em;margin:10px 0 8px 0">IoT Smart Alarm Clock</h2>
+        <p style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#747878;margin:0 0 30px 0">ESP32-C3 embedded system · Completed</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:34px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">ESP32-C3</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">C++</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">LittleFS</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">I2C/SPI</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">FreeRTOS</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">Python · Asset packing</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;padding:22px 0;border-top:1px solid #c4c7c7;border-bottom:1px solid #c4c7c7;margin-bottom:34px">
+          <div><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8a8d8d;display:block;margin-bottom:6px">CPU overhead</span><span style="font-family:Bitter,serif;font-size:28px">−40%</span></div>
+          <div><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8a8d8d;display:block;margin-bottom:6px">BSS memory</span><span style="font-family:Bitter,serif;font-size:28px">−65%</span></div>
+          <div><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8a8d8d;display:block;margin-bottom:6px">Header check</span><span style="font-family:Bitter,serif;font-size:28px">16-byte</span></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:26px">
+          <div>
+            <h4 style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#444748;margin:0 0 10px 0">Memory-constrained architecture</h4>
+            <p style="font-size:15px;line-height:1.7;color:#1a1c19;margin:0;text-wrap:pretty">Engineered a custom .bin streaming animation engine to bypass ESP32-C3 RAM limitations, enabling high-quality animations via LittleFS frame-streaming with 16-byte header verification.</p>
+          </div>
+          <div>
+            <h4 style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#444748;margin:0 0 10px 0">Resource optimisation</h4>
+            <p style="font-size:15px;line-height:1.7;color:#1a1c19;margin:0;text-wrap:pretty">A multi-tier throttling strategy — I2C capping, sensor polling reduction with median filtering, and UI string caching — reduced CPU overhead by 40% and enhanced system stability.</p>
+          </div>
+          <div>
+            <h4 style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#444748;margin:0 0 10px 0">Modular firmware design</h4>
+            <p style="font-size:15px;line-height:1.7;color:#1a1c19;margin:0;text-wrap:pretty">A feature-toggle architecture cut BSS memory allocation by 65%, keeping compatibility with WiFi/BT stacks while maintaining a responsive, interrupt-driven multi-page menu system.</p>
+          </div>
+          <div>
+            <h4 style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#444748;margin:0 0 10px 0">System reliability</h4>
+            <p style="font-size:15px;line-height:1.7;color:#1a1c19;margin:0;text-wrap:pretty">A heterogeneous sensor suite (PIR, ultrasonic, IMU) drives gesture control and motion wake, synchronised with dual-source timekeeping (NTP + hardware RTC) for offline resilience.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case Study 2: ISL Gesture Recognition -->
+      <div class="case-study-content" data-case-study="2" style="display:none">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8a8d8d">/03</span>
+        <h2 style="font-family:Bitter,serif;font-weight:300;font-size:48px;line-height:1.05;letter-spacing:-.02em;margin:10px 0 8px 0">ISL Gesture Recognition</h2>
+        <p style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#747878;margin:0 0 30px 0">Random Forest classifier · Completed</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:34px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">Python</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">Scikit-learn</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">NumPy</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">Pandas</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:26px">
+          <div>
+            <h4 style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#444748;margin:0 0 10px 0">Data pipeline</h4>
+            <p style="font-size:15px;line-height:1.7;color:#1a1c19;margin:0;text-wrap:pretty">Processed Indian Sign Language hand gesture datasets in CSV format, carrying landmark and movement data per sample.</p>
+          </div>
+          <div>
+            <h4 style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#444748;margin:0 0 10px 0">Model</h4>
+            <p style="font-size:15px;line-height:1.7;color:#1a1c19;margin:0;text-wrap:pretty">Trained a Random Forest model to classify ISL gestures accurately, chosen for its robustness on tabular landmark features and its interpretability.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case Study 3: Movie Recommender -->
+      <div class="case-study-content" data-case-study="3" style="display:none">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8a8d8d">/04</span>
+        <h2 style="font-family:Bitter,serif;font-weight:300;font-size:48px;line-height:1.05;letter-spacing:-.02em;margin:10px 0 8px 0">Movie Recommender</h2>
+        <p style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#747878;margin:0 0 30px 0">Collaborative filtering engine · Completed</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:34px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">Python</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">Scikit-learn</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">NumPy</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5e5e5e;border:1px solid #d6d6d0;padding:4px 9px">HTML</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:26px">
+          <div>
+            <h4 style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#444748;margin:0 0 10px 0">Engine</h4>
+            <p style="font-size:15px;line-height:1.7;color:#1a1c19;margin:0;text-wrap:pretty">Built a collaborative filtering engine to generate personalised movie suggestions from user rating patterns.</p>
+          </div>
+          <div>
+            <h4 style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#444748;margin:0 0 10px 0">Interface</h4>
+            <p style="font-size:15px;line-height:1.7;color:#1a1c19;margin:0;text-wrap:pretty">Processed large datasets and designed a simple web UI for user input and returned recommendations.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Drawer Bottom Contact CTA -->
+      <div style="margin-top:44px;padding-top:26px;border-top:1px solid #c4c7c7;display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:13px;color:#747878">Want something like this built?</span>
+        <a id="drawerContactBtn" href="mailto:samarthrawat18@email.com" class="btn-drawer-cta">Get in touch <span class="material-symbols-outlined" style="font-size:16px;">arrow_outward</span></a>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+<script>
+(function() {
+  const SECTIONS = ['home', 'projects', 'about', 'skills', 'education', 'interests', 'contact'];
+  const TICKER = [
+    'Building AI-driven applications',
+    'Merging machine learning, IoT and web',
+    'Shipping firmware on 400KB of RAM',
+    'Taking on freelance work'
+  ];
+
+  let currentSectionIndex = 0;
+  let tickerIdx = 0;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 1. Live Indian Standard Time (IST) Clocks
+  function updateClock() {
+    try {
+      const opts = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: false };
+      const shortTime = new Intl.DateTimeFormat('en-GB', opts).format(new Date());
+      const fullTime = new Intl.DateTimeFormat('en-GB', Object.assign({ second: '2-digit' }, opts)).format(new Date());
+      
+      const sidebarClock = document.getElementById('sidebarClock');
+      if (sidebarClock) sidebarClock.textContent = 'IST ' + shortTime;
+      
+      const dashboardClock = document.getElementById('dashboardClock');
+      if (dashboardClock) dashboardClock.textContent = fullTime + ' IST';
+    } catch(e) {}
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // 2. Cycling Status Ticker
+  const tickerEl = document.getElementById('dashboardTickerText');
+  if (tickerEl) {
+    setInterval(() => {
+      tickerIdx = (tickerIdx + 1) % TICKER.length;
+      tickerEl.textContent = TICKER[tickerIdx];
+    }, 4200);
+  }
+
+  // 3. Smooth Scroll Progress Bar
+  const progressEl = document.getElementById('scrollProgressBar');
+  function onScroll() {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const p = max > 0 ? Math.min(1, h.scrollTop / max) : 0;
+    if (progressEl) progressEl.style.transform = 'scaleX(' + p + ')';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // 4. Scroll Reveal Animations
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'none';
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('[data-reveal]').forEach((el) => {
+    if (reduced) return;
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(22px)';
+    el.style.transition = 'opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1)';
+    revealObs.observe(el);
+  });
+  setTimeout(() => {
+    document.querySelectorAll('[data-reveal]').forEach((el) => { 
+      el.style.opacity = '1'; 
+      el.style.transform = 'none'; 
+    });
+  }, 2600);
+
+  // 5. Active Nav Spy & Sidebar Indicator
+  const navIndicator = document.getElementById('navIndicator');
+  const navLinks = document.querySelectorAll('.nav-item');
+
+  function setActiveNav(index) {
+    if (index < 0 || index >= SECTIONS.length) return;
+    currentSectionIndex = index;
+    if (navIndicator) {
+      navIndicator.style.transform = 'translateY(' + (index * 44) + 'px)';
+    }
+    navLinks.forEach((link, idx) => {
+      if (idx === index) {
+        link.classList.add('active');
+        link.style.color = '#000';
+      } else {
+        link.classList.remove('active');
+        link.style.color = '#444748';
+      }
+    });
+  }
+
+  navLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      const idx = parseInt(link.getAttribute('data-nav'), 10);
+      if (!isNaN(idx)) setActiveNav(idx);
+    });
+  });
+
+  const sectionObs = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        const i = SECTIONS.indexOf(e.target.id);
+        if (i >= 0 && i !== currentSectionIndex) setActiveNav(i);
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+
+  SECTIONS.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) sectionObs.observe(el);
+  });
+
+  // 6. Case Study Slide-over Drawer
+  const drawerBackdrop = document.getElementById('drawerBackdrop');
+  const caseStudyDrawer = document.getElementById('caseStudyDrawer');
+  const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+  const caseStudyContents = document.querySelectorAll('.case-study-content');
+
+  function openCaseStudy(idx) {
+    if (!caseStudyDrawer || !drawerBackdrop) return;
+    caseStudyContents.forEach((c) => {
+      if (c.getAttribute('data-case-study') === String(idx)) {
+        c.style.display = 'block';
+      } else {
+        c.style.display = 'none';
+      }
+    });
+    drawerBackdrop.style.display = 'block';
+    caseStudyDrawer.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCaseStudy() {
+    if (!caseStudyDrawer || !drawerBackdrop) return;
+    drawerBackdrop.style.display = 'none';
+    caseStudyDrawer.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.project-row').forEach((row) => {
+    row.addEventListener('click', () => {
+      const idx = row.getAttribute('data-project-idx');
+      if (idx !== null && idx !== undefined) openCaseStudy(idx);
+    });
+  });
+
+  if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeCaseStudy);
+  if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeCaseStudy);
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeCaseStudy();
+  });
+
+  // 7. Interactive Magnetic Custom Follower Cursor
+  const ring = document.getElementById('cursorRing');
+  const dot = document.getElementById('cursorDot');
+  if (ring && dot && !window.matchMedia('(pointer: coarse)').matches) {
+    let mx = window.innerWidth / 2, my = window.innerHeight / 2, rx = mx, ry = my, shown = false;
+    window.addEventListener('mousemove', (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+      dot.style.transform = 'translate3d(' + (mx - 2.5) + 'px,' + (my - 2.5) + 'px,0)';
+      if (!shown) {
+        shown = true;
+        ring.style.opacity = '1';
+        dot.style.opacity = '1';
+      }
+      const t = e.target;
+      const near = t && t.closest && t.closest('a,button,[data-reveal] [onclick],[role=button]');
+      const card = t && t.closest && t.closest('[data-nav],.project-row');
+      const grow = !!(near || card) || (t && t.closest && !!t.closest('[style*="cursor:pointer"]'));
+      ring.style.width = grow ? '54px' : '34px';
+      ring.style.height = grow ? '54px' : '34px';
+      ring.style.backgroundColor = grow ? 'rgba(26,28,25,.07)' : 'transparent';
+      ring.style.borderColor = grow ? 'rgba(26,28,25,.75)' : 'rgba(26,28,25,.45)';
+    }, { passive: true });
+
+    function cursorLoop() {
+      const w = parseFloat(ring.style.width || '34');
+      rx += (mx - rx) * 0.16;
+      ry += (my - ry) * 0.16;
+      ring.style.transform = 'translate3d(' + (rx - w / 2) + 'px,' + (ry - w / 2) + 'px,0)';
+      requestAnimationFrame(cursorLoop);
+    }
+    cursorLoop();
+  }
+
+  // 8. Dynamic 2D Particle Canvas Field
+  const cv = document.getElementById('particleCanvas');
+  if (cv && !reduced) {
+    const ctx = cv.getContext('2d');
+    let w = 0, h = 0, pts = [], mouse = { x: -999, y: -999 };
+    const density = 22000;
+    const speed = 0.13;
+
+    function setupCanvas() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = cv.clientWidth;
+      h = cv.clientHeight;
+      cv.width = w * dpr;
+      cv.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const n = Math.min(150, Math.round((w * h) / density));
+      pts = [];
+      for (let i = 0; i < n; i++) {
+        pts.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * speed,
+          vy: (Math.random() - 0.5) * speed,
+          r: Math.random() * 1.1 + 0.5
+        });
+      }
+    }
+    setupCanvas();
+    window.addEventListener('resize', setupCanvas);
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    }, { passive: true });
+
+    function drawField() {
+      ctx.clearRect(0, 0, w, h);
+      for (let i = 0; i < pts.length; i++) {
+        const p = pts[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < -20) p.x = w + 20;
+        if (p.x > w + 20) p.x = -20;
+        if (p.y < -20) p.y = h + 20;
+        if (p.y > h + 20) p.y = -20;
+
+        const dx = p.x - mouse.x;
+        const dy = p.y - mouse.y;
+        const d2 = dx * dx + dy * dy;
+        const glow = d2 < 26000 ? 1 - d2 / 26000 : 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r + glow * 1.4, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(26,28,25,' + (0.1 + glow * 0.35) + ')';
+        ctx.fill();
+      }
+      requestAnimationFrame(drawField);
+    }
+    drawField();
+  }
+})();
 </script>
 
-
-</body></html>
+</body>
+</html>
