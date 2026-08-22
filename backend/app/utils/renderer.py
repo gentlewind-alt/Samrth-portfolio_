@@ -645,7 +645,7 @@ TEMPLATE = r"""<!DOCTYPE html>
   var FAST_WINDOW_MS = 290, SLAP_DELAY_MS = 90, SLAP_VOLUME = 0.6, START_CHIYO_ON = true, MOTION = 'confident', CURSOR = true;
   var INK = "url('vectorizer/fee93e0d-1d82-4761-8be5-4d277d0f6bfa.svg')";
   var $ = function (s, r) { return (r || document).querySelector(s); };
-  var $ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var chiyoOn = false, chiyoFrame = 1, chiyoBusy = false, chiyoReady = false, lastClick = 0, idleTimer, seqTimer, watchdog;
@@ -654,6 +654,18 @@ TEMPLATE = r"""<!DOCTYPE html>
   var layer = $('#chiyoLayer');
 
   $('#slapCount').textContent = slapCount;
+
+  // The shared counter lives in /api/slaps. If it is unreachable (no KV store
+  // provisioned, or a static host with no functions) slapRemote stays false
+  // and the per-browser localStorage count above is what shows.
+  var slapRemote = false;
+  function showSlaps(n) { slapCount = n; $('#slapCount').textContent = n; }
+  function slapsApi(opts) {
+    return fetch('/api/slaps', opts).then(function (r) { return r.ok ? r.json() : null; });
+  }
+  slapsApi().then(function (d) {
+    if (d && typeof d.count === 'number') { slapRemote = true; showSlaps(d.count); }
+  }).catch(function () {});
 
   function paintChiyo() {
     if (!layer) return;
@@ -664,7 +676,7 @@ TEMPLATE = r"""<!DOCTYPE html>
   }
   function waitForFrames() {
     if (!layer) { chiyoReady = true; return Promise.resolve(); }
-    return Promise.all($('img', layer).map(function (img) { return img.decode ? img.decode().catch(function(){}) : Promise.resolve(); }))
+    return Promise.all($$('img', layer).map(function (img) { return img.decode ? img.decode().catch(function(){}) : Promise.resolve(); }))
       .then(function () { chiyoReady = true; });
   }
   function startIdle() {
@@ -707,6 +719,11 @@ TEMPLATE = r"""<!DOCTYPE html>
     slapCount += 1;
     localStorage.setItem('chiyoSlapCount', String(slapCount));
     $('#slapCount').textContent = slapCount;
+    if (slapRemote) {
+      slapsApi({ method: 'POST' }).then(function (d) {
+        if (d && typeof d.count === 'number' && d.count > slapCount) showSlaps(d.count);
+      }).catch(function () {});
+    }
     chiyoBusy = true;
     var i = 0;
     (function step() {
@@ -730,7 +747,7 @@ TEMPLATE = r"""<!DOCTYPE html>
     $('#chiyoStatus').style.color = on ? 'var(--accent)' : '#8a8d8d';
     $('#chiyoStatus').textContent = on ? 'ON' : 'OFF';
     $('#root').style.textShadow = on ? '0 0 5px rgba(250,250,245,.72),0 0 1px rgba(250,250,245,.9)' : '';
-    $('[data-metasoft]').forEach(function (el) { el.style.color = on ? '#4a4d4d' : ''; });
+    $$('[data-metasoft]').forEach(function (el) { el.style.color = on ? '#4a4d4d' : ''; });
     if (on) { paintChiyo(); if (!chiyoReady) waitForFrames().then(startIdle); else startIdle(); }
   }
 
@@ -739,11 +756,11 @@ TEMPLATE = r"""<!DOCTYPE html>
     $('#aside').style.width = collapsed ? '76px' : '264px';
     $('#main').style.marginLeft = collapsed ? '76px' : '264px';
     $('#sideIcon').textContent = collapsed ? 'chevron_right' : 'chevron_left';
-    $('.side-label').forEach(function (el) { el.style.display = collapsed ? 'none' : 'contents'; });
+    $$('.side-label').forEach(function (el) { el.style.display = collapsed ? 'none' : 'contents'; });
   }
   function setActive(i) { active = i; $('#navInd').style.transform = 'translateY(' + i * 44 + 'px)'; }
   function openCase(i) {
-    $('.case').forEach(function (el) { el.style.display = el.getAttribute('data-case') === String(i) ? 'block' : 'none'; });
+    $$('.case').forEach(function (el) { el.style.display = el.getAttribute('data-case') === String(i) ? 'block' : 'none'; });
     $('#panelWrap').style.display = 'block';
   }
 
@@ -780,14 +797,14 @@ TEMPLATE = r"""<!DOCTYPE html>
       if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'none'; revealObs.unobserve(e.target); }
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
-  $('[data-reveal]').forEach(function (el) {
+  $$('[data-reveal]').forEach(function (el) {
     if (reduced) return;
     el.style.opacity = '0';
     el.style.transform = 'translateY(22px)';
     el.style.transition = 'opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1)';
     revealObs.observe(el);
   });
-  setTimeout(function () { $('[data-reveal]').forEach(function (el) { el.style.opacity = '1'; el.style.transform = 'none'; }); }, 2600);
+  setTimeout(function () { $$('[data-reveal]').forEach(function (el) { el.style.opacity = '1'; el.style.transform = 'none'; }); }, 2600);
 
   var sectionObs = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {

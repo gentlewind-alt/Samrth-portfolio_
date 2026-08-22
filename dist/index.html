@@ -624,6 +624,18 @@
 
   $('#slapCount').textContent = slapCount;
 
+  // The shared counter lives in /api/slaps. If it is unreachable (no KV store
+  // provisioned, or a static host with no functions) slapRemote stays false
+  // and the per-browser localStorage count above is what shows.
+  var slapRemote = false;
+  function showSlaps(n) { slapCount = n; $('#slapCount').textContent = n; }
+  function slapsApi(opts) {
+    return fetch('/api/slaps', opts).then(function (r) { return r.ok ? r.json() : null; });
+  }
+  slapsApi().then(function (d) {
+    if (d && typeof d.count === 'number') { slapRemote = true; showSlaps(d.count); }
+  }).catch(function () {});
+
   function paintChiyo() {
     if (!layer) return;
     for (var i = 0; i < layer.children.length; i++) {
@@ -676,6 +688,11 @@
     slapCount += 1;
     localStorage.setItem('chiyoSlapCount', String(slapCount));
     $('#slapCount').textContent = slapCount;
+    if (slapRemote) {
+      slapsApi({ method: 'POST' }).then(function (d) {
+        if (d && typeof d.count === 'number' && d.count > slapCount) showSlaps(d.count);
+      }).catch(function () {});
+    }
     chiyoBusy = true;
     var i = 0;
     (function step() {
