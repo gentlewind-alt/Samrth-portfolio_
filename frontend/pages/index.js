@@ -1,58 +1,6 @@
-import React, { useEffect, useRef } from 'react';
-import ChiyoBackground from '../components/ChiyoBackground/ChiyoBackground';
+import React from 'react';
+import PortfolioV2 from '../components/portfolio/PortfolioV2';
 
-export async function getServerSideProps() {
-  try {
-    // Fetch portfolio with latest resume from backend
-    const res = await fetch('http://127.0.0.1:8000/');
-    if (!res.ok) throw new Error('Failed to fetch portfolio');
-    const html = await res.text();
-
-    return { props: { html } };
-  } catch (err) {
-    console.error('Error fetching resume:', err);
-    return {
-      props: {
-        html: `
-          <div style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #0d1117; color: #c9d1d9; font-family: sans-serif; padding: 20px; text-align: center;">
-            <h1 style="color: #f85149; margin-bottom: 10px;">Portfolio Offline</h1>
-            <p style="margin-bottom: 20px;">Could not connect to the backend server. Make sure the FastAPI server is running on port 8000.</p>
-            <a href="/admin" style="padding: 10px 20px; background: #238636; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px; transition: background 0.2s;">Go to Admin Panel</a>
-          </div>
-        `
-      }
-    };
-  }
-}
-
-export default function Home({ html }) {
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    // Extract and run scripts within the injected HTML
-    const scripts = containerRef.current.querySelectorAll('script');
-    scripts.forEach((oldScript) => {
-      // Avoid re-executing remote analytic tags if already present
-      if (oldScript.src && document.querySelector(`script[src="${oldScript.src}"]`)) {
-        return;
-      }
-      const newScript = document.createElement('script');
-      Array.from(oldScript.attributes).forEach((attr) => {
-        newScript.setAttribute(attr.name, attr.value);
-      });
-      newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-      if (oldScript.parentNode) {
-        oldScript.parentNode.replaceChild(newScript, oldScript);
-      }
-    });
-  }, [html]);
-
-  // Render the fetched portfolio HTML directly
-  return (
-    <>
-      <div ref={containerRef} dangerouslySetInnerHTML={{ __html: html }} />
-      <ChiyoBackground />
-    </>
-  );
+export default function Home() {
+  return <PortfolioV2 />;
 }
