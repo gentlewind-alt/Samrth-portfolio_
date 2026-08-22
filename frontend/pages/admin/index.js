@@ -16,12 +16,13 @@ export default function AdminDashboard() {
   const fetchResumes = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${API_URL}/resumes/`);
+      const res = await fetch(`${API_URL}/resumes`);
       if (!res.ok) throw new Error('Failed to fetch resumes from API');
       const data = await res.json();
-      // Sort resumes by upload time (newest first)
-      data.sort((a, b) => new Date(b.uploaded_at) - new Date(a.uploaded_at));
-      setResumes(data);
+      // Sort resumes by creation time (newest first)
+      const resumes = data.resumes || [];
+      resumes.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      setResumes(resumes);
       setError(null);
     } catch (err) {
       console.error(err);
@@ -65,13 +66,13 @@ export default function AdminDashboard() {
 
     try {
       setUploading(true);
-      const res = await fetch(`${API_URL}/resumes/`, {
+      const res = await fetch(`${API_URL}/resumes`, {
         method: 'POST',
         body: formData,
       });
 
       if (!res.ok) throw new Error('Upload failed');
-      
+
       const newResume = await res.json();
       setResumes((prev) => [newResume, ...prev]);
       alert('Resume uploaded and processed successfully!');

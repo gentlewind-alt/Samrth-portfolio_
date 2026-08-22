@@ -3,29 +3,10 @@ import ChiyoBackground from '../components/ChiyoBackground/ChiyoBackground';
 
 export async function getServerSideProps() {
   try {
-    // 1. Fetch all resumes from backend to find the latest one
-    const listRes = await fetch('http://127.0.0.1:8000/resumes/');
-    if (!listRes.ok) throw new Error('Failed to fetch resumes list');
-    const resumes = await listRes.json();
-
-    if (resumes.length === 0) {
-      // If no resumes exist, redirect to admin page to upload one
-      return {
-        redirect: {
-          destination: '/admin',
-          permanent: false,
-        },
-      };
-    }
-
-    // Sort by uploaded_at desc to find the latest
-    resumes.sort((a, b) => new Date(b.uploaded_at) - new Date(a.uploaded_at));
-    const latestResume = resumes[0];
-
-    // 2. Fetch the rendered HTML of the latest resume
-    const renderRes = await fetch(`http://127.0.0.1:8000/resumes/${latestResume.id}/render`);
-    if (!renderRes.ok) throw new Error('Failed to fetch rendered resume');
-    const html = await renderRes.text();
+    // Fetch portfolio with latest resume from backend
+    const res = await fetch('http://127.0.0.1:8000/');
+    if (!res.ok) throw new Error('Failed to fetch portfolio');
+    const html = await res.text();
 
     return { props: { html } };
   } catch (err) {
