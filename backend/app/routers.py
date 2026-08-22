@@ -788,3 +788,20 @@ def render_resume_html(resume_id: int, db: Session = Depends(dependencies.get_db
     from fastapi.responses import HTMLResponse
     return HTMLResponse(content=html_content, status_code=200)
 
+@router.get("/api/slaps")
+def get_slaps(db: Session = Depends(dependencies.get_db)):
+    slap_record = db.query(models.SlapCount).first()
+    if not slap_record:
+        return {"count": 0}
+    return {"count": slap_record.count}
+
+@router.post("/api/slaps")
+def increment_slaps(db: Session = Depends(dependencies.get_db)):
+    slap_record = db.query(models.SlapCount).first()
+    if not slap_record:
+        slap_record = models.SlapCount(count=1)
+        db.add(slap_record)
+    else:
+        slap_record.count += 1
+    db.commit()
+    return {"count": slap_record.count}

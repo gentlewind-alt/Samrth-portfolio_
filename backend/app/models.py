@@ -20,3 +20,9 @@ class Resume(Base):
     filename = Column(String, nullable=False)
     content_json = Column(JSON, nullable=False, default={})
     uploaded_at = Column(DateTime, default=datetime.utcnow)
+
+class SlapCount(Base):
+    __tablename__ = "slap_count"
+
+    id = Column(Integer, primary_key=True, index=True)
+    count = Column(Integer, default=0, nullable=False)
