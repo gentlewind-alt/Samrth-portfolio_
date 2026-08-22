@@ -10,6 +10,10 @@ module.exports = {
         source: '/vectorizer/:path*',
         destination: 'http://127.0.0.1:8000/vectorizer/:path*',
       },
+      {
+        source: '/assets/:path*',
+        destination: 'http://127.0.0.1:8000/assets/:path*',
+      },
     ];
   },
 };

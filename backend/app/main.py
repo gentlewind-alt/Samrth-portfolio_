@@ -25,6 +25,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Serve the portfolio's static art. Paths are resolved from this file rather
+# than the cwd, since run_project.bat launches uvicorn from backend/.
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+for _route, _dirname in (("/vectorizer", "vectorizer"), ("/assets", "assets")):
+    _path = os.path.join(REPO_ROOT, _dirname)
+    if os.path.isdir(_path):
+        app.mount(_route, StaticFiles(directory=_path), name=_dirname)
+
 # Include routers
 app.include_router(portfolio.router)
 app.include_router(admin.router)

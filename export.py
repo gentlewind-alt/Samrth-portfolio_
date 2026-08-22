@@ -5,16 +5,34 @@ import sys
 def export_portfolio():
     print("Exporting static portfolio website...")
     
-    # Locate database path
-    db_path = "backend/resume.db"
-    if not os.path.exists(db_path):
-        db_path = "backend/app/resume.db"
-        if not os.path.exists(db_path):
-            # Try from backend directory
-            db_path = "resume.db"
-            if not os.path.exists(db_path):
-                print("Error: resume.db database file not found.")
-                return
+    # Locate database path. The app writes backend/portfolio.db (see
+    # database.py, which resolves ./portfolio.db against uvicorn's cwd of
+    # backend/); the resume.db names are older and may exist as empty stubs,
+    # so skip any candidate that has no resumes table.
+    def _has_resumes(path):
+        if not os.path.exists(path) or os.path.getsize(path) == 0:
+            return False
+        import sqlite3
+        try:
+            with sqlite3.connect(path) as conn:
+                return conn.execute(
+                    "SELECT 1 FROM sqlite_master WHERE type='table' AND name='resumes'"
+                ).fetchone() is not None
+        except sqlite3.Error:
+            return False
+
+    candidates = [
+        os.path.join("backend", "portfolio.db"),
+        "portfolio.db",
+        os.path.join("backend", "resume.db"),
+        os.path.join("backend", "app", "resume.db"),
+        "resume.db",
+    ]
+    db_path = next((p for p in candidates if _has_resumes(p)), None)
+    if db_path is None:
+        print("Error: no database with a 'resumes' table found. Tried: " + ", ".join(candidates))
+        return
+    print(f"Using database: {db_path}")
 
     # Add backend directory to system path
     backend_dir = os.path.abspath("backend")
@@ -22,7 +40,7 @@ def export_portfolio():
         sys.path.append(backend_dir)
         
     try:
-        from app.routers import render_resume_html
+        from app.utils import render_portfolio_html
         from sqlalchemy import create_engine
         from sqlalchemy.orm import sessionmaker
         
@@ -42,9 +60,8 @@ def export_portfolio():
         print(f"Found latest resume: ID {resume.id} | File: {resume.filename}")
         print("Rendering static HTML...")
         
-        # Render the HTML using the backend router
-        response = render_resume_html(resume.id, db)
-        html_content = response.body.decode("utf-8")
+        # Render the HTML using the backend renderer
+        html_content = render_portfolio_html(resume.content_json, resume.id)
         db.close()
         
         # Create output directory
@@ -87,7 +104,15 @@ def export_portfolio():
             print("Copied vectorizer SVG background assets to dist/vectorizer/")
         else:
             print("Warning: vectorizer directory not found, background assets might be missing.")
-            
+
+        # Copy Chiyo frames
+        chiyo_src = os.path.join("assets", "chiyo")
+        if os.path.exists(chiyo_src):
+            shutil.copytree(chiyo_src, os.path.join(dist_dir, "assets", "chiyo"))
+            print("Copied Chiyo animation frames to dist/assets/chiyo/")
+        else:
+            print("Warning: assets/chiyo directory not found, Chiyo mode will have no frames.")
+
         print("\n" + "="*50)
         print("SUCCESS: Static portfolio website generated successfully!")
         print("Output Folder: dist/")
