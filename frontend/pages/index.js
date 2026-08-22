@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import ChiyoSlapper from '../components/ChiyoSlapper';
+import ChiyoBackground from '../components/ChiyoBackground/ChiyoBackground';
 
 export async function getServerSideProps() {
   try {
@@ -71,9 +71,7 @@ export default function Home({ html }) {
   return (
     <>
       <div ref={containerRef} dangerouslySetInnerHTML={{ __html: html }} />
-      <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 9999 }}>
-        <ChiyoSlapper />
-      </div>
+      <ChiyoBackground />
     </>
   );
 }

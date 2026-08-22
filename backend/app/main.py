@@ -1,20 +1,23 @@
-"""FastAPI application entry point for the resume CMS prototype.
-
-- Includes the API router defined in `routers.py`.
-- Sets up the database tables on startup.
-- Runs with `uvicorn app.main:app --reload` from the `backend` directory.
-"""
-
-import uvicorn
+"""FastAPI application for backend-driven portfolio."""
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import os
-from . import models, dependencies, routers
+from .database import engine
+from .models import Base
+from .routers import portfolio, admin
 
-from fastapi.middleware.cors import CORSMiddleware
+# Create tables
+Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="Resume CMS API", version="0.1.0")
-# Allow all origins for local development – adjust in production
+# Initialize app
+app = FastAPI(
+    title="Portfolio API",
+    description="Backend-driven portfolio with resume management",
+    version="2.0.0"
+)
+
+# Add CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -22,23 +25,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-def read_root():
-    return {"message": "Resume CMS API"}
+# Include routers
+app.include_router(portfolio.router)
+app.include_router(admin.router)
 
-# Include the router with the / prefix (router already defines full paths)
-app.include_router(routers.router)
 
-# Mount vectorizer static files to serve background SVGs
-vectorizer_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "vectorizer"))
-if os.path.exists(vectorizer_path):
-    app.mount("/vectorizer", StaticFiles(directory=vectorizer_path), name="vectorizer")
+@app.get("/health")
+def health_check():
+    """Health check endpoint."""
+    return {"status": "ok", "message": "Portfolio API is running"}
 
-# Create tables on startup (SQLite for prototype)
-@app.on_event("startup")
-def on_startup():
-    models.Base.metadata.create_all(bind=dependencies.engine)
 
 if __name__ == "__main__":
+    import uvicorn
     uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
-

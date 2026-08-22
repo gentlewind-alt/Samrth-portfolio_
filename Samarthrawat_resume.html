@@ -280,15 +280,106 @@
         width: 100vw !important;
       }
     }
-    @media (prefers-reduced-motion: reduce) { 
-      *, *::before, *::after { 
-        animation: none !important; 
-        transition: none !important; 
-      } 
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* Chiyo Background Styles */
+    .chiyo-toggle-container {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 9999;
+    }
+
+    .chiyo-toggle-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #111;
+      color: #fafaf5;
+      border: 1px solid #747878;
+      cursor: pointer;
+      font-size: 22px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(26, 28, 25, 0.15);
+    }
+
+    .chiyo-toggle-btn:hover {
+      background: #000;
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(26, 28, 25, 0.25);
+    }
+
+    .chiyo-toggle-btn.active {
+      background: #22c55e;
+      color: #111;
+      border-color: #22c55e;
+    }
+
+    .chiyo-background-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .chiyo-active-override {
+      background: transparent !important;
+    }
+
+    .chiyo-active-override body,
+    .chiyo-active-override div[style*="background:#fafaf5"],
+    .chiyo-active-override div[style*="background: #fafaf5"],
+    .chiyo-active-override div[style*="background-color:#fafaf5"],
+    .chiyo-active-override div[style*="background-color: #fafaf5"] {
+      background: transparent !important;
+      background-color: transparent !important;
+    }
+
+    .chiyo-active-override img[src*="vectorizer"] {
+      display: none !important;
+    }
+
+    .chiyo-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(250, 250, 245, 0.75);
+      pointer-events: none;
+    }
+
+    .chiyo-canvas-container {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .chiyo-canvas-container canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
     }
   </style>
 </head>
 <body>
+
+<!-- Chiyo Background Toggle Container -->
+<div class="chiyo-toggle-container">
+  <button class="chiyo-toggle-btn" id="chiyoToggle" title="Toggle Chiyo background">🐱</button>
+</div>
+
+<!-- Chiyo Background Layer (shown when enabled) -->
+<div id="chiyoBackgroundLayer" class="chiyo-background-layer" style="display:none">
+  <div class="chiyo-canvas-container" id="chiyoCanvasContainer"></div>
+  <div class="chiyo-overlay"></div>
+</div>
 
 <div style="min-height:100vh;background:#fafaf5;color:#1a1c19;position:relative;overflow-x:hidden;--accent:#22c55e">
 
@@ -1050,6 +1141,91 @@
     }
     drawField();
   }
+
+  // 9. Chiyo Background Toggle System
+  (function() {
+    const CLICK_THRESHOLD = 300; // ms between clicks
+    const FAST_SLAP_THRESHOLD = 3; // clicks to trigger fast animation
+
+    const toggleBtn = document.getElementById('chiyoToggle');
+    const backgroundLayer = document.getElementById('chiyoBackgroundLayer');
+    const htmlElement = document.documentElement;
+
+    let chiyoEnabled = false;
+    let clickCount = 0;
+    let lastClickTime = 0;
+
+    if (!toggleBtn) return;
+
+    // Toggle button click handler
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      chiyoEnabled = !chiyoEnabled;
+      toggleBtn.classList.toggle('active', chiyoEnabled);
+
+      if (chiyoEnabled) {
+        backgroundLayer.style.display = 'block';
+        htmlElement.classList.add('chiyo-active-override');
+        // Store preference
+        localStorage.setItem('chiyo-enabled', 'true');
+      } else {
+        backgroundLayer.style.display = 'none';
+        htmlElement.classList.remove('chiyo-active-override');
+        localStorage.setItem('chiyo-enabled', 'false');
+      }
+    });
+
+    // Restore preference on page load
+    if (localStorage.getItem('chiyo-enabled') === 'true') {
+      chiyoEnabled = true;
+      toggleBtn.classList.add('active');
+      backgroundLayer.style.display = 'block';
+      htmlElement.classList.add('chiyo-active-override');
+    }
+
+    // Global click handler for Chiyo interactions
+    document.addEventListener('click', (e) => {
+      if (!chiyoEnabled) return;
+
+      // Ignore clicks on toggle button
+      if (e.target.closest('.chiyo-toggle-container')) {
+        return;
+      }
+
+      const now = Date.now();
+      const timeSinceLastClick = now - lastClickTime;
+
+      if (timeSinceLastClick < CLICK_THRESHOLD) {
+        clickCount += 1;
+      } else {
+        clickCount = 1;
+      }
+
+      lastClickTime = now;
+
+      if (clickCount >= FAST_SLAP_THRESHOLD) {
+        // Trigger fast slap animation
+        triggerChiyoAnimation('fast_slap');
+        clickCount = 0;
+      } else {
+        // Trigger normal slap animation
+        triggerChiyoAnimation('slap');
+      }
+    });
+
+    // Animation trigger function
+    function triggerChiyoAnimation(type) {
+      // Add visual feedback - subtle pulse or scale effect
+      const canvas = document.getElementById('particleCanvas');
+      if (canvas) {
+        // Add a subtle glow effect to particles on interaction
+        canvas.style.filter = type === 'fast_slap' ? 'brightness(1.2)' : 'brightness(1.1)';
+        setTimeout(() => {
+          canvas.style.filter = 'brightness(1)';
+        }, 200);
+      }
+    }
+  })();
 })();
 </script>
 
