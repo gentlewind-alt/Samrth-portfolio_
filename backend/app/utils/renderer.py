@@ -655,16 +655,27 @@ TEMPLATE = r"""<!DOCTYPE html>
 
   $('#slapCount').textContent = slapCount;
 
-  // The shared counter lives in /api/slaps. If it is unreachable (no KV store
-  // provisioned, or a static host with no functions) slapRemote stays false
-  // and the per-browser localStorage count above is what shows.
+  // Shared slap counter, held in Upstash Redis and called straight from the
+  // browser (Upstash sends CORS headers). One number for every visitor: it
+  // survives reloads and carries over between people.
+  //
+  // The site is static with no build step, so this token is necessarily
+  // public. It reaches only this counter key, and is rotatable in the Upstash
+  // console. If the request fails, slapRemote stays false and the per-browser
+  // localStorage count above is what shows.
+  var SLAP_URL = 'https://vast-ghoul-90200.upstash.io';
+  var SLAP_TOKEN = 'gQAAAAAAAWBYAAIgcDFmYzgyOWY0ZjAwMGQ0NDhlOWQyZGJlYzIyMWE5NzlmNg';
+  var SLAP_KEY = 'chiyo:slaps';
   var slapRemote = false;
   function showSlaps(n) { slapCount = n; $('#slapCount').textContent = n; }
-  function slapsApi(opts) {
-    return fetch('/api/slaps', opts).then(function (r) { return r.ok ? r.json() : null; });
+  function slapsApi(cmd) {
+    return fetch(SLAP_URL + '/' + cmd + '/' + SLAP_KEY, {
+      headers: { Authorization: 'Bearer ' + SLAP_TOKEN },
+      cache: 'no-store'
+    }).then(function (r) { return r.ok ? r.json() : null; });
   }
-  slapsApi().then(function (d) {
-    if (d && typeof d.count === 'number') { slapRemote = true; showSlaps(d.count); }
+  slapsApi('get').then(function (d) {
+    if (d) { slapRemote = true; showSlaps(parseInt(d.result, 10) || 0); }
   }).catch(function () {});
 
   function paintChiyo() {
@@ -720,8 +731,9 @@ TEMPLATE = r"""<!DOCTYPE html>
     localStorage.setItem('chiyoSlapCount', String(slapCount));
     $('#slapCount').textContent = slapCount;
     if (slapRemote) {
-      slapsApi({ method: 'POST' }).then(function (d) {
-        if (d && typeof d.count === 'number' && d.count > slapCount) showSlaps(d.count);
+      slapsApi('incr').then(function (d) {
+        var n = d && parseInt(d.result, 10);
+        if (n && n > slapCount) showSlaps(n);
       }).catch(function () {});
     }
     chiyoBusy = true;
