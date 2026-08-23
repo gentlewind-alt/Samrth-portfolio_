@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/slaps.js": {
+      "maxDuration": 10
+    }
+  }
+}
