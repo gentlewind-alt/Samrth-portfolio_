@@ -678,6 +678,20 @@ TEMPLATE = r"""<!DOCTYPE html>
     if (d) { slapRemote = true; showSlaps(parseInt(d.result, 10) || 0); }
   }).catch(function () {});
 
+  // Keep the number live for everyone watching at once: re-read it on a timer,
+  // but only while the tab is visible and Chiyo mode is on, since that is the
+  // only time the counter is on screen. Backgrounded and idle tabs cost
+  // nothing. The count only ever moves up, so a stale read can never drag it
+  // backwards past a slap this visitor just landed.
+  var SLAP_POLL_MS = 8000;
+  setInterval(function () {
+    if (!slapRemote || document.hidden || !chiyoOn) return;
+    slapsApi('get').then(function (d) {
+      var n = d && parseInt(d.result, 10);
+      if (n && n > slapCount) showSlaps(n);
+    }).catch(function () {});
+  }, SLAP_POLL_MS);
+
   function paintChiyo() {
     if (!layer) return;
     for (var i = 0; i < layer.children.length; i++) {
