@@ -1,8 +1,0 @@
-{
-  "name": "samarth-portfolio",
-  "private": true,
-  "description": "Static portfolio served from dist/, with the shared slap counter in api/.",
-  "engines": {
-    "node": "22.x"
-  }
-}
