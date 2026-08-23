@@ -1,12 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "builds": [
-    { "src": "api/*.js", "use": "@vercel/node" },
-    { "src": "dist/**", "use": "@vercel/static" }
-  ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/", "dest": "/dist/index.html" },
-    { "src": "/(.*)", "dest": "/dist/$1" }
-  ]
+  "buildCommand": "mkdir -p dist",
+  "outputDirectory": "dist"
 }
